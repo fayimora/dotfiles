@@ -17,7 +17,7 @@ fi
 
 # Removes .zshrc from $HOME (if it exists) and symlinks the .zshrc file from the .dotfiles
 rm -rf $HOME/.zshrc
-ln -s $HOME/.dotfiles/.zshrc $HOME/.zshrc
+ln -s $HOME/.dotfiles/zsh/.zshrc $HOME/.zshrc
 
 # Update Homebrew recipes
 brew update
@@ -27,10 +27,13 @@ brew tap homebrew/bundle
 brew bundle --file $DOTFILES/Brewfile
 
 # Setup neovim
-rm -rf ~/.config/nvim
-rm -rf ~/.local/share/nvim
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+rm -rf $HOME/.config/nvim
+rm -rf $HOME/.local/share/nvim
+git clone https://github.com/NvChad/NvChad $HOME/.config/nvim --depth 1
 ln -s $DOTFILES/nvchad/custom ~/.config/nvim/lua/custom
+
+# Link tmux config
+ln -s $DOTFILES/.tmux.conf $HOME/.tmux.conf
 
 # Symlink the Mackup config file to the home directory
 ln -s $DOTFILES/.mackup.cfg $HOME/.mackup.cfg
