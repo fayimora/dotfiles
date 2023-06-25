@@ -33,10 +33,11 @@ git clone https://github.com/NvChad/NvChad $HOME/.config/nvim --depth 1
 ln -s $DOTFILES/nvchad/custom ~/.config/nvim/lua/custom
 
 # Link tmux config
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ln -s $DOTFILES/.tmux.conf $HOME/.tmux.conf
 
 # Symlink the Mackup config file to the home directory
 ln -s $DOTFILES/.mackup.cfg $HOME/.mackup.cfg
 
 # Set macOS preferences - we will run this last because this will reload the shell
-source $DOTFILES/.macos
+# source $DOTFILES/.macos
