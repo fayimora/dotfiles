@@ -6,6 +6,8 @@ info () {
 
 info "Setting up your Mac..."
 
+$DOTFILES=$HOME/.dotfiles
+
 # Check for Oh My Zsh and install if we don't have it
 if test ! $(which omz); then
   info "Installing Oh My Zsh..."
@@ -24,7 +26,7 @@ fi
 # Removes .zshrc from $HOME (if it exists) and symlinks the .zshrc file from the .dotfiles
 info "Cleaning up zsh..."
 rm -rf $HOME/.zshrc
-ln -s $HOME/.dotfiles/zsh/.zshrc $HOME/.zshrc
+ln -s $DOTFILES/zsh/.zshrc $HOME/.zshrc
 
 # Update Homebrew recipes
 info "Updating Homebrew..."
@@ -33,7 +35,8 @@ brew update
 # Install all our dependencies with bundle (See Brewfile)
 info "Installing dependencies fron bundle..."
 brew tap homebrew/bundle
-brew bundle --file $DOTFILES/Brewfile
+# ln -s $DOTFILES/Brewfile $HOME/.Brewfile
+HOMEBREW_BUNDLE_FILE=$DOTFILES/Brewfile brew bundle install
 
 # Setup neovim
 info "Setting up neovim..."
