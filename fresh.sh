@@ -6,7 +6,8 @@ info () {
 
 info "Setting up your Mac..."
 
-$DOTFILES=$HOME/.dotfiles
+DOTFILES="$HOME/.dotfiles"
+info "Dotfiles path: $DOTFILES"
 
 # Check for Oh My Zsh and install if we don't have it
 if test ! $(which omz); then
@@ -48,10 +49,14 @@ ln -s $DOTFILES/nvchad/custom ~/.config/nvim/lua/custom
 # Link tmux config
 info "Setting up tmux..."
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-ln -s $DOTFILES/.tmux.conf $HOME/.tmux.conf
+ln -fs $DOTFILES/.tmux.conf $HOME/.tmux.conf
 
 # Symlink the Mackup config file to the home directory
 # ln -s $DOTFILES/.mackup.cfg $HOME/.mackup.cfg
 
 # Set macOS preferences - we will run this last because this will reload the shell
+info "Setting up macOS..."
 # source $DOTFILES/.macos
+
+info "All done!"
+
