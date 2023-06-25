@@ -3,11 +3,8 @@ alias copyssh="pbcopy < $HOME/.ssh/id_ed25519.pub"
 alias reloadshell="source $HOME/.zshrc"
 alias reloaddns="dscacheutil -flushcache && sudo killall -HUP mDNSResponder"
 alias ll="/opt/homebrew/opt/coreutils/libexec/gnubin/ls -AhlFo --color --group-directories-first"
-alias phpstorm='open -a /Applications/PhpStorm.app "`pwd`"'
 alias shrug="echo '¯\_(ツ)_/¯' | pbcopy"
 alias c="clear"
-alias compile="commit 'compile'"
-alias version="commit 'version'"
 
 # Directories
 alias dotfiles="cd $DOTFILES"
@@ -16,12 +13,10 @@ alias library="cd $HOME/Library"
 
 # JS
 alias nfresh="rm -rf node_modules/ package-lock.json && npm install"
-alias watch="npm run watch"
 
 # PS
 alias psa="ps aux"
 alias psg="ps aux | grep "
-alias psr='ps aux | grep ruby'
 
 # Moving around
 alias cdb='cd -'
@@ -37,12 +32,7 @@ alias ls='ls -Gh'
 alias lsg='ll | grep'
 
 # vim using
-mvim --version > /dev/null 2>&1
-MACVIM_INSTALLED=$?
-if [ $MACVIM_INSTALLED -eq 0 ]; then
-  alias vim="mvim -v"
-fi
-
+alias vim="nvim"
 
 # Git
 alias gs='git status'
@@ -108,6 +98,7 @@ alias gbb='git bisect bad'
 alias gdmb='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 
 # Common shell functions
+alias cat='bat'
 alias less='less -r'
 alias tf='tail -f'
 alias l='less'
@@ -131,3 +122,4 @@ alias brewu='brew update && brew upgrade && brew cleanup && brew doctor'
 
 # Scala CLI
 alias scli='scala-cli'
+

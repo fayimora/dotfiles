@@ -17,6 +17,7 @@ tap 'virtuslab/scala-cli'
 # Binaries
 brew 'awscli'
 brew 'bash' # Latest Bash version
+brew 'bat'
 brew 'coreutils' # Those that come with macOS are outdated
 brew 'ffmpeg'
 brew 'gh'
@@ -28,6 +29,7 @@ brew 'mackup'
 brew 'mas' # Mac App Store manager
 brew 'pkg-config'
 brew 'svn' # Needed to install fonts
+brew 'zoxide'
 
 # Development
 brew 'imagemagick'
