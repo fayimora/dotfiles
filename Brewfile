@@ -33,7 +33,9 @@ brew 'zoxide'
 
 # Development
 brew 'imagemagick'
+brew 'neovim'
 brew 'nvm'
+brew 'tmux'
 
 # Apps
 cask '1password'

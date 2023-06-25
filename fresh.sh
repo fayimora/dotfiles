@@ -26,6 +26,12 @@ brew update
 brew tap homebrew/bundle
 brew bundle --file $DOTFILES/Brewfile
 
+# Setup neovim
+rm -rf ~/.config/nvim
+rm -rf ~/.local/share/nvim
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+ln -s $DOTFILES/nvchad/custom ~/.config/nvim/lua/custom
+
 # Symlink the Mackup config file to the home directory
 ln -s $DOTFILES/.mackup.cfg $HOME/.mackup.cfg
 
