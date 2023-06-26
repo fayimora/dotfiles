@@ -46,6 +46,10 @@ rm -rf $HOME/.local/share/nvim
 git clone https://github.com/NvChad/NvChad $HOME/.config/nvim --depth 1
 ln -s $DOTFILES/nvchad/custom ~/.config/nvim/lua/custom
 
+# Setup git
+info "Setting up git..."
+ln -fs $DOTFILES/gitconfig $HOME/.gitconfig
+
 # Link tmux config
 info "Setting up tmux..."
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
