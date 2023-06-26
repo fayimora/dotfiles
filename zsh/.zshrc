@@ -73,7 +73,7 @@ ZSH_CUSTOM=$DOTFILES/zsh/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(1password brew direnv docker-compose docker-machine dotenv direnv git git-extras tmux vi-mode zoxide zsh-autosuggestions zsh-syntax-highlighting zsh-completions)
+plugins=(1password brew direnv docker-compose docker-machine dotenv direnv git git-extras tmux vi-mode zoxide)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -103,3 +103,7 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+source $DOTFILES/zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $DOTFILES/zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $DOTFILES/zsh/custom/plugins/zsh-completions/zsh-completions.plugin.zsh
