@@ -32,28 +32,28 @@ M.keys = {
 
   -- resize keymaps
   {
-    "H",
+    "<M-h>",
     function()
       require("tmux").resize_left()
     end,
     desc = "Resize Left",
   },
   {
-    "J",
+    "<M-j>",
     function()
       require("tmux").resize_bottom()
     end,
     desc = "Resize Down",
   },
   {
-    "K",
+    "<M-k>",
     function()
       require("tmux").resize_top()
     end,
     desc = "Resize Up",
   },
   {
-    "L",
+    "<M-l>",
     function()
       require("tmux").resize_right()
     end,
