@@ -35,7 +35,7 @@ local plugins = {
 
   {
     "windwp/nvim-ts-autotag",
-    event = "InsertEnter",
+    event = "VeryLazy",
     config = function()
       require("nvim-ts-autotag").setup()
     end,
@@ -182,6 +182,14 @@ local plugins = {
     config = function()
       require("custom.configs.tmux").setup()
     end,
+  },
+
+  {
+    'junegunn/fzf',
+    event = "VeryLazy",
+    run = function()
+      vim.fn['fzf#install']()
+    end
   },
 
   {
