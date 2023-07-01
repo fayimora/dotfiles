@@ -35,6 +35,7 @@ alias lsg='ll | grep'
 alias vim="nvim"
 
 # Git
+alias lg='lazygit'
 alias gs='git status'
 alias gstsh='git stash'
 alias gst='git stash'
