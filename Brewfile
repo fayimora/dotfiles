@@ -24,6 +24,7 @@ brew 'gh'
 brew 'git'
 brew 'grep'
 brew 'httpie'
+brew 'hyperfine'
 brew 'jq'
 brew 'mackup'
 brew 'mas' # Mac App Store manager
@@ -78,6 +79,7 @@ cask 'font-source-code-pro-for-powerline'
 cask 'font-source-code-pro'
 cask 'font-source-sans-pro'
 cask 'font-source-serif-pro'
+cask 'font-meslo-lg-nerd-font'
 
 # Mac App Store
 # mas 'Giphy Capture', id: 668208984
