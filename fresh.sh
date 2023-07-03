@@ -39,6 +39,9 @@ brew tap homebrew/bundle
 # ln -s $DOTFILES/Brewfile $HOME/.Brewfile
 HOMEBREW_BUNDLE_FILE=$DOTFILES/Brewfile brew bundle install
 
+# Install sdkman
+curl -s "https://get.sdkman.io" | bash
+
 # Setup neovim
 info "Setting up neovim..."
 rm -rf $HOME/.config/nvim
