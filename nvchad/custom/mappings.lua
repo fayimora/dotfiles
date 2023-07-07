@@ -8,6 +8,7 @@ M.general = {
     ["<leader>lg"] = { "<cmd> LazyGit<cr>", "Open LazyGit" },
     ["gk"] = {"<cmd> lua vim.lsp.buf.hover()<cr>", "Show Documentation"},
 		["gK"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "LSP signature help" },
+    ["<leader>cf"] = { "<cmd>lua vim.lsp.buf.format()<cr>", "LSP formatting" }
 	},
 }
 
