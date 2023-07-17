@@ -8,14 +8,16 @@ M.general = {
     ["<leader>lg"] = { "<cmd> LazyGit<cr>", "Open LazyGit" },
     ["gk"] = {"<cmd> lua vim.lsp.buf.hover()<cr>", "Show Documentation"},
 		["gK"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "LSP signature help" },
+		["<leader>ca"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "code actions" },
+		["<leader>cr"] = { "<cmd>lua vim.lsp.buf.rename()<cr>", "LSP rename" },
     ["<leader>cf"] = { "<cmd>lua vim.lsp.buf.format()<cr>", "LSP formatting" }
 	},
 }
 
 M.disabled = {
 	n = {
-		["<leader>h"] = "",
-		["<leader>v"] = "",
+		-- ["<leader>h"] = "",
+		-- ["<leader>v"] = "",
 		-- ["gi"] = "",
 
 		-- ["<C-h>"] = "",
@@ -36,8 +38,6 @@ M.telescope = {
     ["gi"] = {"<cmd>Telescope lsp_implementations<cr>", "Goto Implementation"},
     ["gd"] = {"<cmd>Telescope lsp_definitions<cr>", "Goto Definition"},
 
-		["<leader>ca"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "code actions" },
-		["<leader>cr"] = { "<cmd>lua vim.lsp.buf.rename()<cr>", "LSP rename" },
 		["<leader>ff"] = { "<cmd>Telescope find_files<cr>", "find files" },
 		["<leader>fg"] = { "<cmd>Telescope live_grep<cr>", "find in files" },
 		["<leader>fb"] = { "<cmd>Telescope buffers<cr>", "find buffers" },
@@ -54,7 +54,7 @@ M.telescope = {
 		["<leader>fn"] = { "<cmd>Telescope lsp_document_symbols<cr>", "find document symbols" },
 		["<leader>fp"] = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "find project symbols" },
 		["<leader>fe"] = { "<cmd>Telescope lsp_workspace_diagnostics<cr>", "find workspace diagnostics" },
-    ["<leader>mc"] = {"<cmd>Telescope metals commands<cr>", "Metals window"},
+    ["<leader>mc"] = { "<cmd>Telescope metals commands<cr>", "Metals window" },
 	},
 }
 --
