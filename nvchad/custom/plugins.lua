@@ -245,8 +245,17 @@ local plugins = {
         desc = "Toggle Flash Search",
       },
     },
-  }
+  },
 
+  {
+    'nvimdev/lspsaga.nvim',
+    event = 'LspAttach',
+    config = function()
+      require('lspsaga').setup({
+        win_width = 50,
+      })
+    end,
+  }
 
   -- To make a plugin not be loaded
   -- {

@@ -8,7 +8,10 @@ M.general = {
     ["<leader>lg"] = { "<cmd> LazyGit<cr>", "Open LazyGit" },
     ["gk"] = {"<cmd> lua vim.lsp.buf.hover()<cr>", "Show Documentation"},
 		["gK"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "LSP signature help" },
-		["<leader>ca"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "code actions" },
+		["gp"] = { "<cmd>Lspsaga peek_definition<cr>", "LSP signature help" },
+		["gt"] = { "<cmd>Lspsaga goto_type_definition<cr>", "LSP signature help" },
+		["<leader>ca"] = { "<cmd>Lspsaga code_action<cr>", "code actions" },
+		-- ["<leader>ca"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "code actions" },
 		["<leader>cr"] = { "<cmd>lua vim.lsp.buf.rename()<cr>", "LSP rename" },
     ["<leader>cf"] = { "<cmd>lua vim.lsp.buf.format()<cr>", "LSP formatting" }
 	},
