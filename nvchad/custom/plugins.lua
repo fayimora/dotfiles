@@ -145,7 +145,6 @@ local plugins = {
     },
   },
 
-  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   {
     "nvim-telescope/telescope.nvim",
     opts = {
@@ -159,11 +158,16 @@ local plugins = {
         },
       },
     },
-    -- fastest sorter
     dependencies = {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
+      },
+      {
+        "nvim-telescope/telescope-live-grep-args.nvim" ,
+        -- This will not install any breaking changes.
+        -- For major updates, this must be adjusted manually.
+        version = "^1.0.0",
       },
     },
   },

@@ -42,7 +42,7 @@ M.telescope = {
     ["gd"] = {"<cmd>Telescope lsp_definitions<cr>", "Goto Definition"},
 
 		["<leader>ff"] = { "<cmd>Telescope find_files<cr>", "find files" },
-		["<leader>fg"] = { "<cmd>Telescope live_grep<cr>", "find in files" },
+		["<leader>fg"] = { "<cmd>Telescope live_grep_args<cr>", "find in files" },
 		["<leader>fb"] = { "<cmd>Telescope buffers<cr>", "find buffers" },
 		["<leader>fh"] = { "<cmd>Telescope help_tags<cr>", "find help" },
 		["<leader>fo"] = { "<cmd>Telescope oldfiles<cr>", "find old files" },
