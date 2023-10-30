@@ -3,6 +3,8 @@ local M = {}
 
 M.general = {
 	n = {
+    ["0"] = {"^"},
+    ["^"] = {"0"},
 		[";"] = { ":", "enter command mode", opts = { nowait = true } },
     ["<leader>gg"] = { "<cmd> LazyGit<cr>", "Open LazyGit" },
     ["<leader>lg"] = { "<cmd> LazyGit<cr>", "Open LazyGit" },
@@ -15,6 +17,10 @@ M.general = {
 		["<leader>cr"] = { "<cmd>lua vim.lsp.buf.rename()<cr>", "LSP rename" },
     ["<leader>cf"] = { "<cmd>lua vim.lsp.buf.format()<cr>", "LSP formatting" }
 	},
+  v = {
+    ["0"] = {"^"},
+    ["^"] = {"0"},
+  }
 }
 
 M.disabled = {
