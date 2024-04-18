@@ -19,6 +19,7 @@ M.treesitter = {
     "python",
     "java",
     "scala",
+    "hocon",
   },
   autotag = {
     enable = true,
