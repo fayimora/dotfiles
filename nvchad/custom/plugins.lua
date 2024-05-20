@@ -284,6 +284,21 @@ local plugins = {
     "samjwill/nvim-unception",
     lazy = false,
     init = function() vim.g.unception_block_while_host_edits = true end
+  },
+
+  {
+    "mg979/vim-visual-multi",
+    lazy = false,
+  },
+
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    lazy = false,
+    config = function()
+      require('Comment').setup({
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      })
+    end
   }
 
   -- To make a plugin not be loaded

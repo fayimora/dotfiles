@@ -5,6 +5,8 @@ M.general = {
 	n = {
     ["0"] = {"^"},
     ["^"] = {"0"},
+    ["<Enter>"] = {"o<ESC>"},
+    ["<S-Enter>"] = {"O<ESC>"},
 		[";"] = { ":", "enter command mode", opts = { nowait = true } },
     ["<leader>gg"] = { "<cmd> LazyGit<cr>", "Open LazyGit" },
     ["<leader>lg"] = { "<cmd> LazyGit<cr>", "Open LazyGit" },
@@ -15,7 +17,8 @@ M.general = {
 		["<leader>ca"] = { "<cmd>Lspsaga code_action<cr>", "code actions" },
 		-- ["<leader>ca"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "code actions" },
 		["<leader>cr"] = { "<cmd>lua vim.lsp.buf.rename()<cr>", "LSP rename" },
-    ["<leader>cf"] = { "<cmd>lua vim.lsp.buf.format()<cr>", "LSP formatting" }
+    ["<leader>cf"] = { "<cmd>lua vim.lsp.buf.format()<cr>", "LSP formatting" },
+    ["<leader>tt"] = { "<cmd>:Lspsaga term_toggle<cr>", "Toggle Terminal" }
 	},
   v = {
     ["0"] = {"^"},
