@@ -1,4 +1,4 @@
-local overrides = require "custom.configs.overrides"
+local overrides = require("custom.configs.overrides")
 
 ---@type NvPluginSpec[]
 local plugins = {
@@ -15,13 +15,13 @@ local plugins = {
       {
         "jose-elias-alvarez/null-ls.nvim",
         config = function()
-          require "custom.configs.null-ls"
+          require("custom.configs.null-ls")
         end,
       },
     },
     config = function()
-      require "plugins.configs.lspconfig"
-      require "custom.configs.lspconfig"
+      require("plugins.configs.lspconfig")
+      require("custom.configs.lspconfig")
     end, -- Override to setup mason-lspconfig
   },
 
@@ -66,7 +66,7 @@ local plugins = {
     },
     ft = { "scala", "sbt", "sc" },
     config = function()
-      require "custom.configs.metals"
+      require("custom.configs.metals")
     end,
   },
 
@@ -89,11 +89,11 @@ local plugins = {
     opts = {
       sources = {
         { name = "nvim_lsp", group_index = 2 },
-        { name = "copilot", group_index = 2 },
-        { name = "luasnip", group_index = 2 },
-        { name = "buffer", group_index = 2 },
+        { name = "copilot",  group_index = 2 },
+        { name = "luasnip",  group_index = 2 },
+        { name = "buffer",   group_index = 2 },
         { name = "nvim_lua", group_index = 2 },
-        { name = "path", group_index = 2 },
+        { name = "path",     group_index = 2 },
       },
     },
   },
@@ -108,9 +108,9 @@ local plugins = {
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
-      require("nvim-surround").setup {
+      require("nvim-surround").setup({
         -- Configuration here, or leave empty to use defaults
-      }
+      })
     end,
   },
 
@@ -123,8 +123,8 @@ local plugins = {
     "Wansmer/treesj",
     -- keys = { '<space>m', '<space>j', '<space>s' },
     config = function()
-      require("treesj").setup {--[[ your config ]]
-      }
+      require("treesj").setup({ --[[ your config ]]
+      })
     end,
   },
 
@@ -141,6 +141,38 @@ local plugins = {
 
   {
     "folke/trouble.nvim",
+    keys = {
+      {
+        "<leader>xx",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>cs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>cl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "LSP Definitions / references / ... (Trouble)",
+      },
+      {
+        "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "Location List (Trouble)",
+      },
+      {
+        "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "Quickfix List (Trouble)",
+      },
+    },
     opts = {
       -- your configuration comes here
       -- or leave it empty to use the default settings
@@ -153,9 +185,7 @@ local plugins = {
     opts = {
       extensions_list = { "themes", "terms", "fzf" },
       pickers = {
-        resume = {
-
-        },
+        resume = {},
       },
       extensions = {
         fzf = {
@@ -172,7 +202,7 @@ local plugins = {
         build = "make",
       },
       {
-        "nvim-telescope/telescope-live-grep-args.nvim" ,
+        "nvim-telescope/telescope-live-grep-args.nvim",
         -- This will not install any breaking changes.
         -- For major updates, this must be adjusted manually.
         version = "^1.0.0",
@@ -197,11 +227,11 @@ local plugins = {
   },
 
   {
-    'junegunn/fzf',
+    "junegunn/fzf",
     event = "VeryLazy",
     run = function()
-      vim.fn['fzf#install']()
-    end
+      vim.fn["fzf#install"]()
+    end,
   },
 
   {
@@ -219,8 +249,7 @@ local plugins = {
                 return "\\<" .. str
               end,
             },
-          }
-          )
+          })
         end,
         desc = "Flash",
       },
@@ -260,10 +289,10 @@ local plugins = {
   },
 
   {
-    'nvimdev/lspsaga.nvim',
-    event = 'LspAttach',
+    "nvimdev/lspsaga.nvim",
+    event = "LspAttach",
     config = function()
-      require('lspsaga').setup({
+      require("lspsaga").setup({
         win_width = 50,
       })
     end,
@@ -275,7 +304,6 @@ local plugins = {
     config = function()
       require("custom.configs.gist").setup()
     end,
-
   },
   -- `GistsList` opens the selected gif in a terminal buffer,
   -- nvim-unception uses neovim remote rpc functionality to open the gist in an actual buffer
@@ -283,7 +311,9 @@ local plugins = {
   {
     "samjwill/nvim-unception",
     lazy = false,
-    init = function() vim.g.unception_block_while_host_edits = true end
+    init = function()
+      vim.g.unception_block_while_host_edits = true
+    end,
   },
 
   {
@@ -295,11 +325,11 @@ local plugins = {
     "JoosepAlviste/nvim-ts-context-commentstring",
     lazy = false,
     config = function()
-      require('Comment').setup({
-        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      require("Comment").setup({
+        pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
       })
-    end
-  }
+    end,
+  },
 
   -- To make a plugin not be loaded
   -- {
