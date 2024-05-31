@@ -103,23 +103,19 @@ local plugins = {
       {
         "zbirenbaum/copilot-cmp",
         config = function()
-          require("copilot_cmp").setup({
-            sources = {
-              { name = "supermaven" },
-            },
-          })
+          require("copilot_cmp").setup({})
         end,
       },
     },
     opts = {
       sources = {
-        { name = "nvim_lsp", group_index = 2 },
+        { name = "nvim_lsp",   group_index = 2 },
         -- { name = "copilot",  group_index = 2 },
         { name = "supermaven", group_index = 2 },
-        { name = "luasnip",  group_index = 2 },
-        { name = "buffer",   group_index = 2 },
-        { name = "nvim_lua", group_index = 2 },
-        { name = "path",     group_index = 2 },
+        { name = "luasnip",    group_index = 2 },
+        { name = "buffer",     group_index = 2 },
+        { name = "nvim_lua",   group_index = 2 },
+        { name = "path",       group_index = 2 },
       },
     },
   },
