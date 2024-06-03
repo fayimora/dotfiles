@@ -353,6 +353,15 @@ local plugins = {
     end,
   },
 
+  {
+    "NeogitOrg/neogit",
+    cmd = "Neogit",
+    dependencies = {
+      "sindrets/diffview.nvim",
+    },
+    config = true,
+  },
+
   -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",

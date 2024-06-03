@@ -91,4 +91,8 @@ M.copilot = {
   },
 }
 
+M.base46 = {
+  integrations = {"neogit"}
+}
+
 return M
