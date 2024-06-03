@@ -92,7 +92,7 @@ M.copilot = {
 }
 
 M.base46 = {
-  integrations = {"neogit"}
+  integrations = { "neogit" },
 }
 
 return M
