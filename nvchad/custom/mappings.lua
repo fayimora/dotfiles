@@ -61,7 +61,6 @@ M.telescope = {
 		["<leader>fc"] = { "<cmd>Telescope colorscheme<cr>", "find colorscheme" },
 		["<leader>ft"] = { "<cmd>Telescope treesitter<cr>", "find treesitter" },
 		["<leader>fw"] = { "<cmd>Telescope grep_string<cr>", "find word under cursor" },
-		["<leader>fd"] = { "<cmd>TroubleToggle<cr>", "find document diagnostics" },
 		["<leader>fr"] = { "<cmd>Telescope lsp_references<cr>", "find references" },
 		["<leader>fn"] = { "<cmd>Telescope lsp_document_symbols<cr>", "find document symbols" },
 		["<leader>fp"] = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "find project symbols" },
@@ -69,7 +68,17 @@ M.telescope = {
     ["<leader>mc"] = { "<cmd>Telescope metals commands<cr>", "Metals window" },
 	},
 }
---
--- more keybinds!
+
+M.trouble = {
+  n = {
+    ["<leader>fd"] = { "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", "find document diagnostics" },
+    ["<leader>xx"] = { "<cmd>Trouble diagnostics toggle<cr>", "Diagnostics (Trouble)" },
+    ["<leader>xX"] = { "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", "Buffer Diagnostics (Trouble)" },
+    ["<leader>cs"] = { "<cmd>Trouble symbols toggle focus=false<cr>", "Symbols (Trouble)" },
+    ["<leader>cl"] = { "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", "LSP Definitions / references / ... (Trouble)" },
+    ["<leader>xL"] = { "<cmd>Trouble loclist toggle<cr>", "Location List (Trouble)" },
+    ["<leader>xQ"] = { "<cmd>Trouble qflist toggle<cr>", "Quickfix List (Trouble)" },
+  },
+}
 
 return M
