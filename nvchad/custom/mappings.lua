@@ -5,8 +5,8 @@ M.general = {
 	n = {
     ["0"] = {"^"},
     ["^"] = {"0"},
-    ["<Enter>"] = {"o<ESC>"},
-    ["<S-Enter>"] = {"O<ESC>"},
+    -- ["<Enter>"] = {"o<ESC>"},
+    -- ["<S-Enter>"] = {"O<ESC>"},
 		[";"] = { ":", "enter command mode", opts = { nowait = true } },
     ["<leader>gg"] = { "<cmd> LazyGit<cr>", "Open LazyGit" },
     ["<leader>lg"] = { "<cmd> LazyGit<cr>", "Open LazyGit" },
