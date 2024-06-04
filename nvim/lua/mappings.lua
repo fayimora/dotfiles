@@ -15,14 +15,13 @@ map("n", "<leader>lg", "<cmd> LazyGit<cr>", { desc = "open lazygit" })
 map("n", "gk", "<cmd>lua vim.lsp.buf.hover()<cr>", { desc = "show documentaion" })
 map("n", "gK", "<cmd>lua vim.lsp.buf.signature_help()<cr>", { desc = "LSP signature help" })
 map("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "LSP rename" })
-map("n", "<leader>cf", "<cmd>lua vim.lsp.buf.format()<cr>", { desc = "LSP formatting" })
+map("n", "<leader>cf", "<cmd>lua conform.format()<cr>", { desc = "LSP formatting" })
 
 -- Lspsaga mappings
 map("n", "gp", "<cmd>Lspsaga peek_definition<cr>", { desc = "LSP signature help" })
 map("n", "gt", "<cmd>Lspsaga goto_type_definition<cr>", { desc = "LSP signature help" })
 map("n", "<leader>ca", "<cmd>Lspsaga code_action<cr>", { desc = "code actions" })
 map("n", "<leader>tt", "<cmd>:Lspsaga term_toggle<cr>", { desc = "Toggle Terminal" })
-
 
 -- M.telescope = {
 -- 	n = {
@@ -41,13 +40,16 @@ map("n", "gws", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { desc = "fi
 map("n", "gi", "<cmd>Telescope lsp_implementations<cr>", { desc = "Goto Implementation" })
 map("n", "gd", "<cmd>Telescope lsp_definitions<cr>", { desc = "Goto Definition" })
 
-
 -- Trouble mappings
 map("n", "<leader>fd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "find document diagnostics" })
 map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
 map("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })
 map("n", "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
-map("n", "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", { desc = "LSP Definitions / references / ... (Trouble)" })
+map(
+  "n",
+  "<leader>cl",
+  "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+  { desc = "LSP Definitions / references / ... (Trouble)" }
+)
 map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
 map("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
-

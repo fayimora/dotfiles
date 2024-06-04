@@ -1,4 +1,4 @@
-local overrides = require("configs.overrides")
+local overrides = require "configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
@@ -12,16 +12,16 @@ local plugins = {
     },
     dependencies = {
       -- format & linting
-      {
-        "jose-elias-alvarez/null-ls.nvim",
-        config = function()
-          require("configs.null-ls")
-        end,
-      },
+      -- {
+      --   "jose-elias-alvarez/null-ls.nvim",
+      --   config = function()
+      --     require("configs.null-ls")
+      --   end,
+      -- },
     },
     config = function()
-      require("nvchad.configs.lspconfig")
-      require("configs.lspconfig")
+      require "nvchad.configs.lspconfig"
+      require "configs.lspconfig"
     end, -- Override to setup mason-lspconfig
   },
 
@@ -29,6 +29,9 @@ local plugins = {
   {
     "williamboman/mason.nvim",
     opts = overrides.mason,
+    dependencies = {
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
+    },
   },
 
   {
@@ -66,7 +69,7 @@ local plugins = {
     },
     ft = { "scala", "sbt", "sc" },
     config = function()
-      require("configs.metals")
+      require "configs.metals"
     end,
   },
 
@@ -80,7 +83,7 @@ local plugins = {
     "supermaven-inc/supermaven-nvim",
     event = "InsertEnter",
     config = function()
-      require("supermaven-nvim").setup({
+      require("supermaven-nvim").setup {
         keymaps = {
           accept_suggestion = "<Tab>",
           clear_suggestion = "<C-]>",
@@ -91,9 +94,9 @@ local plugins = {
           suggestion_color = "#ffffff",
           cterm = 244,
         },
-        disable_inline_completion = false, -- disables inline completion for use with cmp
-        disable_keymaps = false,       -- disables built in keymaps for more manual control
-      })
+        disable_inline_completion = true, -- disables inline completion for use with cmp
+        disable_keymaps = false, -- disables built in keymaps for more manual control
+      }
     end,
   },
 
@@ -109,13 +112,13 @@ local plugins = {
     -- },
     opts = {
       sources = {
-        { name = "nvim_lsp",   group_index = 2 },
+        { name = "nvim_lsp", group_index = 2 },
         -- { name = "copilot",  group_index = 2 },
         { name = "supermaven", group_index = 2 },
-        { name = "luasnip",    group_index = 2 },
-        { name = "buffer",     group_index = 2 },
-        { name = "nvim_lua",   group_index = 2 },
-        { name = "path",       group_index = 2 },
+        { name = "luasnip", group_index = 2 },
+        { name = "buffer", group_index = 2 },
+        { name = "nvim_lua", group_index = 2 },
+        { name = "path", group_index = 2 },
       },
     },
   },
@@ -130,9 +133,9 @@ local plugins = {
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
-      require("nvim-surround").setup({
+      require("nvim-surround").setup {
         -- Configuration here, or leave empty to use defaults
-      })
+      }
     end,
   },
 
@@ -145,8 +148,8 @@ local plugins = {
     "Wansmer/treesj",
     -- keys = { '<space>m', '<space>j', '<space>s' },
     config = function()
-      require("treesj").setup({ --[[ your config ]]
-      })
+      require("treesj").setup { --[[ your config ]]
+      }
     end,
   },
 
@@ -233,13 +236,13 @@ local plugins = {
         "s",
         mode = { "n", "x", "o" },
         function()
-          require("flash").jump({
+          require("flash").jump {
             search = {
               mode = function(str)
                 return "\\<" .. str
               end,
             },
-          })
+          }
         end,
         desc = "Flash",
       },
@@ -282,9 +285,9 @@ local plugins = {
     "nvimdev/lspsaga.nvim",
     event = "LspAttach",
     config = function()
-      require("lspsaga").setup({
+      require("lspsaga").setup {
         win_width = 50,
-      })
+      }
     end,
   },
   {
@@ -312,13 +315,21 @@ local plugins = {
   },
 
   {
+    "numToStr/Comment.nvim",
+    opts = {
+      -- add any options here
+    },
+    lazy = false,
+  },
+
+  {
     "JoosepAlviste/nvim-ts-context-commentstring",
     lazy = false,
-    -- config = function()
-    --   require("Comment").setup({
-    --     pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
-    --   })
-    -- end,
+    config = function()
+      require("Comment").setup {
+        pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+      }
+    end,
   },
 
   {
