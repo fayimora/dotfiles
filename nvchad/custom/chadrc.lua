@@ -22,6 +22,10 @@ M.ui = {
 
 }
 
+M.base46 = {
+  integrations = { "trouble", "notify", "neogit" },
+}
+
 M.plugins = "custom.plugins"
 
 -- check core.mappings for table structure

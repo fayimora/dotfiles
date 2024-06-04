@@ -327,7 +327,10 @@ local plugins = {
     dependencies = {
       "sindrets/diffview.nvim",
     },
-    config = true,
+    config = function()
+      require("neogit").setup()
+      dofile(vim.g.base46_cache .. "neogit")
+    end,
   },
 
   {
