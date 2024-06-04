@@ -46,8 +46,7 @@ curl -s "https://get.sdkman.io" | bash
 info "Setting up neovim..."
 rm -rf $HOME/.config/nvim
 rm -rf $HOME/.local/share/nvim
-git clone https://github.com/NvChad/NvChad $HOME/.config/nvim --depth 1
-ln -s $DOTFILES/nvchad/custom ~/.config/nvim/lua/custom
+ln -s $DOTFILES/nvim ~/.config/nvim
 
 # Setup git
 info "Setting up git..."

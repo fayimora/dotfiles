@@ -1,4 +1,4 @@
-local overrides = require("custom.configs.overrides")
+local overrides = require("configs.overrides")
 
 ---@type NvPluginSpec[]
 local plugins = {
@@ -15,13 +15,13 @@ local plugins = {
       {
         "jose-elias-alvarez/null-ls.nvim",
         config = function()
-          require("custom.configs.null-ls")
+          require("configs.null-ls")
         end,
       },
     },
     config = function()
-      require("plugins.configs.lspconfig")
-      require("custom.configs.lspconfig")
+      require("nvchad.configs.lspconfig")
+      require("configs.lspconfig")
     end, -- Override to setup mason-lspconfig
   },
 
@@ -66,7 +66,7 @@ local plugins = {
     },
     ft = { "scala", "sbt", "sc" },
     config = function()
-      require("custom.configs.metals")
+      require("configs.metals")
     end,
   },
 
@@ -204,15 +204,15 @@ local plugins = {
     "folke/todo-comments.nvim",
     event = "BufRead",
     config = function()
-      require("custom.configs.todo").setup()
+      require("configs.todo").setup()
     end,
   },
 
   {
     "aserowy/tmux.nvim",
-    keys = require("custom.configs.tmux").keys,
+    keys = require("configs.tmux").keys,
     config = function()
-      require("custom.configs.tmux").setup()
+      require("configs.tmux").setup()
     end,
   },
 
@@ -292,7 +292,7 @@ local plugins = {
     cmd = { "GistCreate", "GistCreateFromFile", "GistsList" },
     -- config = true,
     config = function()
-      require("custom.configs.gist").setup()
+      require("configs.gist").setup()
     end,
   },
   -- `GistsList` opens the selected gif in a terminal buffer,
@@ -314,11 +314,11 @@ local plugins = {
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
     lazy = false,
-    config = function()
-      require("Comment").setup({
-        pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
-      })
-    end,
+    -- config = function()
+    --   require("Comment").setup({
+    --     pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+    --   })
+    -- end,
   },
 
   {
@@ -345,7 +345,7 @@ local plugins = {
       "rcarriga/nvim-notify",
     },
     config = function()
-      require("custom.configs.noice").setup()
+      require("configs.noice").setup()
     end,
   },
 
