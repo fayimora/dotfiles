@@ -303,7 +303,6 @@ local plugins = {
   -- and prevents neovim buffer inception
   {
     "samjwill/nvim-unception",
-    lazy = false,
     init = function()
       vim.g.unception_block_while_host_edits = true
     end,
@@ -316,20 +315,16 @@ local plugins = {
 
   {
     "numToStr/Comment.nvim",
-    opts = {
-      -- add any options here
-    },
-    lazy = false,
-  },
-
-  {
-    "JoosepAlviste/nvim-ts-context-commentstring",
     lazy = false,
     config = function()
       require("Comment").setup {
+        ignore = "^$", -- ignores empty lines
         pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
       }
     end,
+    dependencies = {
+      "JoosepAlviste/nvim-ts-context-commentstring",
+    },
   },
 
   {
@@ -358,6 +353,18 @@ local plugins = {
     config = function()
       require("configs.noice").setup()
     end,
+  },
+
+  {
+    "folke/trouble.nvim",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
+  },
+
+  {
+    "wakatime/vim-wakatime",
+    event = "VeryLazy",
+    enabled = vim.fn.filereadable(vim.fn.getenv "HOME" .. "/.wakatime.cfg"),
   },
 
   -- To make a plugin not be loaded
