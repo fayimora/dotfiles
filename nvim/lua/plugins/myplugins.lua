@@ -361,11 +361,11 @@ local plugins = {
     cmd = "Trouble",
   },
 
-  {
-    "wakatime/vim-wakatime",
-    event = "VeryLazy",
-    enabled = vim.fn.filereadable(vim.fn.getenv "HOME" .. "/.wakatime.cfg"),
-  },
+  -- {
+  --   "wakatime/vim-wakatime",
+  --   event = "VeryLazy",
+  --   enabled = vim.fn.filereadable(vim.fn.getenv "HOME" .. "/.wakatime.cfg"),
+  -- },
 
   -- To make a plugin not be loaded
   -- {
