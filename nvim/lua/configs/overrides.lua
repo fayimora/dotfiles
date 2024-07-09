@@ -35,6 +35,7 @@ M.treesitter = {
 
 M.mason = {
   ensure_installed = {
+    "astro-language-server",
     -- lua stuff
     "lua-language-server",
     "stylua",
@@ -57,6 +58,7 @@ M.mason = {
     "bash-language-server",
     "dockerfile-language-server",
     "docker-compose-language-service",
+    "jsonnet-language-server",
   },
 }
 
