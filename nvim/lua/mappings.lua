@@ -39,6 +39,7 @@ map("n", "<leader>mc", "<cmd>Telescope metals commands<cr>", { desc = "Metals wi
 map("n", "gws", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { desc = "find project symbols" })
 map("n", "gi", "<cmd>Telescope lsp_implementations<cr>", { desc = "Goto Implementation" })
 map("n", "gd", "<cmd>Telescope lsp_definitions<cr>", { desc = "Goto Definition" })
+map("n", "<leader>fr", "<cmd>Telescope resume<cr>", { desc = "Resume pickers" })
 
 -- Trouble mappings
 map("n", "<leader>fd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "find document diagnostics" })

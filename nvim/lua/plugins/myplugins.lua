@@ -188,6 +188,14 @@ local plugins = {
           case_mode = "smart_case",
         },
       },
+      defaults = {
+        mappings = {
+          n = {
+            ["l"] = require("telescope.actions").cycle_history_next,
+            ["h"] = require("telescope.actions").cycle_history_prev,
+          },
+        },
+      },
     },
     dependencies = {
       {
