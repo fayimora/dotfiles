@@ -58,3 +58,9 @@ map("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List
 -- nvimtree
 map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
 map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
+
+-- tmux.nvim
+map("n", "<C-h>", '<cmd>lua require("tmux").move_left()<cr>', { desc = "tmux move left" })
+map("n", "<C-l>", '<cmd>lua require("tmux").move_right()<cr>', { desc = "tmux move right" })
+map("n", "<C-j>", '<cmd>lua require("tmux").move_bottom()<cr>', { desc = "tmux move down" })
+map("n", "<C-k>", '<cmd>lua require("tmux").move_top()<cr>', { desc = "tmux move up" })
