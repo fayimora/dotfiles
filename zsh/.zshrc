@@ -130,5 +130,4 @@ export SDKMAN_DIR="$HOME/.sdkman"
 # alias cd to zoxide
 eval "$(zoxide init --cmd cd zsh)"
 
-export EDITOR=nvim
-export VISUAL=nvim
+
