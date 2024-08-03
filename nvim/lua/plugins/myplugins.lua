@@ -369,6 +369,28 @@ local plugins = {
     cmd = "Trouble",
   },
 
+  {
+    "mistweaverco/kulala.nvim",
+    config = function()
+      require("kulala").setup()
+    end,
+  },
+
+  {
+    "chrisgrieser/nvim-rip-substitute",
+    cmd = "RipSubstitute",
+    keys = {
+      {
+        "<leader>fs",
+        function()
+          require("rip-substitute").sub()
+        end,
+        mode = { "n", "x" },
+        desc = " rip substitute",
+      },
+    },
+  },
+
   -- {
   --   "wakatime/vim-wakatime",
   --   event = "VeryLazy",

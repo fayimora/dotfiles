@@ -2,6 +2,9 @@ local M = {}
 
 M.setup = function()
   require("noice").setup {
+    messages = {
+      enabled = false,
+    },
     lsp = {
       override = {
         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,

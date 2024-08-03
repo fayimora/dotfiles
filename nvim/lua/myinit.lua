@@ -12,4 +12,10 @@ vim.api.nvim_create_autocmd(
   { group = hocon_group, pattern = "*/resources/*.conf", command = "set ft=hocon" }
 )
 
-vim.opt_global.shortmess:remove("F")
+vim.filetype.add {
+  extension = {
+    ["http"] = "http",
+  },
+}
+
+vim.opt_global.shortmess:remove "F"
