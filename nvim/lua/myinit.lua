@@ -19,3 +19,9 @@ vim.filetype.add {
 }
 
 vim.opt_global.shortmess:remove "F"
+
+vim.diagnostic.config {
+  severity_sort = true,
+  update_in_insert = true,
+  virtual_text = false,
+}
