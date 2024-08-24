@@ -6,6 +6,7 @@ local map = vim.keymap.set
 map("n", "0", "^", { desc = "go to first character" })
 map("n", "^", "0", { desc = "go to start of line" })
 map("n", ";", ":", { desc = "enter command mode" })
+map("n", "<leader>dd", "<cmd>lua vim.diagnostic.open_float()<cr>", { desc = "Open float" })
 
 -- Git mappings
 map("n", "<leader>gg", "<cmd> Neogit<cr>", { desc = "open lazygit" })
@@ -43,8 +44,8 @@ map("n", "<leader>fr", "<cmd>Telescope resume<cr>", { desc = "Resume pickers" })
 
 -- Trouble mappings
 map("n", "<leader>fd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "find document diagnostics" })
-map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
-map("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })
+map("n", "<leader>xX", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
+map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })
 map("n", "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
 map(
   "n",
