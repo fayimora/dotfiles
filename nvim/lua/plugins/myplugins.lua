@@ -43,7 +43,13 @@ local plugins = {
     "windwp/nvim-ts-autotag",
     event = "VeryLazy",
     config = function()
-      require("nvim-ts-autotag").setup()
+      require("nvim-ts-autotag").setup {
+        opts = {
+          enable_close = true, -- Auto close tags
+          enable_rename = true, -- Auto rename pairs of tags
+          enable_close_on_slash = true, -- Auto close on trailing </
+        },
+      }
     end,
   },
 
@@ -335,6 +341,10 @@ local plugins = {
     },
   },
 
+  {
+    "sindrets/diffview.nvim",
+    cmd = "DiffviewOpen",
+  },
   {
     "NeogitOrg/neogit",
     cmd = "Neogit",
