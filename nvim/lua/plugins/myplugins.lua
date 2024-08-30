@@ -300,10 +300,14 @@ local plugins = {
     event = "LspAttach",
     config = function()
       require("lspsaga").setup {
-        win_width = 50,
+        outline = {
+          win_width = 30,
+          win_position = "left",
+        },
       }
     end,
   },
+
   {
     "Rawnly/gist.nvim",
     cmd = { "GistCreate", "GistCreateFromFile", "GistsList" },
@@ -399,6 +403,14 @@ local plugins = {
         desc = " rip substitute",
       },
     },
+  },
+
+  {
+    "onsails/lspkind-nvim",
+    event = "LspAttach",
+    config = function()
+      require("configs.lspkind").setup()
+    end,
   },
 
   -- {
