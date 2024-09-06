@@ -22,6 +22,7 @@ map("n", "<leader>cf", "<cmd>lua conform.format()<cr>", { desc = "LSP formatting
 map("n", "gp", "<cmd>Lspsaga peek_definition<cr>", { desc = "LSP signature help" })
 map("n", "gt", "<cmd>Lspsaga goto_type_definition<cr>", { desc = "LSP signature help" })
 map("n", "<leader>ca", "<cmd>Lspsaga code_action<cr>", { desc = "code actions" })
+map("n", "<leader>ci", "<cmd>Lspsaga incoming_calls<cr>", { desc = "incoming calls" })
 map("n", "<leader>tt", "<cmd>:Lspsaga term_toggle<cr>", { desc = "Toggle Terminal" })
 
 -- M.telescope = {
@@ -46,11 +47,16 @@ map("n", "<leader>fr", "<cmd>Telescope resume<cr>", { desc = "Resume pickers" })
 map("n", "<leader>fd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "find document diagnostics" })
 map("n", "<leader>xX", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
 map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })
-map("n", "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
+map(
+  "n",
+  "<leader>cs",
+  "<cmd>Trouble symbols toggle focus=true<cr> pinned=true win.relative=win win.position=right",
+  { desc = "Symbols (Trouble)" }
+)
 map(
   "n",
   "<leader>cl",
-  "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+  "<cmd>Trouble lsp toggle focus=true win.position=right pinned=true win.relative=win<cr>",
   { desc = "LSP Definitions / references / ... (Trouble)" }
 )
 map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
