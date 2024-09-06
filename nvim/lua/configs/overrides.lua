@@ -24,9 +24,9 @@ M.treesitter = {
     "vim",
     "yaml",
   },
-  autotag = {
-    enable = true,
-  },
+  -- autotag = {
+  --   enable = true,
+  -- },
   indent = {
     enable = true,
     -- disable = {
