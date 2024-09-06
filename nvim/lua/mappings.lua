@@ -71,3 +71,7 @@ map("n", "<C-h>", '<cmd>lua require("tmux").move_left()<cr>', { desc = "tmux mov
 map("n", "<C-l>", '<cmd>lua require("tmux").move_right()<cr>', { desc = "tmux move right" })
 map("n", "<C-j>", '<cmd>lua require("tmux").move_bottom()<cr>', { desc = "tmux move down" })
 map("n", "<C-k>", '<cmd>lua require("tmux").move_top()<cr>', { desc = "tmux move up" })
+
+-- vim-easy-align
+map("n", "ga", "<Plug>(EasyAlign)", { desc = "EasyAlign" })
+map("x", "ga", "<Plug>(EasyAlign)", { desc = "EasyAlign" })
