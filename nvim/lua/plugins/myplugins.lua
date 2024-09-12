@@ -95,12 +95,12 @@ local plugins = {
           clear_suggestion = "<C-]>",
           accept_word = "<C-j>",
         },
-        ignore_filetypes = { cpp = true },
+        ignore_filetypes = { "cpp" },
         color = {
           suggestion_color = "#ffffff",
           cterm = 244,
         },
-        disable_inline_completion = true, -- disables inline completion for use with cmp
+        disable_inline_completion = false, -- disables inline completion for use with cmp
         disable_keymaps = false, -- disables built in keymaps for more manual control
       }
     end,
@@ -120,7 +120,7 @@ local plugins = {
       sources = {
         { name = "nvim_lsp", group_index = 2 },
         -- { name = "copilot",  group_index = 2 },
-        { name = "supermaven", group_index = 2 },
+        -- { name = "supermaven", group_index = 2 },
         { name = "luasnip", group_index = 2 },
         { name = "buffer", group_index = 2 },
         { name = "nvim_lua", group_index = 2 },
