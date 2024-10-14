@@ -107,6 +107,10 @@
 [core]
 	autocrlf = input
   editor = nvim
+  pager = delta
+[delta]
+  side-by-side = true
+  line-numbers = true
 [advice]
   statusHints = false
 [diff]
