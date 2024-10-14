@@ -429,6 +429,9 @@ local plugins = {
     event = "VeryLazy",
   },
 
+  { "nvchad/volt", lazy = true },
+  { "nvchad/menu", lazy = true },
+
   -- {
   --   "wakatime/vim-wakatime",
   --   event = "VeryLazy",
