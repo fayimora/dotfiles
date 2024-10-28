@@ -11,6 +11,8 @@ map("n", "<leader>dd", "<cmd>lua vim.diagnostic.open_float()<cr>", { desc = "Ope
 -- Git mappings
 map("n", "<leader>gg", "<cmd> Neogit<cr>", { desc = "open lazygit" })
 map("n", "<leader>lg", "<cmd> LazyGit<cr>", { desc = "open lazygit" })
+map("n", "<leader>gnh", "<cmd> Gitsigns next_hunk<cr>", { desc = "Gitsigns next hunk" })
+map("n", "<leader>gph", "<cmd> Gitsigns prev_hunk<cr>", { desc = "Gitsigns previous hunk" })
 
 -- Lsp mappings
 map("n", "gk", "<cmd>lua vim.lsp.buf.hover()<cr>", { desc = "show documentaion" })
