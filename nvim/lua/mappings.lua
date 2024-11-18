@@ -52,7 +52,7 @@ map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { des
 map(
   "n",
   "<leader>cs",
-  "<cmd>Trouble symbols toggle focus=true<cr> pinned=true win.relative=win win.position=right<cr>",
+  "<cmd>Trouble symbols toggle focus=true pinned=true win.relative=win win.position=right<cr>",
   { desc = "Symbols (Trouble)" }
 )
 map(
