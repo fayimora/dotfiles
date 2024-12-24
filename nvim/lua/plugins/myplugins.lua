@@ -131,7 +131,13 @@ local plugins = {
 
   {
     "kdheepak/lazygit.nvim",
-    cmd = "LazyGit",
+    cmd = {
+      "LazyGit",
+      "LazyGitConfig",
+      "LazyGitCurrentFile",
+      "LazyGitFilter",
+      "LazyGitFilterCurentFile",
+    },
   },
 
   {
@@ -431,6 +437,13 @@ local plugins = {
 
   { "nvchad/volt", lazy = true },
   { "nvchad/menu", lazy = true },
+  {
+    "echasnovski/mini.nvim",
+    version = false,
+    config = function()
+      require("mini.animate").setup()
+    end,
+  },
 
   -- {
   --   "wakatime/vim-wakatime",

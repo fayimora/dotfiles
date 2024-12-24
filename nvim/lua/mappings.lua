@@ -91,3 +91,13 @@ vim.keymap.set("n", "<RightMouse>", function()
   local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
   require("menu").open(options, { mouse = true })
 end, {})
+
+-- lazygit Toggle
+map({ "n", "t" }, "<A-g>", function()
+  require("nvchad.term").toggle {
+    pos = "float",
+    id = "lazygit",
+    float_ops = { width = 0.7, height = 0.7 },
+    cmd = "lazygit",
+  }
+end, { desc = "lazygit Toggle" })
