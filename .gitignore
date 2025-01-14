@@ -2,4 +2,5 @@
 .bsp
 .metals
 .scala-build
+nvim/lazy-lock.json
 
