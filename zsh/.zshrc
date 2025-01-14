@@ -80,7 +80,7 @@ ZSH_CUSTOM=$DOTFILES/zsh/custom/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(1password brew direnv docker-compose docker-machine dotenv direnv git git-extras tmux vi-mode zoxide)
+plugins=(1password brew direnv docker-compose docker dotenv direnv git git-extras tmux vi-mode zoxide)
 
 source $ZSH/oh-my-zsh.sh
 
