@@ -104,6 +104,10 @@
   # the usual default is to push all branches
   default = upstream
 	autoSetupRemote = true
+[pull]
+  rebase = true
+[rebase]
+  autoStash = true
 [core]
 	autocrlf = input
   editor = nvim
