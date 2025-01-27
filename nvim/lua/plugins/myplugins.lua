@@ -471,6 +471,13 @@ local plugins = {
     end,
   },
 
+  {
+    "nvzone/typr",
+    dependencies = "nvzone/volt",
+    opts = {},
+    cmd = { "Typr", "TyprStats" },
+  },
+
   -- {
   --   "wakatime/vim-wakatime",
   --   event = "VeryLazy",
