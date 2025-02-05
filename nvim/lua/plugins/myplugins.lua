@@ -223,28 +223,45 @@ local plugins = {
 
   {
     "nvim-telescope/telescope.nvim",
-    opts = {
-      extensions_list = { "themes", "terms", "fzf" },
-      pickers = {
-        resume = {},
-      },
-      extensions = {
-        fzf = {
-          fuzzy = true,
-          override_generic_sorter = true,
-          override_file_sorter = true,
-          case_mode = "smart_case",
+    opts = function(_, conf)
+      local lga_actions = require "telescope-live-grep-args.actions"
+      local actions = require "telescope.actions"
+
+      local myopts = {
+        extensions_list = { "themes", "terms", "fzf", "live_grep_args" },
+        pickers = {
+          resume = {},
         },
-      },
-      defaults = {
-        mappings = {
-          n = {
-            ["l"] = require("telescope.actions").cycle_history_next,
-            ["h"] = require("telescope.actions").cycle_history_prev,
+        extensions = {
+          fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = "smart_case",
+          },
+          live_grep_args = {
+            auto_quoting = true,
+            mappings = {
+              i = {
+                ["<C-k>"] = lga_actions.quote_prompt(),
+                ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob " },
+                -- freeze the current list and start a fuzzy search in the frozen list
+                ["<C-space>"] = require("telescope.actions").to_fuzzy_refine,
+              },
+            },
           },
         },
-      },
-    },
+        defaults = {
+          mappings = {
+            n = {
+              ["l"] = actions.cycle_history_next,
+              ["h"] = actions.cycle_history_prev,
+            },
+          },
+        },
+      }
+      return vim.tbl_deep_extend("force", conf, myopts)
+    end,
     dependencies = {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
@@ -252,9 +269,7 @@ local plugins = {
       },
       {
         "nvim-telescope/telescope-live-grep-args.nvim",
-        -- This will not install any breaking changes.
-        -- For major updates, this must be adjusted manually.
-        version = "^1.0.0",
+        version = "^1.1.0",
       },
     },
   },
