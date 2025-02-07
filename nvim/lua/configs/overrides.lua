@@ -17,6 +17,7 @@ M.treesitter = {
     "markdown_inline",
     "python",
     "regex",
+    "rust",
     "scala",
     "toml",
     "tsx",
@@ -62,6 +63,8 @@ M.mason = {
     "docker-compose-language-service",
     "jsonnet-language-server",
     "helm-ls",
+    "rust-analyzer",
+    "codelldb",
   },
 }
 

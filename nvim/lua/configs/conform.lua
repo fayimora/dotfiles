@@ -14,6 +14,7 @@ local options = {
     typescript = { "prettierd", "prettier", stop_after_first = true },
     typescriptreact = { "prettierd", "prettier", stop_after_first = true },
     yaml = { "prettier" },
+    rust = { "rustfmt", lsp_format = "fallback" },
   },
 
   format_on_save = {
