@@ -34,6 +34,21 @@ M.treesitter = {
     --   "python"
     -- },
   },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<C-@>",
+      node_incremental = "<C-@>",
+      scope_incremental = false,
+      node_decremental = "<BS>", -- BS stands for Backspace
+    },
+    -- keymaps = {
+    --   init_selection = "gnn",
+    --   node_incremental = "gnn",
+    --   scope_incremental = false,
+    --   node_decremental = "gnm",
+    -- },
+  },
 }
 
 M.mason = {
