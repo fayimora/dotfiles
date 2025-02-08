@@ -39,6 +39,12 @@ map("n", "<leader>fg", "<cmd>Telescope live_grep_args<cr>", { desc = "grep in fi
 map("n", "<leader>fw", "<cmd>Telescope grep_string<cr>", { desc = "find word under cursor" })
 map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
 map("n", "<leader>fq", "<cmd>Telescope quickfix<cr>", { desc = "find quickfix" })
+map(
+  "n",
+  "<leader>fds",
+  "<cmd>Telescope lsp_document_symbols ignore_symbols=variable<cr>",
+  { desc = "find document symbols" }
+)
 map("n", "<leader>mc", "<cmd>Telescope metals commands<cr>", { desc = "Metals window" })
 map("n", "gws", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { desc = "find project symbols" })
 map("n", "gi", "<cmd>Telescope lsp_implementations<cr>", { desc = "Goto Implementation" })
@@ -46,7 +52,7 @@ map("n", "gd", "<cmd>Telescope lsp_definitions<cr>", { desc = "Goto Definition" 
 map("n", "<leader>fr", "<cmd>Telescope resume<cr>", { desc = "Resume pickers" })
 
 -- Trouble mappings
-map("n", "<leader>fd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "find document diagnostics" })
+map("n", "<leader>fdd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "find document diagnostics" })
 map("n", "<leader>xX", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
 map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })
 map(
