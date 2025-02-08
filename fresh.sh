@@ -1,6 +1,6 @@
 #!/bin/sh
 
-info () {
+info() {
   printf "\r  [ \033[00;34m..\033[0m ] $1\n"
 }
 
@@ -20,7 +20,7 @@ if test ! $(which brew); then
   info "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>$HOME/.zprofile
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
@@ -60,9 +60,11 @@ ln -fs $DOTFILES/.tmux.conf $HOME/.tmux.conf
 # Symlink the Mackup config file to the home directory
 # ln -s $DOTFILES/.mackup.cfg $HOME/.mackup.cfg
 
+# Setup aerospace
+ln -s $DOTFILES/aerospace/aerospace.toml $HOME/.config/aerospace.toml
+
 # Set macOS preferences - we will run this last because this will reload the shell
 info "Setting up macOS..."
 # source $DOTFILES/.macos
 
 info "All done!"
-

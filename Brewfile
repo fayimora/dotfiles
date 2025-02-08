@@ -33,9 +33,15 @@ brew 'svn' # Needed to install fonts
 brew 'zoxide'
 
 # Development
+brew 'caddy'
+brew 'delta'
+brew 'go'
 brew 'imagemagick'
 brew 'neovim'
 brew 'nvm'
+brew 'rust'
+brew 'rust-analyzer'
+brew 'task'
 brew 'tmux'
 
 # Apps
@@ -51,6 +57,7 @@ cask 'google-chrome'
 cask 'jetbrains-toolbox'
 cask 'maccy'
 cask 'microsoft-teams'
+cask 'nikitabobko/tap/aerospace'
 cask 'numi'
 cask 'obsidian'
 cask 'postman'
