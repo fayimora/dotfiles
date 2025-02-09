@@ -7,6 +7,7 @@ info() {
 info "Setting up your Mac..."
 
 DOTFILES="$HOME/.dotfiles"
+CONFIG_DIR="$HOME/.config"
 info "Dotfiles path: $DOTFILES"
 
 # Check for Oh My Zsh and install if we don't have it
@@ -44,9 +45,9 @@ curl -s "https://get.sdkman.io" | bash
 
 # Setup neovim
 info "Setting up neovim..."
-rm -rf $HOME/.config/nvim
+rm -rf $CONFIG_DIR/nvim
 rm -rf $HOME/.local/share/nvim
-ln -s $DOTFILES/nvim ~/.config/nvim
+ln -s $DOTFILES/nvim $CONFIG_DIR/nvim
 
 # Setup git
 info "Setting up git..."
@@ -60,8 +61,15 @@ ln -fs $DOTFILES/.tmux.conf $HOME/.tmux.conf
 # Symlink the Mackup config file to the home directory
 # ln -s $DOTFILES/.mackup.cfg $HOME/.mackup.cfg
 
-# Setup aerospace
-ln -s $DOTFILES/aerospace/aerospace.toml $HOME/.config/aerospace.toml
+# Setup aerospace, sketchybar and jankyborders
+mkdir -p $CONFIG_DIR/{aerospace,sketchybar/plugins,borders}
+ln -s $DOTFILES/aerospace/aerospace.toml $CONFIG_DIR/aerospace.toml
+
+ln -sf $DOTFILES/sketchybar/sketchybarrc $CONFIG_DIR/sketchybar/sketchybarrc
+ln -sf $DOTFILES/sketchybar/plugins $CONFIG_DIR/sketchybar/plugins
+# chmod +x $DOTFILES/sketchybar/plugins/*
+
+ln -sf $DOTFILES/jankyborders/bordersrc $CONFIG_DIR/borders/bordersrc
 
 # Set macOS preferences - we will run this last because this will reload the shell
 info "Setting up macOS..."

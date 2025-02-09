@@ -13,11 +13,13 @@ tap 'homebrew/core'
 tap 'jesseduffield/lazygit'
 tap 'scalacenter/bloop'
 tap 'virtuslab/scala-cli'
+tap 'FelixKratz/formulae'
 
 # Binaries
 brew 'awscli'
 brew 'bash' # Latest Bash version
 brew 'bat'
+brew 'borders'
 brew 'coreutils' # Those that come with macOS are outdated
 brew 'ffmpeg'
 brew 'gh'
@@ -31,6 +33,7 @@ brew 'mas' # Mac App Store manager
 brew 'pkg-config'
 brew 'svn' # Needed to install fonts
 brew 'zoxide'
+brew 'sketchybar'
 
 # Development
 brew 'caddy'
