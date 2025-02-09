@@ -78,6 +78,7 @@ M.mason = {
     "docker-compose-language-service",
     "jsonnet-language-server",
     "helm-ls",
+    "gopls",
     "rust-analyzer",
     "codelldb",
   },
