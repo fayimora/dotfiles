@@ -198,11 +198,6 @@ local plugins = {
     end,
   },
 
-  -- {
-  --   "zbirenbaum/copilot.lua",
-  --   event = "InsertEnter",
-  --   opts = overrides.copilot,
-  -- },
 
   {
     "supermaven-inc/supermaven-nvim",
