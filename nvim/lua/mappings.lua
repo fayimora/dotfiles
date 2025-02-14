@@ -35,8 +35,12 @@ map("n", "<leader>tt", "<cmd>:Lspsaga term_toggle<cr>", { desc = "Toggle Termina
 -- }
 
 -- Telescope mappings
+local lga_shortcuts = require "telescope-live-grep-args.shortcuts"
+
 map("n", "<leader>fg", "<cmd>Telescope live_grep_args<cr>", { desc = "grep in files" })
-map("n", "<leader>fw", "<cmd>Telescope grep_string<cr>", { desc = "find word under cursor" })
+-- map("n", "<leader>fw", "<cmd>Telescope grep_string<cr>", { desc = "find word under cursor" })
+map("n", "<leader>fw", lga_shortcuts.grep_word_under_cursor, { desc = "find word under cursor" })
+
 map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
 map("n", "<leader>fq", "<cmd>Telescope quickfix<cr>", { desc = "find quickfix" })
 map(
