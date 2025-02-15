@@ -21,7 +21,9 @@ brew 'bash' # Latest Bash version
 brew 'bat'
 brew 'borders'
 brew 'coreutils' # Those that come with macOS are outdated
+brew 'fd'
 brew 'ffmpeg'
+brew 'fzf'
 brew 'gh'
 brew 'git'
 brew 'grep'
@@ -31,9 +33,14 @@ brew 'jq'
 brew 'mackup'
 brew 'mas' # Mac App Store manager
 brew 'pkg-config'
-brew 'svn' # Needed to install fonts
-brew 'zoxide'
+brew 'poppler'
+brew 'ripgrep'
+brew 'sevenzip'
 brew 'sketchybar'
+brew 'svn' # Needed to install fonts
+brew 'tabiew'
+brew 'yazi'
+brew 'zoxide'
 
 # Development
 brew 'caddy'
@@ -49,8 +56,8 @@ brew 'tmux'
 
 # Apps
 cask '1password'
-cask 'adobe-creative-cloud'
-cask 'brave-browser'
+# cask 'adobe-creative-cloud'
+# cask 'brave-browser'
 cask 'discord'
 cask 'docker'
 cask 'figma'
@@ -90,6 +97,7 @@ cask 'font-source-code-pro'
 cask 'font-source-sans-pro'
 cask 'font-source-serif-pro'
 cask 'font-meslo-lg-nerd-font'
+cask 'font-symbols-only-nerd-font'
 
 # Mac App Store
 # mas 'Giphy Capture', id: 668208984
