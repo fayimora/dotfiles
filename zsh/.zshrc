@@ -132,3 +132,16 @@ export SDKMAN_DIR="$HOME/.sdkman"
 eval "$(zoxide init --cmd cd zsh)"
 
 
+
+# >>> scala-cli completions >>>
+fpath=("/Users/fayi/Library/Application Support/ScalaCli/completions/zsh" $fpath)
+compinit
+# <<< scala-cli completions <<<
+
+# pnpm
+export PNPM_HOME="/Users/fayi/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
