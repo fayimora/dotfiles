@@ -1,3 +1,5 @@
+require("java").setup()
+
 local on_attach = require("nvchad.configs.lspconfig").on_attach
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 

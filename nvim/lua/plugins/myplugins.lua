@@ -32,6 +32,12 @@ local plugins = {
     dependencies = {
       "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
+    config = function(_, opts)
+      local conf = vim.tbl_deep_extend("keep", opts, overrides.mason)
+      vim.print(conf)
+      require("mason").setup(conf)
+      vim.print(conf)
+    end,
   },
 
   {
@@ -198,6 +204,7 @@ local plugins = {
     end,
   },
 
+  { "nvim-java/nvim-java" },
 
   {
     "supermaven-inc/supermaven-nvim",

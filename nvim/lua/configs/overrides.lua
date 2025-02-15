@@ -77,10 +77,15 @@ M.mason = {
     "dockerfile-language-server",
     "docker-compose-language-service",
     "jsonnet-language-server",
+    -- "jdtls",
     "helm-ls",
     "gopls",
     "rust-analyzer",
     "codelldb",
+  },
+  registries = {
+    "github:nvim-java/mason-registry",
+    "github:mason-org/mason-registry",
   },
 }
 
