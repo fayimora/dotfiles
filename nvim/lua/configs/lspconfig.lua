@@ -5,7 +5,7 @@ local lspconfig = require "lspconfig"
 local util = require "lspconfig/util"
 
 -- if you just want default config for the servers then put them in a table
-local servers = { "bashls", "html", "cssls", "ts_ls", "clangd", "tailwindcss", "jdtls" }
+local servers = { "bashls", "html", "cssls", "ts_ls", "clangd", "tailwindcss", "jdtls", "python-lsp-server" }
 
 for _, lsp in ipairs(servers) do
   -- if lsp ~= "jdtls" then
