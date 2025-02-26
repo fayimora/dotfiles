@@ -80,7 +80,7 @@ M.mason = {
     "jdtls",
     "helm-ls",
     "gopls",
-    "python-lsp-server",
+    "pylsp",
     "rust-analyzer",
     "codelldb",
   },
