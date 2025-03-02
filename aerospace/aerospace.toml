@@ -146,6 +146,7 @@ automatically-unhide-macos-hidden-apps = false
 
     # Setup App shortcuts
     cmd-ctrl-alt-t = 'exec-and-forget open -a Kitty'
+    cmd-ctrl-alt-g = 'exec-and-forget open -a Ghostty'
     cmd-ctrl-alt-o = 'exec-and-forget open -a Obsidian'
     cmd-ctrl-alt-a = 'exec-and-forget open -a Arc'
     cmd-ctrl-alt-w = 'exec-and-forget open -a WhatsApp'
@@ -176,6 +177,10 @@ automatically-unhide-macos-hidden-apps = false
 # See: https://nikitabobko.github.io/AeroSpace/guide#on-window-detected-callback
 [[on-window-detected]]
 if.app-id = 'net.kovidgoyal.kitty'
+run = "move-node-to-workspace 2"
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
 run = "move-node-to-workspace 2"
 
 # Float some apps by default
