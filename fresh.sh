@@ -71,6 +71,13 @@ ln -sf $DOTFILES/sketchybar/plugins $CONFIG_DIR/sketchybar/plugins
 
 ln -sf $DOTFILES/jankyborders/bordersrc $CONFIG_DIR/borders/bordersrc
 
+# link Kitty and Ghostty configs
+mkdir -p $CONFIG_DIR/kitty
+mkdir -p $CONFIG_DIR/ghostty
+
+ln -sf $DOTFILES/kitty.conf $CONFIG_DIR/kitty/kitty.conf
+ln -sf $DOTFILES/ghostty/config $CONFIG_DIR/ghostty/config
+
 # Set macOS preferences - we will run this last because this will reload the shell
 info "Setting up macOS..."
 # source $DOTFILES/.macos
