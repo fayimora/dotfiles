@@ -202,7 +202,6 @@ local plugins = {
     end,
   },
 
-
   {
     "supermaven-inc/supermaven-nvim",
     event = "InsertEnter",
@@ -580,12 +579,25 @@ local plugins = {
 
   { "nvchad/volt", lazy = true },
   { "nvchad/menu", lazy = true },
+
   {
     "echasnovski/mini.nvim",
     version = false,
+    lazy = false,
     config = function()
-      -- require("mini.animate").setup()
-      -- require("mini.ai").setup()
+      local animate = require "mini.animate"
+      local duration = 150
+      require("mini.animate").setup {
+        scroll = {
+          enable = true,
+          timing = animate.gen_timing.linear { duration = duration, unit = "total" },
+        },
+        cursor = {
+          enable = true,
+          timing = animate.gen_timing.linear { duration = duration, unit = "total" },
+        },
+      }
+      require("mini.ai").setup()
     end,
   },
 
