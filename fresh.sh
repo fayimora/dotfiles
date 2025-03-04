@@ -76,7 +76,7 @@ mkdir -p $CONFIG_DIR/kitty
 mkdir -p $CONFIG_DIR/ghostty
 
 ln -sf $DOTFILES/kitty.conf $CONFIG_DIR/kitty/kitty.conf
-ln -sf $DOTFILES/ghostty/config $CONFIG_DIR/ghostty/config
+ln -sf $DOTFILES/ghostty $CONFIG_DIR/ghostty
 
 # Set macOS preferences - we will run this last because this will reload the shell
 info "Setting up macOS..."
