@@ -6,6 +6,7 @@ M.treesitter = {
     "c",
     "css",
     "dockerfile",
+    "go",
     "hocon",
     "http",
     "html",
