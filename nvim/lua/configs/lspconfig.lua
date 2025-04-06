@@ -1,8 +1,12 @@
-local on_attach = require("nvchad.configs.lspconfig").on_attach
-local capabilities = require("nvchad.configs.lspconfig").capabilities
+local nvlsp = require "nvchad.configs.lspconfig"
+
+local on_attach = nvlsp.on_attach
+local capabilities = nvlsp.capabilities
 
 local lspconfig = require "lspconfig"
 local util = require "lspconfig/util"
+
+nvlsp.defaults()
 
 -- if you just want default config for the servers then put them in a table
 local servers = { "bashls", "html", "cssls", "ts_ls", "clangd", "tailwindcss", "jdtls", "pylsp" }

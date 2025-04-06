@@ -20,7 +20,6 @@ local plugins = {
       -- },
     },
     config = function()
-      require "nvchad.configs.lspconfig"
       require "configs.lspconfig"
     end, -- Override to setup mason-lspconfig
   },
@@ -149,6 +148,16 @@ local plugins = {
         },
       }
     end,
+  },
+
+  {
+    "rcarriga/nvim-notify",
+    opts = {
+      timeout = 500,
+      render = "compact",
+      stages = "fade",
+      top_down = true,
+    },
   },
 
   {
