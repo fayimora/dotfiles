@@ -52,6 +52,8 @@ ln -s $DOTFILES/nvim $CONFIG_DIR/nvim
 # Setup git
 info "Setting up git..."
 ln -fs $DOTFILES/gitconfig $HOME/.gitconfig
+mkdir -p $HOME/.config/lazygit
+ln -fs $DOTFILES/lazygit/config.yml $HOME/.config/lazygit/config.yml
 
 # Link tmux config
 info "Setting up tmux..."
