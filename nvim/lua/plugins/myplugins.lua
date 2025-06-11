@@ -327,11 +327,19 @@ local plugins = {
     opts = function(_, conf)
       local lga_actions = require "telescope-live-grep-args.actions"
       local actions = require "telescope.actions"
+      local additional_rg_args =
+        { "--hidden", "--glob", "!**/.git/*", "--glob", "!**/node_modules/*", "--glob", "!**/.idea/*" }
 
       local myopts = {
         extensions_list = { "themes", "terms", "fzf", "live_grep_args" },
         pickers = {
           resume = {},
+          find_files = {
+            -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
+            find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+          },
+          live_grep = { additional_args = additional_rg_args },
+          grep_string = { additional_args = additional_rg_args },
         },
         extensions = {
           fzf = {
@@ -629,6 +637,7 @@ local plugins = {
       local codelldb = mason_registry.get_package "codelldb"
       local extension_path = codelldb:get_install_path() .. "/extension/"
       local codelldb_path = extension_path .. "adapter/codelldb"
+
       local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
       -- If you are on Linux, replace the line above with the line below:
       -- local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
