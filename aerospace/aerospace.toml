@@ -224,3 +224,8 @@ if.app-name-regex-substring = '1Password'
 check-further-callbacks = true
 run = 'layout floating'
 
+[[on-window-detected]]
+if.app-name-regex-substring = 'TickTick'
+check-further-callbacks = true
+run = 'layout floating'
+
