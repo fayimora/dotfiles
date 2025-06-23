@@ -149,6 +149,7 @@ automatically-unhide-macos-hidden-apps = false
     cmd-ctrl-alt-g = 'exec-and-forget open -a Ghostty'
     cmd-ctrl-alt-o = 'exec-and-forget open -a Obsidian'
     cmd-ctrl-alt-a = 'exec-and-forget open -a Arc'
+    cmd-ctrl-alt-z = 'exec-and-forget open -a Zen'
     cmd-ctrl-alt-w = 'exec-and-forget open -a WhatsApp'
     cmd-ctrl-alt-c = [ 'exec-and-forget open -a Telegram', 'exec-and-forget open -a WhatsApp' ]
 
@@ -177,6 +178,10 @@ automatically-unhide-macos-hidden-apps = false
 [[on-window-detected]]
 if.app-id = 'Arc'
 run = "move-node-to-workspace 1"
+
+[[on-window-detected]]
+if.app-id = 'Zen'
+run = "move-node-to-workspace 2"
 
 [[on-window-detected]]
 if.app-id = 'net.kovidgoyal.kitty'
