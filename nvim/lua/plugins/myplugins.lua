@@ -81,6 +81,9 @@ local plugins = {
 
               ["ac"] = { query = "@class.outer", desc = "Select outer part of a class" },
               ["ic"] = { query = "@class.inner", desc = "Select inner part of a class" },
+
+              ["at"] = { query = "@element.outer", desc = "Select outer part of a tag" },
+              ["it"] = { query = "@element.inner", desc = "Select inner part of a tag" },
             },
           },
           -- swap = {
@@ -617,7 +620,7 @@ local plugins = {
           timing = animate.gen_timing.linear { duration = duration, unit = "total" },
         },
       }
-      require("mini.ai").setup()
+      -- require("mini.ai").setup()
     end,
   },
 
