@@ -508,10 +508,10 @@ local plugins = {
     end,
   },
 
-  {
-    "mg979/vim-visual-multi",
-    lazy = false,
-  },
+  -- {
+  --   "mg979/vim-visual-multi",
+  --   lazy = false,
+  -- },
 
   {
     "numToStr/Comment.nvim",
@@ -609,7 +609,7 @@ local plugins = {
     lazy = false,
     config = function()
       local animate = require "mini.animate"
-      local duration = 150
+      local duration = 100
       require("mini.animate").setup {
         scroll = {
           enable = true,
