@@ -75,8 +75,20 @@ map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location Lis
 map("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
 
 -- nvimtree
+local nvimTreeFocusOrToggle = function()
+  local nvimTree = require "nvim-tree.api"
+  local currentBuf = vim.api.nvim_get_current_buf()
+  local currentBufFt = vim.api.nvim_get_option_value("filetype", { buf = currentBuf })
+  if currentBufFt == "NvimTree" then
+    nvimTree.tree.toggle()
+  else
+    nvimTree.tree.focus()
+  end
+end
+
 map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
-map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
+-- map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
+map("n", "<leader>e", nvimTreeFocusOrToggle, { desc = "nvimtree focus window" })
 
 -- tmux.nvim
 map("n", "<C-h>", '<cmd>lua require("tmux").move_left()<cr>', { desc = "tmux move left" })
