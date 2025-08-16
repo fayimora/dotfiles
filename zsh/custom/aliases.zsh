@@ -2,7 +2,7 @@
 alias copyssh="pbcopy < $HOME/.ssh/id_ed25519.pub"
 alias reloadshell="source $HOME/.zshrc"
 alias reloaddns="dscacheutil -flushcache && sudo killall -HUP mDNSResponder"
-alias ll="/opt/homebrew/opt/coreutils/libexec/gnubin/ls -AhlFo --color --group-directories-first"
+alias ls="eza -1h --icons=always --hyperlink"
 alias shrug="echo '¯\_(ツ)_/¯' | pbcopy"
 alias c="clear"
 
@@ -26,10 +26,9 @@ alias cls='clear;ls'
 alias df='df -h'
 alias du='du -h -d 2'
 alias ll='ls -alGh'
-alias ls='ls -Gh'
 
 # show me files matching "ls grep"
-alias lsg='ll | grep'
+alias lsg='ll | rg --smart-case'
 
 # vim using
 alias vim="nvim"
@@ -93,6 +92,7 @@ alias gclndfx='git clean -dfx'
 alias gsm='git submodule'
 alias gsmi='git submodule init'
 alias gsmu='git submodule update'
+alias gsmur='git submodule update --init --recursive'
 alias gt='git t'
 alias gbg='git bisect good'
 alias gbb='git bisect bad'
