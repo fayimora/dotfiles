@@ -219,11 +219,12 @@ local plugins = {
     event = "InsertEnter",
     config = function()
       require("supermaven-nvim").setup {
-        keymaps = {
-          accept_suggestion = "<Tab>",
-          clear_suggestion = "<C-]>",
-          accept_word = "<C-j>",
-        },
+        keymaps = nil,
+        -- keymaps = {
+        --   accept_suggestion = "<Tab>",
+        --   clear_suggestion = "<C-]>",
+        --   accept_word = "<C-j>",
+        -- },
         ignore_filetypes = { "cpp" },
         color = {
           suggestion_color = "#ffffff",
@@ -249,7 +250,7 @@ local plugins = {
       sources = {
         { name = "nvim_lsp", group_index = 2 },
         -- { name = "copilot",  group_index = 2 },
-        -- { name = "supermaven", group_index = 2 },
+        { name = "supermaven", group_index = 2 },
         { name = "luasnip", group_index = 2 },
         { name = "buffer", group_index = 2 },
         { name = "nvim_lua", group_index = 2 },
