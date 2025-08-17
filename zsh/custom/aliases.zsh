@@ -124,3 +124,7 @@ alias brewu='brew update && brew upgrade && brew cleanup && brew doctor'
 # Scala CLI
 alias scli='scala-cli'
 
+# Start new tmux project
+alias new-project='source $DOTFILES/start-new-project.sh'
+alias sntp='source $DOTFILES/start-new-project.sh'
+
