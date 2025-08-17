@@ -6,11 +6,9 @@
 local M = {}
 
 -- Path to overriding theme and highlights files
--- local highlights = require "highlights"
+local highlights = require "highlights"
 
 M.ui = {
-  theme = "onedark",
-  -- theme_toggle = { "onedark", "one_light" },
   telescope = { style = "bordered" },
 
   hl_override = highlights.override,
@@ -26,6 +24,8 @@ M.ui = {
 }
 
 M.base46 = {
+  theme = "tokyodark",
+  theme_toggle = { "tokyodark", "onedark" },
   integrations = { "trouble", "notify", "neogit" },
 }
 
