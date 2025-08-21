@@ -1,9 +1,13 @@
 theme = tokyonight
 font-family = "JetBrainsMono Nerd Font"
 font-size = 14
-macos-option-as-alt = true
+macos-option-as-alt = left
 
 keybind = alt+left=unbind
 keybind = alt+right=unbind
+keybind = f11=toggle_fullscreen
 
 macos-titlebar-style = tabs
+
+copy-on-select = clipboard
+clipboard-trim-trailing-spaces = true

@@ -186,12 +186,12 @@ local plugins = {
     ft = { "scala", "sbt", "java" },
     opts = function()
       local metals_config = require("metals").bare_config()
-      metals_config.init_options.statusBarProvider = "on"
+      metals_config.init_options.statusBarProvider = "off"
       metals_config.settings = {
         showImplicitArguments = true,
         showInferredType = true,
         excludedPackages = {},
-        serverProperties = { "-Xmx2g" },
+        serverProperties = { "-Xmx3g" },
         serverVersion = "latest.snapshot",
       }
 
