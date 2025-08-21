@@ -188,16 +188,25 @@ local plugins = {
       local metals_config = require("metals").bare_config()
       metals_config.init_options.statusBarProvider = "off"
       metals_config.settings = {
-        showImplicitArguments = true,
-        showInferredType = true,
+        defaultBspToBuildTool = true,
         excludedPackages = {},
         serverProperties = { "-Xmx3g" },
         serverVersion = "latest.snapshot",
+        showImplicitArguments = true,
+        showInferredType = true,
+        inlayHints = true,
       }
 
       metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
       metals_config.on_attach = function(client, bufnr)
         -- your on_attach function
+        vim.keymap.set("n", "<leader>ch", function()
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+          else
+            vim.notify("Server is not an inlay_hint provider", vim.log.levels.ERROR)
+          end
+        end, { desc = "Toggle inlay hints" })
       end
 
       return metals_config
