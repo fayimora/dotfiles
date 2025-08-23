@@ -380,7 +380,7 @@ local plugins = {
               ["h"] = actions.cycle_history_prev,
             },
             i = {
-              ["<c-d>"] = actions.delete_buffer,
+              ["<C-S-d>"] = actions.delete_buffer,
             },
           },
         },
