@@ -27,7 +27,7 @@ tmux new-session -d -s "$session_name" -c "$(pwd)" -n "neovim"
 tmux send-keys -t "$session_name:neovim" 'nvim .' Enter
 
 tmux new-window -t "$session_name" -c "$(pwd)"
-tmux new-window -t "$session_name" -c "$(pwd)" -n "lr-tasks"
+# tmux new-window -t "$session_name" -c "$(pwd)" -n "lr-tasks"
 
 # Focus back on the first window (vim) using the base index
 # tmux select-window -t "$session_name:$base_index"
