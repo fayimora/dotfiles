@@ -129,3 +129,4 @@ alias scli='scala-cli'
 alias new-project='source $DOTFILES/start-new-project.sh'
 alias sntp='source $DOTFILES/start-new-project.sh'
 
+alias repair-vencord='sh -c "$(curl -sS https://raw.githubusercontent.com/Vendicated/VencordInstaller/main/install.sh)"'
