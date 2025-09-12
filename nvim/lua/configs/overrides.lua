@@ -60,6 +60,7 @@ M.mason = {
     "stylua",
 
     -- web dev stuff
+    "biome",
     "css-lsp",
     "html-lsp",
     "typescript-language-server",
