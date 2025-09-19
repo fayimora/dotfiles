@@ -9,7 +9,7 @@ local util = require "lspconfig/util"
 nvlsp.defaults()
 
 -- if you just want default config for the servers then put them in a table
-local servers = { "bashls", "html", "cssls", "ts_ls", "clangd", "tailwindcss", "jdtls", "pylsp" }
+local servers = { "bashls", "html", "cssls", "ts_ls", "clangd", "tailwindcss", "jdtls", "pylsp", "biome" }
 
 for _, lsp in ipairs(servers) do
   -- if lsp ~= "jdtls" then
@@ -40,3 +40,5 @@ lspconfig["gopls"].setup {
     },
   },
 }
+
+vim.lsp.enable(servers)
