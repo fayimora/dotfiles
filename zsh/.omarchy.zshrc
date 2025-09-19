@@ -67,3 +67,13 @@ export PATH="$PATH:/home/fayi/.local/share/coursier/bin"
 . "$HOME/.cargo/env"
 
 [[ -n $TMUX ]] && export TERM="xterm-256color"
+
+eval "$(mise activate zsh)"
+
+# pnpm
+export PNPM_HOME="/home/fayi/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
