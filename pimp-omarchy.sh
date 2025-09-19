@@ -14,7 +14,7 @@ info "\nPimping up your Omarchy..."
 
 info "Installing required packages..."
 yay -S --noconfirm --needed zsh tmux tmux-plugin-manager opencode-bin lnav httpie github-cli nfs-utils \
-  zen-browser discord nordvpn-bin telegram-desktop-bin visual-studio-code-bin ghostty-git ttf-jetbrains-mono-nerd \
+  discord nordvpn-bin telegram-desktop-bin visual-studio-code-bin ttf-jetbrains-mono-nerd \
   slack-desktop discord go-task brave-bin
 
 info "Installing dev environments..."
@@ -61,11 +61,11 @@ ln -fs $DOTFILES/gitconfig $HOME/.gitconfig
 
 info "Setting up tmux..."
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-ln -fs $DOTFILES/.tmux.conf $HOME/.tmux.conf
+ln -s $DOTFILES/.tmux.conf $HOME/.tmux.conf
 info "Remember to install the tmux plugins with prefix + I"
 
 info "Setting up Ghostty"
 # mkdir -p $CONFIG_DIR/ghostty
-ln -sf $DOTFILES/ghostty $CONFIG_DIR/ghostty
+ln -s $DOTFILES/ghostty $CONFIG_DIR/ghostty
 
 info "All done! Please reboot your machine"
