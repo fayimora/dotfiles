@@ -3,24 +3,11 @@ local nvlsp = require "nvchad.configs.lspconfig"
 local on_attach = nvlsp.on_attach
 local capabilities = nvlsp.capabilities
 
-local lspconfig = require "lspconfig"
 local util = require "lspconfig/util"
 
 nvlsp.defaults()
 
--- if you just want default config for the servers then put them in a table
-local servers = { "bashls", "html", "cssls", "ts_ls", "clangd", "tailwindcss", "jdtls", "pylsp", "biome" }
-
-for _, lsp in ipairs(servers) do
-  -- if lsp ~= "jdtls" then
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-  -- end
-end
-
-lspconfig["gopls"].setup {
+local gocfg = {
   on_attach = on_attach,
   capabilities = capabilities,
   cmd = { "gopls" },
@@ -41,4 +28,24 @@ lspconfig["gopls"].setup {
   },
 }
 
-vim.lsp.enable(servers)
+local servers = {
+  bashls = {},
+  html = {},
+  cssls = {},
+  ts_ls = {},
+  clangd = {},
+  tailwindcss = {},
+  jdtls = {},
+  pylsp = {},
+  biome = {},
+  gopls = gocfg,
+}
+
+for name, config in pairs(servers) do
+  if name ~= "jdtls" then
+    vim.lsp.enable(name)
+    if config then
+      vim.lsp.config(name, config)
+    end
+  end
+end
