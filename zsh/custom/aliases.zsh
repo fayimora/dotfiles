@@ -130,3 +130,7 @@ alias new-project='source $DOTFILES/start-new-project.sh'
 alias sntp='source $DOTFILES/start-new-project.sh'
 
 alias repair-vencord='sh -c "$(curl -sS https://raw.githubusercontent.com/Vendicated/VencordInstaller/main/install.sh)"'
+
+alias enable-usb-rwa='sudo chmod a+rw /dev/hidraw*'
+alias disable-usb-rwa='sudo chmod a+rw /dev/hidraw*'
+
