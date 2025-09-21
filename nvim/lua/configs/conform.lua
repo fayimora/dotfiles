@@ -1,12 +1,12 @@
 local options = {
   formatters_by_ft = {
-    css = { "biome-check", "prettier", stop_after_first = true },
+    css = { "biome-check", "prettierd" },
     go = { "gofmt" },
     html = { "biome-check", "prettierd" },
-    javascript = { "biome-check", "prettierd", stop_after_first = true },
-    javascriptreact = { "biome-check", "prettierd", stop_after_first = true },
-    typescript = { "biome-check", "prettierd", stop_after_first = true },
-    typescriptreact = { "biome-check", "prettierd", stop_after_first = true },
+    javascript = { "biome-check", "prettierd" },
+    javascriptreact = { "biome-check", "prettierd" },
+    typescript = { "biome-check", "prettierd" },
+    typescriptreact = { "biome-check", "prettierd" },
     json = { "biome-check", "prettier" },
     lua = { "stylua" },
     markdown = { "prettier" },
@@ -14,7 +14,6 @@ local options = {
     yaml = { "prettier" },
     rust = { "rustfmt", lsp_format = "fallback" },
   },
-
   format_on_save = {
     -- These options will be passed to conform.format()
     async = false,
