@@ -350,6 +350,7 @@ local plugins = {
           find_files = {
             -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
             find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+            path_display = { "truncate" },
           },
           live_grep = { additional_args = additional_rg_args },
           grep_string = { additional_args = additional_rg_args },
@@ -378,6 +379,7 @@ local plugins = {
             n = {
               ["l"] = actions.cycle_history_next,
               ["h"] = actions.cycle_history_prev,
+              ["<C-d>"] = actions.delete_buffer,
             },
             i = {
               ["<C-S-d>"] = actions.delete_buffer,
