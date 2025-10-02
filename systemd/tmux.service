@@ -1,0 +1,20 @@
+[Unit]
+Description=Start tmux in detached session
+; After=network.target
+
+[Service]
+Type=simple
+User=fayi
+Group=fayi
+ExecStart=/usr/bin/tmux new-session -A -s default
+ExecStop=/usr/bin/tmux kill-session -t default
+RemainAfterExit=yes
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+CPUQuota=50%
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
