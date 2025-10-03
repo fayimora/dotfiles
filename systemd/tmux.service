@@ -3,14 +3,11 @@ Description=Start tmux in detached session
 ; After=network.target
 
 [Service]
-Type=simple
-ExecStart=/usr/bin/tmux new-session -A -s default
+Type=forking
+ExecStart=/usr/bin/tmux new-session -d -s default
 ExecStop=/usr/bin/tmux kill-session -t default
-RemainAfterExit=yes
 Restart=on-failure
 RestartSec=5
-LimitNOFILE=65536
-CPUQuota=50%
 StandardOutput=journal
 StandardError=journal
 
