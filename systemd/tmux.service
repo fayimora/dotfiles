@@ -4,8 +4,6 @@ Description=Start tmux in detached session
 
 [Service]
 Type=simple
-User=fayi
-Group=fayi
 ExecStart=/usr/bin/tmux new-session -A -s default
 ExecStop=/usr/bin/tmux kill-session -t default
 RemainAfterExit=yes
