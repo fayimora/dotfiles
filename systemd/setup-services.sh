@@ -15,6 +15,11 @@ for service_file in "$SCRIPT_DIR"/*.service; do
     filename=$(basename "$service_file")
     echo "Installing $filename..."
     # TODO: Check if file already exists and backup(append timestamp) before copying
+    if [[ -f "$SERVICE_DIR/$filename" ]]; then
+      backup_name="${filename%.service}-$(date +%Y%m%d_%H%M%S).service.backup"
+      mv "$SERVICE_DIR/$filename" "$SERVICE_DIR/$backup_name"
+      echo "Backed up existing $filename to $backup_name"
+    fi
     cp "$service_file" "$SERVICE_DIR/"
   fi
 done
