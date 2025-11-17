@@ -29,6 +29,10 @@ M.treesitter = {
   -- autotag = {
   --   enable = true,
   -- },
+  highlight = {
+    enable = true,
+    disable = { "dockerfile" },
+  },
   indent = {
     enable = true,
     -- disable = {
