@@ -541,7 +541,18 @@ local plugins = {
 
   {
     "sindrets/diffview.nvim",
-    cmd = "DiffviewOpen",
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewToggleFiles",
+      "DiffviewFocusFiles",
+      "DiffviewRefresh",
+      "DiffviewFileHistory",
+      "DiffviewOpenInVsplit",
+      "DiffviewOpenInTab",
+      "DiffviewToggleFilesInTab",
+      "DiffviewFocusFilesInTab",
+    },
   },
   {
     "NeogitOrg/neogit",
