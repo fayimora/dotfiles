@@ -11,7 +11,7 @@ local options = {
     lua = { "stylua" },
     markdown = { "prettier" },
     sh = { "shfmt" },
-    yaml = { "prettier" },
+    yaml = { "prettierd" },
     rust = { "rustfmt", lsp_format = "fallback" },
   },
   format_on_save = {

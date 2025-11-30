@@ -70,7 +70,7 @@ M.mason = {
     "typescript-language-server",
     "deno",
     -- "eslint_d",
-    -- "prettier",
+    "prettierd",
     -- "eslint",
     "tailwindcss-language-server",
 
@@ -81,14 +81,16 @@ M.mason = {
     -- other stuff
     "bash-language-server",
     "dockerfile-language-server",
-    "docker-compose-language-service",
+    -- "docker-compose-language-service",
     "jsonnet-language-server",
     "jdtls",
     "helm-ls",
     "gopls",
-    "pylsp",
+    -- "pylsp",
     "rust-analyzer",
     "codelldb",
+    "yaml-language-server",
+    "gh-actions-language-server",
   },
 }
 

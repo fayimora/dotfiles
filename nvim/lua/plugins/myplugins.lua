@@ -28,12 +28,19 @@ local plugins = {
   {
     "williamboman/mason.nvim",
     opts = overrides.mason,
-    dependencies = {
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
-    },
     config = function(_, opts)
       local conf = vim.tbl_deep_extend("keep", opts, overrides.mason)
       require("mason").setup(conf)
+    end,
+  },
+
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    lazy = false,
+    config = function()
+      require("mason-tool-installer").setup {
+        ensure_installed = overrides.mason.ensure_installed,
+      }
     end,
   },
 
