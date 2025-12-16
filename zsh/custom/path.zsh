@@ -16,3 +16,5 @@ export PATH="node_modules/.bin:vendor/bin:$PATH"
 #export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 
 export PATH="$PATH:/Users/fayi/Library/Application Support/Coursier/bin"
+
+export PATH="$HOME/.cache/.bun/bin:$PATH"
