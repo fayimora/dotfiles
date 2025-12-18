@@ -572,6 +572,13 @@ local plugins = {
       "DiffviewFocusFilesInTab",
     },
   },
+
+  {
+    "esmuellert/vscode-diff.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    cmd = "CodeDiff",
+  },
+
   {
     "NeogitOrg/neogit",
     cmd = "Neogit",
@@ -738,6 +745,11 @@ local plugins = {
         sources = { { name = "crates" } },
       }
     end,
+  },
+
+  {
+    "OXY2DEV/markview.nvim",
+    lazy = false,
   },
 
   -- {
