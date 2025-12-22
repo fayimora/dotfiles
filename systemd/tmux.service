@@ -1,13 +1,11 @@
 [Unit]
 Description=Start tmux in detached session
-After=default.target
+After=graphical-session.target
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-SupplementaryGroups=
-ExecStart=/usr/bin/tmux new-session -d -s default
+ExecStart=/bin/bash -c 'tmux has-session -t default 2>/dev/null || tmux new-session -d -s default'
 
 [Install]
-WantedBy=default.target
-
+WantedBy=graphical-session.target
