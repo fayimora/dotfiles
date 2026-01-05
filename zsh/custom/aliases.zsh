@@ -14,6 +14,7 @@ alias library="cd $HOME/Library"
 # JS
 alias nfresh="rm -rf node_modules/ package-lock.json && npm install"
 alias pnfresh="rm -rf node_modules/ pnpm-lock.json && pnpm install"
+alias bunfresh="rm -rf node_modules/ bun-lock.json && bun install"
 
 # PS
 alias psa="ps aux"
