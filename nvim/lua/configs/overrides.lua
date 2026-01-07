@@ -68,9 +68,9 @@ M.mason = {
     "css-lsp",
     "html-lsp",
     "typescript-language-server",
-    "deno",
+    -- "deno",
     -- "eslint_d",
-    "prettierd",
+    -- "prettierd",
     -- "eslint",
     "tailwindcss-language-server",
 
@@ -101,7 +101,7 @@ M.nvimtree = {
   },
   view = {
     side = "right",
-    width = 50,
+    width = 30,
   },
 
   renderer = {
