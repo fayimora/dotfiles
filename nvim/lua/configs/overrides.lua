@@ -65,13 +65,11 @@ M.mason = {
     "stylua",
 
     -- web dev stuff
-    -- "biome",
+    "biome",
     "css-lsp",
     "html-lsp",
     "typescript-language-server",
-    -- "deno",
-    -- "eslint_d",
-    -- "prettierd",
+    "prettierd",
     -- "eslint",
     "tailwindcss-language-server",
 
