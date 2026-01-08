@@ -17,12 +17,22 @@ local function find_bin(bin_name)
       return "yarn"
     end
 
-    local node_modules = vim.fs.find("node_modules", { upward = true, path = dir, type = "directory" })[1]
-    if node_modules then
+    local root_dir = vim.fn.getcwd()
+
+    -- Keep searching upward through monorepo workspaces until root
+    local search_dir = dir
+    while search_dir and (not root_dir or search_dir:find(root_dir, 1, true)) do
+      local node_modules = vim.fs.find("node_modules", { upward = true, path = search_dir, type = "directory" })[1]
+      if not node_modules then
+        break
+      end
+
       local bin = node_modules .. "/.bin/" .. bin_name
       if vim.fn.executable(bin) == 1 then
         return bin
       end
+
+      search_dir = vim.fs.dirname(vim.fs.dirname(node_modules))
     end
 
     vim.notify(bin_name .. " not in node_modules - run install", vim.log.levels.WARN)
