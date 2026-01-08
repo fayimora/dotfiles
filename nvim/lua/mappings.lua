@@ -26,6 +26,7 @@ map("n", "gt", "<cmd>Lspsaga goto_type_definition<cr>", { desc = "LSP signature 
 map("n", "<leader>ca", "<cmd>Lspsaga code_action<cr>", { desc = "code actions" })
 map("n", "<leader>ci", "<cmd>Telescope lsp_incoming_calls<cr>", { desc = "incoming calls" })
 map("n", "<leader>tt", "<cmd>:Lspsaga term_toggle<cr>", { desc = "Toggle Terminal" })
+vim.keymap.set({ "n", "t" }, "<A-t>", "<cmd>Lspsaga term_toggle<CR>", { desc = "Toggle Lspsaga terminal" })
 
 -- M.telescope = {
 -- 	n = {
