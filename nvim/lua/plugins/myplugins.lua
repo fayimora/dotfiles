@@ -5,6 +5,8 @@ local plugins = {
 
   -- Override plugin definition options
 
+  { import = "nvchad.blink.lazyspec" },
+
   {
     "neovim/nvim-lspconfig",
     opts = {
