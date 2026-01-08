@@ -130,6 +130,8 @@ alias scli='scala-cli'
 alias new-project='source $DOTFILES/start-new-project.sh'
 alias sntp='source $DOTFILES/start-new-project.sh'
 alias tn='tmux new -A -s "$(basename "$PWD")"'
+alias ta='tmux attach'
+alias tl='tmux ls'
 
 alias repair-vencord='sh -c "$(curl -sS https://raw.githubusercontent.com/Vendicated/VencordInstaller/main/install.sh)"'
 
