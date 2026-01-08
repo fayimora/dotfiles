@@ -56,8 +56,7 @@ ln -s $DOTFILES/nvim $CONFIG_DIR/nvim
 
 info "Setting up git..."
 ln -fs $DOTFILES/gitconfig $HOME/.gitconfig
-# mkdir -p $HOME/.config/lazygit
-# ln -fs $DOTFILES/lazygit/config.yml $HOME/.config/lazygit/config.yml
+ln -s $DOTFILES/lazygit $HOME/.config/lazygit
 
 info "Setting up tmux..."
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
