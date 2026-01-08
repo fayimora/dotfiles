@@ -5,8 +5,9 @@ local function has_config(patterns)
   end
 end
 
-local has_biome = has_config({ "biome.json", "biome.jsonc" })
-local has_prettier = has_config({ ".prettierrc", ".prettierrc.json", ".prettierrc.js", "prettier.config.js", "prettier.config.mjs" })
+local has_biome = has_config { "biome.json", "biome.jsonc" }
+local has_prettier =
+  has_config { ".prettierrc", ".prettierrc.json", ".prettierrc.js", "prettier.config.js", "prettier.config.mjs" }
 
 local function web_formatters(bufnr)
   if has_biome(bufnr) then
@@ -25,7 +26,8 @@ local options = {
     javascriptreact = web_formatters,
     typescript = web_formatters,
     typescriptreact = web_formatters,
-    json = web_formatters,
+    json = { "biome" },
+    jsonc = { "biome" },
     markdown = web_formatters,
     yaml = web_formatters,
     go = { "gofmt" },
