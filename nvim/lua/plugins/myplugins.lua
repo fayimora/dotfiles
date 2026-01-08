@@ -749,6 +749,11 @@ local plugins = {
     lazy = false,
   },
 
+  {
+    "ziglang/zig.vim",
+    ft = "zig",
+  },
+
   -- {
   --   "wakatime/vim-wakatime",
   --   event = "VeryLazy",

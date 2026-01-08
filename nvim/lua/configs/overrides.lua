@@ -25,6 +25,7 @@ M.treesitter = {
     "typescript",
     "vim",
     "yaml",
+    "zig",
   },
   -- autotag = {
   --   enable = true,
@@ -91,6 +92,7 @@ M.mason = {
     "codelldb",
     "yaml-language-server",
     "gh-actions-language-server",
+    "zls",
   },
 }
 

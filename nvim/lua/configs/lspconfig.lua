@@ -39,6 +39,7 @@ local servers = {
   pylsp = {},
   biome = {},
   gopls = gocfg,
+  zls = {},
 }
 
 for name, config in pairs(servers) do
