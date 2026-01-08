@@ -10,29 +10,21 @@ local plugins = {
     opts = {
       inlay_hints = { enabled = true },
     },
-    dependencies = {
-      -- format & linting
-      -- {
-      --   "jose-elias-alvarez/null-ls.nvim",
-      --   config = function()
-      --     require("configs.null-ls")
-      --   end,
-      -- },
-    },
     config = function()
       require "configs.lspconfig"
     end, -- Override to setup mason-lspconfig
   },
 
-  -- override plugin configs
-  {
-    "williamboman/mason.nvim",
-    opts = overrides.mason,
-    config = function(_, opts)
-      local conf = vim.tbl_deep_extend("keep", opts, overrides.mason)
-      require("mason").setup(conf)
-    end,
-  },
+  { "williamboman/mason.nvim", opts = overrides.mason },
+
+  -- {
+  --   "williamboman/mason.nvim",
+  --   opts = overrides.mason,
+  --   config = function(_, opts)
+  --     local conf = vim.tbl_deep_extend("keep", opts, overrides.mason)
+  --     require("mason").setup(conf)
+  --   end,
+  -- },
 
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -46,6 +38,7 @@ local plugins = {
 
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",
     opts = overrides.treesitter,
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
@@ -54,6 +47,7 @@ local plugins = {
 
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "master",
     lazy = true,
     config = function()
       require("nvim-treesitter.configs").setup {
@@ -175,7 +169,6 @@ local plugins = {
     opts = overrides.nvimtree,
   },
 
-  -- Install a plugin
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
@@ -252,28 +245,30 @@ local plugins = {
     end,
   },
 
-  {
-    "hrsh7th/nvim-cmp",
-    -- dependencies = {
-    --   {
-    --     "zbirenbaum/copilot-cmp",
-    --     config = function()
-    --       require("copilot_cmp").setup({})
-    --     end,
-    --   },
-    -- },
-    opts = {
-      sources = {
-        { name = "nvim_lsp", group_index = 2 },
-        -- { name = "copilot",  group_index = 2 },
-        { name = "supermaven", group_index = 2 },
-        { name = "luasnip", group_index = 2 },
-        { name = "buffer", group_index = 2 },
-        { name = "nvim_lua", group_index = 2 },
-        { name = "path", group_index = 2 },
-      },
-    },
-  },
+  -- { "hrsh7th/nvim-cmp", enabled = false },
+
+  -- {
+  --   "hrsh7th/nvim-cmp",
+  --   -- dependencies = {
+  --   --   {
+  --   --     "zbirenbaum/copilot-cmp",
+  --   --     config = function()
+  --   --       require("copilot_cmp").setup({})
+  --   --     end,
+  --   --   },
+  --   -- },
+  --   opts = {
+  --     sources = {
+  --       { name = "nvim_lsp", group_index = 2 },
+  --       -- { name = "copilot",  group_index = 2 },
+  --       { name = "supermaven", group_index = 2 },
+  --       { name = "luasnip", group_index = 2 },
+  --       { name = "buffer", group_index = 2 },
+  --       { name = "nvim_lua", group_index = 2 },
+  --       { name = "path", group_index = 2 },
+  --     },
+  --   },
+  -- },
 
   {
     "kdheepak/lazygit.nvim",
@@ -288,7 +283,6 @@ local plugins = {
 
   {
     "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
       require("nvim-surround").setup {
@@ -304,10 +298,9 @@ local plugins = {
 
   {
     "Wansmer/treesj",
-    -- keys = { '<space>m', '<space>j', '<space>s' },
+    keys = { "<space>mm", "<space>j", "<space>s" },
     config = function()
-      require("treesj").setup { --[[ your config ]]
-      }
+      require("treesj").setup {}
     end,
   },
 
@@ -317,10 +310,10 @@ local plugins = {
     opts = {},
   },
 
-  {
-    "f-person/git-blame.nvim",
-    event = "VeryLazy",
-  },
+  -- {
+  --   "f-person/git-blame.nvim",
+  --   event = "VeryLazy",
+  -- },
 
   {
     "folke/trouble.nvim",
@@ -557,39 +550,42 @@ local plugins = {
     },
   },
 
-  {
-    "sindrets/diffview.nvim",
-    cmd = {
-      "DiffviewOpen",
-      "DiffviewClose",
-      "DiffviewToggleFiles",
-      "DiffviewFocusFiles",
-      "DiffviewRefresh",
-      "DiffviewFileHistory",
-      "DiffviewOpenInVsplit",
-      "DiffviewOpenInTab",
-      "DiffviewToggleFilesInTab",
-      "DiffviewFocusFilesInTab",
-    },
-  },
+  -- {
+  --   "sindrets/diffview.nvim",
+  --   cmd = {
+  --     "DiffviewOpen",
+  --     "DiffviewClose",
+  --     "DiffviewToggleFiles",
+  --     "DiffviewFocusFiles",
+  --     "DiffviewRefresh",
+  --     "DiffviewFileHistory",
+  --     "DiffviewOpenInVsplit",
+  --     "DiffviewOpenInTab",
+  --     "DiffviewToggleFilesInTab",
+  --     "DiffviewFocusFilesInTab",
+  --   },
+  -- },
 
   {
     "esmuellert/codediff.nvim",
     dependencies = { "MunifTanjim/nui.nvim" },
     cmd = "CodeDiff",
-  },
-
-  {
-    "NeogitOrg/neogit",
-    cmd = "Neogit",
-    dependencies = {
-      "sindrets/diffview.nvim",
-    },
     config = function()
-      require("neogit").setup()
-      dofile(vim.g.base46_cache .. "neogit")
+      require("configs.codediff").setup()
     end,
   },
+
+  -- {
+  --   "NeogitOrg/neogit",
+  --   cmd = "Neogit",
+  --   dependencies = {
+  --     "sindrets/diffview.nvim",
+  --   },
+  --   config = function()
+  --     require("neogit").setup()
+  --     dofile(vim.g.base46_cache .. "neogit")
+  --   end,
+  -- },
 
   {
     "folke/noice.nvim",
@@ -613,12 +609,12 @@ local plugins = {
     cmd = "Trouble",
   },
 
-  {
-    "mistweaverco/kulala.nvim",
-    config = function()
-      require("kulala").setup()
-    end,
-  },
+  -- {
+  --   "mistweaverco/kulala.nvim",
+  --   config = function()
+  --     require("kulala").setup()
+  --   end,
+  -- },
 
   {
     "chrisgrieser/nvim-rip-substitute",
@@ -635,13 +631,13 @@ local plugins = {
     },
   },
 
-  {
-    "onsails/lspkind-nvim",
-    event = "LspAttach",
-    config = function()
-      require("configs.lspkind").setup()
-    end,
-  },
+  -- {
+  --   "onsails/lspkind-nvim",
+  --   event = "LspAttach",
+  --   config = function()
+  --     require("configs.lspkind").setup()
+  --   end,
+  -- },
 
   {
     "junegunn/vim-easy-align",
@@ -652,22 +648,23 @@ local plugins = {
   { "nvchad/menu", lazy = true },
 
   {
-    "echasnovski/mini.nvim",
+    "nvim-mini/mini.nvim",
     version = false,
     lazy = false,
     config = function()
-      local animate = require "mini.animate"
-      local duration = 100
-      require("mini.animate").setup {
-        scroll = {
-          enable = true,
-          timing = animate.gen_timing.linear { duration = duration, unit = "total" },
-        },
-        cursor = {
-          enable = true,
-          timing = animate.gen_timing.linear { duration = duration, unit = "total" },
-        },
-      }
+      -- local animate = require "mini.animate"
+      -- local duration = 500
+      -- require("mini.animate").setup {
+      --   scroll = {
+      --     enable = true,
+      --     timing = animate.gen_timing.linear { duration = duration, unit = "total" },
+      --   },
+      --   cursor = {
+      --     enable = true,
+      --     timing = animate.gen_timing.linear { duration = duration, unit = "total" },
+      --   },
+      -- }
+      require("mini.animate").setup()
       -- require("mini.ai").setup()
     end,
   },
@@ -703,32 +700,32 @@ local plugins = {
     end,
   },
 
-  {
-    "mfussenegger/nvim-dap",
-    config = function()
-      local dap, dapui = require "dap", require "dapui"
-      dap.listeners.before.attach.dapui_config = function()
-        dapui.open()
-      end
-      dap.listeners.before.launch.dapui_config = function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated.dapui_config = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited.dapui_config = function()
-        dapui.close()
-      end
-    end,
-  },
+  -- {
+  --   "mfussenegger/nvim-dap",
+  --   config = function()
+  --     local dap, dapui = require "dap", require "dapui"
+  --     dap.listeners.before.attach.dapui_config = function()
+  --       dapui.open()
+  --     end
+  --     dap.listeners.before.launch.dapui_config = function()
+  --       dapui.open()
+  --     end
+  --     dap.listeners.before.event_terminated.dapui_config = function()
+  --       dapui.close()
+  --     end
+  --     dap.listeners.before.event_exited.dapui_config = function()
+  --       dapui.close()
+  --     end
+  --   end,
+  -- },
 
-  {
-    "rcarriga/nvim-dap-ui",
-    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
-    config = function()
-      require("dapui").setup()
-    end,
-  },
+  -- {
+  --   "rcarriga/nvim-dap-ui",
+  --   dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+  --   config = function()
+  --     require("dapui").setup()
+  --   end,
+  -- },
 
   {
     "saecki/crates.nvim",
