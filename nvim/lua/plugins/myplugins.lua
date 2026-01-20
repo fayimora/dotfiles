@@ -734,15 +734,15 @@ local plugins = {
     ft = { "toml" },
     config = function()
       require("crates").setup {
-        completion = {
-          cmp = {
-            enabled = true,
-          },
-        },
+        -- completion = {
+        --   cmp = {
+        --     enabled = true,
+        --   },
+        -- },
       }
-      require("cmp").setup.buffer {
-        sources = { { name = "crates" } },
-      }
+      -- require("cmp").setup.buffer {
+      --   sources = { { name = "crates" } },
+      -- }
     end,
   },
 
