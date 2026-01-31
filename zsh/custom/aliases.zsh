@@ -138,3 +138,5 @@ alias repair-vencord='sh -c "$(curl -sS https://raw.githubusercontent.com/Vendic
 alias enable-usb-rwa='sudo chmod a+rw /dev/hidraw*'
 alias disable-usb-rwa='sudo chmod a+rw /dev/hidraw*'
 
+alias oc='opencode'
+alias oce='OPENCODE_EXPERIMENTAL=1 opencode'
