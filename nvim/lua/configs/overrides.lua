@@ -2,6 +2,7 @@ local M = {}
 
 M.treesitter = {
   ensure_installed = {
+    "astro",
     "bash",
     "c",
     "css",
@@ -59,12 +60,12 @@ M.treesitter = {
 
 M.mason = {
   ensure_installed = {
-    "astro-language-server",
     -- lua stuff
     "lua-language-server",
     "stylua",
 
     -- web dev stuff
+    "astro-language-server",
     "biome",
     "css-lsp",
     "html-lsp",
@@ -72,6 +73,7 @@ M.mason = {
     "prettierd",
     -- "eslint",
     "tailwindcss-language-server",
+    "mdx-analyzer",
 
     -- c/cpp stuff
     "clangd",

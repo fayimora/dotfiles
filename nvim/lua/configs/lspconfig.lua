@@ -29,6 +29,7 @@ local gocfg = {
 }
 
 local servers = {
+  astro = {},
   bashls = {},
   html = {},
   cssls = {},
