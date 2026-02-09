@@ -26,7 +26,7 @@ map("n", "gt", "<cmd>Lspsaga goto_type_definition<cr>", { desc = "LSP signature 
 map("n", "<leader>ca", "<cmd>Lspsaga code_action<cr>", { desc = "code actions" })
 map("n", "<leader>ci", "<cmd>Telescope lsp_incoming_calls<cr>", { desc = "incoming calls" })
 map("n", "<leader>tt", "<cmd>:Lspsaga term_toggle<cr>", { desc = "Toggle Terminal" })
-vim.keymap.set({ "n", "t" }, "<A-t>", "<cmd>Lspsaga term_toggle<CR>", { desc = "Toggle Lspsaga terminal" })
+map({ "n", "t" }, "<A-t>", "<cmd>Lspsaga term_toggle<CR>", { desc = "Toggle Lspsaga terminal" })
 
 -- M.telescope = {
 -- 	n = {
@@ -97,12 +97,12 @@ map("x", "ga", "<Plug>(EasyAlign)", { desc = "EasyAlign" })
 
 --nvchad/menu
 -- Keyboard users
-vim.keymap.set("n", "<C-t>", function()
+map("n", "<C-t>", function()
   require("menu").open "default"
 end, {})
 
 -- mouse users + nvimtree users!
-vim.keymap.set("n", "<RightMouse>", function()
+map("n", "<RightMouse>", function()
   vim.cmd.exec '"normal! \\<RightMouse>"'
 
   local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
@@ -136,3 +136,32 @@ map("n", "<Leader>dr", "<cmd>lua require'dap'.run_last()<CR>", { desc = "Debugge
 
 -- rustaceanvim
 map("n", "<Leader>dt", "<cmd>lua vim.cmd('RustLsp testables')<CR>", { desc = "Debugger testables" })
+
+-- opencode
+map({ "n", "x" }, "<leader>oa", function()
+  require("opencode").ask("@this: ", { submit = true })
+end, { desc = "Ask opencode" })
+map({ "n", "x" }, "<leader>os", function()
+  require("opencode").select()
+end, { desc = "Execute opencode action…" })
+map({ "n", "t" }, "<leader>ot", function()
+  require("opencode").toggle()
+end, { desc = "Toggle opencode" })
+
+map({ "n", "x" }, "go", function()
+  return require("opencode").operator "@this "
+end, { desc = "Add range to opencode", expr = true })
+map("n", "goo", function()
+  return require("opencode").operator "@this " .. "_"
+end, { desc = "Add line to opencode", expr = true })
+
+-- map("n", "<S-C-u>", function()
+--   require("opencode").command "session.half.page.up"
+-- end, { desc = "Scroll opencode up" })
+-- map("n", "<S-C-d>", function()
+--   require("opencode").command "session.half.page.down"
+-- end, { desc = "Scroll opencode down" })
+
+-- You may want these if you stick with the opinionated "<C-a>" and "<C-x>" above — otherwise consider "<leader>o…".
+-- map("n", "+", "<C-a>", { desc = "Increment under cursor", noremap = true })
+-- map("n", "-", "<C-x>", { desc = "Decrement under cursor", noremap = true })
