@@ -80,5 +80,8 @@ esac
 
 eval "$(direnv hook zsh)"
 
+eval "$(mise activate zsh)"
+
 eval "$(/usr/bin/try init ~/Code/tries)"
 
+if [ -e /home/fayi/.nix-profile/etc/profile.d/nix.sh ]; then . /home/fayi/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
