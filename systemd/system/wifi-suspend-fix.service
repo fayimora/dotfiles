@@ -1,0 +1,13 @@
+[Unit]
+Description=Reload mt7925e wifi driver around sleep (Framework 13 fix)
+Before=hibernate.target suspend.target sleep.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/modprobe mt7925e
+ExecStop=/usr/bin/modprobe -r mt7925e
+
+[Install]
+WantedBy=hibernate.target suspend.target sleep.target
+
