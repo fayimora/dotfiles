@@ -1,0 +1,10 @@
+[Unit]
+Description=ntfy client
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/ntfy subscribe --config %h/.config/ntfy/client.yml --from-config
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target
