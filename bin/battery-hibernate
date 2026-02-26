@@ -1,0 +1,28 @@
+#!/bin/bash
+
+BATTERY_LEVEL=$(omarchy-battery-remaining)
+BATTERY_STATE=$(upower -i $(upower -e | grep 'BAT') | grep -E "state" | awk '{print $2}')
+
+if [[ -n "$BATTERY_LEVEL" && "$BATTERY_LEVEL" =~ ^[0-9]+$ ]]; then
+  if [[ "$BATTERY_STATE" == "discharging" && "$BATTERY_LEVEL" -le 5 ]]; then
+    notify-send -u critical "Battery critical (${BATTERY_LEVEL}%) — hibernating in 60 seconds. Plug in to cancel." -t 60000
+
+    sleep 30
+    BATTERY_LEVEL=$(omarchy-battery-remaining)
+    BATTERY_STATE=$(upower -i $(upower -e | grep 'BAT') | grep -E "state" | awk '{print $2}')
+
+    if [[ "$BATTERY_STATE" == "discharging" && "$BATTERY_LEVEL" -le 5 ]]; then
+      notify-send -u critical "Battery critical (${BATTERY_LEVEL}%) — hibernating in 30 seconds!" -t 30000
+    else
+      exit 0
+    fi
+
+    sleep 30
+
+    BATTERY_LEVEL=$(omarchy-battery-remaining)
+    BATTERY_STATE=$(upower -i $(upower -e | grep 'BAT') | grep -E "state" | awk '{print $2}')
+    if [[ "$BATTERY_STATE" == "discharging" && "$BATTERY_LEVEL" -le 5 ]]; then
+      systemctl hibernate
+    fi
+  fi
+fi
