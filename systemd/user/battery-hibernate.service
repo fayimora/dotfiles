@@ -1,0 +1,6 @@
+[Unit]
+Description=Hibernate on critical battery
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/battery-hibernate
