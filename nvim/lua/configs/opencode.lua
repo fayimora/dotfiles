@@ -23,11 +23,11 @@ M.setup = function()
     end
 
     if pane_exists() then
-      -- Bring the hidden pane back into the current window
-      vim.fn.system("tmux join-pane -h -l 35% -s " .. opencode_pane_id)
+      -- Bring the hidden pane back into the current window (-d keeps focus on current pane)
+      vim.fn.system("tmux join-pane -d -h -l 35% -s " .. opencode_pane_id)
     else
-      -- Create a new pane
-      local result = vim.fn.system "tmux split-window -h -p 35 -P -F '#{pane_id}' 'opencode --port'"
+      -- Create a new pane (-d keeps focus on current pane)
+      local result = vim.fn.system "tmux split-window -d -h -p 35 -P -F '#{pane_id}' 'opencode --port'"
       opencode_pane_id = vim.trim(result)
     end
     opencode_visible = true
@@ -54,8 +54,8 @@ M.setup = function()
       vim.fn.system("tmux break-pane -d -s " .. opencode_pane_id)
       opencode_visible = false
     else
-      -- Bring it back
-      vim.fn.system("tmux join-pane -h -l 35% -s " .. opencode_pane_id)
+      -- Bring it back (-d keeps focus on current pane)
+      vim.fn.system("tmux join-pane -d -h -l 35% -s " .. opencode_pane_id)
       opencode_visible = true
     end
   end
