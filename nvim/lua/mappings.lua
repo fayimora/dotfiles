@@ -155,6 +155,13 @@ map("n", "goo", function()
   return require("opencode").operator "@this " .. "_"
 end, { desc = "Add line to opencode", expr = true })
 
+-- pi-mono
+map("n", "<leader>pp", ":PiSend<CR>")
+map("n", "<leader>ps", ":PiSendSelection<CR>")
+map("n", "<leader>pb", ":PiSendBuffer<CR>")
+map("n", "<leader>pi", ":PiPing<CR>")
+map("n", "<leader>pf", ":PiSendFile<CR>")
+
 -- map("n", "<S-C-u>", function()
 --   require("opencode").command "session.half.page.up"
 -- end, { desc = "Scroll opencode up" })

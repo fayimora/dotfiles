@@ -5,18 +5,6 @@ local plugins = {
 
   -- Override plugin definition options
 
-  {
-    "nickjvandyke/opencode.nvim",
-    dependencies = {
-      -- Recommended for `ask()` and `select()`.
-      ---@module 'snacks' <- Loads `snacks.nvim` types for configuration intellisense.
-      { "folke/snacks.nvim", opts = { input = {}, picker = {} } },
-    },
-    config = function()
-      require("configs.opencode").setup()
-    end,
-  },
-
   { import = "nvchad.blink.lazyspec" },
 
   {
@@ -765,6 +753,44 @@ local plugins = {
   {
     "ziglang/zig.vim",
     ft = "zig",
+  },
+
+  {
+    "carderne/pi-nvim",
+    cmd = {
+      "Pi",
+      "PiSend",
+      "PiSendFile",
+      "PiSendSelection",
+      "PiSendBuffer",
+      "PiPing",
+      "PiSessions",
+    },
+    config = function()
+      require("pi-nvim").setup()
+    end,
+  },
+
+  {
+    "nickjvandyke/opencode.nvim",
+    dependencies = {
+      -- Recommended for `ask()` and `select()`.
+      ---@module 'snacks' <- Loads `snacks.nvim` types for configuration intellisense.
+      { "folke/snacks.nvim", opts = { input = {}, picker = {} } },
+      {
+        "e-cal/opencode-tmux.nvim",
+        opts = {
+          options = "-h",
+          focus = false,
+          auto_close = false,
+          allow_passthrough = false,
+          find_sibling = true,
+        },
+      },
+    },
+    -- config = function()
+    --   require("configs.opencode").setup()
+    -- end,
   },
 
   -- {
