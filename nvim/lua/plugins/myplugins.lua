@@ -163,6 +163,15 @@ local plugins = {
       render = "compact",
       stages = "fade",
       top_down = true,
+
+      -- Option 1 (static color):
+      -- background_colour = "#1a1b26",
+
+      -- Option 2 (dynamic from current Normal highlight):
+      background_colour = function()
+        local hl = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
+        return hl.bg and string.format("#%06x", hl.bg) or "#000000"
+      end,
     },
   },
 
