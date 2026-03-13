@@ -43,5 +43,4 @@ Thumbs.db
 ######################
 .claude/settings.local.json
 
-polyscope.json
 polyscope.local.json
