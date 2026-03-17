@@ -1,11 +1,24 @@
-#!/usr/bin/ssh
+#!/usr/bin/bash
 
 info() {
-  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+	printf "\033[0;34m[INFO]\033[0m %s\n" "$1"
+}
+
+warn() {
+	printf "\033[0;33m[WARN]\033[0m %s\n" "$1"
+}
+
+error() {
+	printf "\033[1;31m[ERROR]\033[0m %s\n" "$1" >&2
+}
+
+success() {
+	printf "\033[0;32m[OK]\033[0m %s\n" "$1"
 }
 
 export DOTFILES="$HOME/Code/dotfiles/"
-export CONFIG_DIR="$XDG_CONFIG_HOME"
+export CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
+mkdir -p "$CONFIG_DIR"
 
 info "Dotfiles path: $DOTFILES"
 info "Config path: $CONFIG_DIR"
@@ -14,8 +27,8 @@ info "\nPimping up your Omarchy..."
 
 info "Installing required packages..."
 yay -S --noconfirm --needed zsh tmux tmux-plugin-manager opencode-bin lnav httpie github-cli nfs-utils \
-  discord nordvpn-bin telegram-desktop-bin visual-studio-code-bin ttf-jetbrains-mono-nerd \
-  slack-desktop discord go-task brave-bin
+	discord nordvpn-bin telegram-desktop-bin visual-studio-code-bin ttf-jetbrains-mono-nerd \
+	slack-desktop discord go-task brave-bin
 
 info "Installing dev environments..."
 mise use --global coursier java direnv node bun deno go python rust
@@ -32,14 +45,14 @@ sudo pacman -Sy --noconfirm --needed starship
 
 info "Setting up zsh..."
 if ! command -v omz >/dev/null 2>&1; then
-  info "Installing Oh My Zsh..."
-  # Use curl with fail flag and show error if it fails
-  if ! sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"; then
-    printf "\033[1;31m[ERROR]\033[0m Failed to install Oh My Zsh\n" >&2
-    exit 1
-  fi
+	info "Installing Oh My Zsh..."
+	# Use curl with fail flag and show error if it fails
+	if ! sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"; then
+		error "Failed to install Oh My Zsh"
+		exit 1
+	fi
 else
-  info "Oh My Zsh is already installed"
+	info "Oh My Zsh is already installed"
 fi
 
 # if test ! $(which omz); then
@@ -64,7 +77,11 @@ ln -s $DOTFILES/.tmux.conf $HOME/.tmux.conf
 info "Remember to install the tmux plugins with prefix + I"
 
 info "Setting up Ghostty"
-# mkdir -p $CONFIG_DIR/ghostty
+rm -rf $CONFIG_DIR/ghostty
 ln -s $DOTFILES/ghostty $CONFIG_DIR/ghostty
+
+info "Setting up Yazi"
+rm -rf $CONFIG_DIR/yazi
+ln -s $DOTFILES/yazi $CONFIG_DIR/yazi
 
 info "All done! Please reboot your machine"

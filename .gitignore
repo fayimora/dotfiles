@@ -3,4 +3,5 @@
 .metals
 .scala-build
 nvim/lazy-lock.json
+zsh/custom/private.zsh
 

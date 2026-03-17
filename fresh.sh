@@ -7,7 +7,8 @@ info() {
 info "Setting up your Mac..."
 
 DOTFILES="$HOME/.dotfiles"
-CONFIG_DIR="$HOME/.config"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
+mkdir -p "$CONFIG_DIR"
 info "Dotfiles path: $DOTFILES"
 
 # Check for Oh My Zsh and install if we don't have it
@@ -73,12 +74,14 @@ ln -sf $DOTFILES/sketchybar/plugins $CONFIG_DIR/sketchybar/plugins
 
 ln -sf $DOTFILES/jankyborders/bordersrc $CONFIG_DIR/borders/bordersrc
 
-# link Kitty and Ghostty configs
+# link Kitty, Ghostty, and Yazi configs
 mkdir -p $CONFIG_DIR/kitty
 mkdir -p $CONFIG_DIR/ghostty
+rm -rf $CONFIG_DIR/yazi
 
 ln -sf $DOTFILES/kitty.conf $CONFIG_DIR/kitty/kitty.conf
 ln -sf $DOTFILES/ghostty $CONFIG_DIR/ghostty
+ln -s $DOTFILES/yazi $CONFIG_DIR/yazi
 
 # Set macOS preferences - we will run this last because this will reload the shell
 info "Setting up macOS..."
