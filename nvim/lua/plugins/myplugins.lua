@@ -789,6 +789,18 @@ local plugins = {
   },
 
   {
+    "pablopunk/pi.nvim",
+    cmd = {
+      "PiAsk",
+      "PiAskSelection",
+      "PiLog",
+    },
+    config = function()
+      require("pi").setup()
+    end,
+  },
+
+  {
     "nickjvandyke/opencode.nvim",
     dependencies = {
       -- Recommended for `ask()` and `select()`.

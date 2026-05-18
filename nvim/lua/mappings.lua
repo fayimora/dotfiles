@@ -162,6 +162,9 @@ map("n", "<leader>pb", ":PiSendBuffer<CR>")
 map("n", "<leader>pi", ":PiPing<CR>")
 map("n", "<leader>pf", ":PiSendFile<CR>")
 
+map("n", "<leader>pa", ":PiAsk<CR>", { desc = "Ask pi" })
+map("v", "<leader>pa", ":PiAskSelection<CR>", { desc = "Ask pi (selection)" })
+
 -- map("n", "<S-C-u>", function()
 --   require("opencode").command "session.half.page.up"
 -- end, { desc = "Scroll opencode up" })
