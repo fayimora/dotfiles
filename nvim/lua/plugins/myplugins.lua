@@ -181,6 +181,18 @@ local plugins = {
   },
 
   {
+    "mikavilpas/yazi.nvim",
+    version = "*", -- use the latest stable version
+    event = "VeryLazy",
+    dependencies = {
+      { "nvim-lua/plenary.nvim", lazy = true },
+    },
+    keys = require("configs.yazi").keys,
+    opts = require("configs.yazi").opts,
+    init = require("configs.yazi").init,
+  },
+
+  {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
     config = function()
