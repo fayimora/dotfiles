@@ -28,7 +28,7 @@ info "\nPimping up your Omarchy..."
 info "Installing required packages..."
 yay -S --noconfirm --needed zsh tmux tmux-plugin-manager opencode-bin lnav httpie github-cli nfs-utils \
 	discord nordvpn-bin telegram-desktop-bin visual-studio-code-bin ttf-jetbrains-mono-nerd \
-	slack-desktop discord go-task brave-bin
+	slack-desktop discord go-task brave-bin yazi
 
 info "Installing dev environments..."
 mise use --global coursier java direnv node bun deno go python rust
@@ -80,8 +80,15 @@ info "Setting up Ghostty"
 rm -rf $CONFIG_DIR/ghostty
 ln -s $DOTFILES/ghostty $CONFIG_DIR/ghostty
 
-info "Setting up Yazi"
+info "Setting up Yazi..."
 rm -rf $CONFIG_DIR/yazi
 ln -s $DOTFILES/yazi $CONFIG_DIR/yazi
+
+if command -v ya >/dev/null 2>&1; then
+	info "Installing Yazi packages..."
+	ya pkg install || warn "Failed to install Yazi packages"
+else
+	warn "Yazi package manager 'ya' was not found; skipping Yazi package install"
+fi
 
 info "All done! Please reboot your machine"

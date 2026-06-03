@@ -23,3 +23,14 @@ scrolloff = 5
 # micro_workers = 5
 # macro_workers = 10
 # bizarre_retry = 5
+
+# Show Git status in Yazi's file list via yazi-rs/plugins:git.
+[[plugin.prepend_fetchers]]
+url   = "*"
+run   = "git"
+group = "git"
+
+[[plugin.prepend_fetchers]]
+url   = "*/"
+run   = "git"
+group = "git"
