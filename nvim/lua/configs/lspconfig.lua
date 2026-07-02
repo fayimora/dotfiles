@@ -7,6 +7,14 @@ local util = require "lspconfig/util"
 
 nvlsp.defaults()
 
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    vim.keymap.set("n", "gd", function()
+      require("telescope.builtin").lsp_definitions()
+    end, { buffer = args.buf, desc = "Find definitions" })
+  end,
+})
+
 local gocfg = {
   on_attach = on_attach,
   capabilities = capabilities,
