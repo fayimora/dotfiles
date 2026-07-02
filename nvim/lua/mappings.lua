@@ -9,10 +9,9 @@ map("n", ";", ":", { desc = "enter command mode" })
 map("n", "<leader>dd", "<cmd>lua vim.diagnostic.open_float()<cr>", { desc = "Open float" })
 
 -- Git mappings
-map("n", "<leader>gg", "<cmd> Neogit<cr>", { desc = "open lazygit" })
-map("n", "<leader>lg", "<cmd> LazyGit<cr>", { desc = "open lazygit" })
-map("n", "<leader>gnh", "<cmd> Gitsigns next_hunk<cr>", { desc = "Gitsigns next hunk" })
-map("n", "<leader>gph", "<cmd> Gitsigns prev_hunk<cr>", { desc = "Gitsigns previous hunk" })
+map("n", "<leader>lg", "<cmd>LazyGit<cr>", { desc = "open lazygit" })
+map("n", "<leader>gnh", "<cmd>Gitsigns next_hunk<cr>", { desc = "Gitsigns next hunk" })
+map("n", "<leader>gph", "<cmd>Gitsigns prev_hunk<cr>", { desc = "Gitsigns previous hunk" })
 
 -- Lsp mappings
 map("n", "gk", "<cmd>lua vim.lsp.buf.hover()<cr>", { desc = "show documentaion" })
@@ -21,12 +20,13 @@ map("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "LSP rename
 map("n", "<leader>cf", "<cmd>lua conform.format()<cr>", { desc = "LSP formatting" })
 
 -- Lspsaga mappings
-map("n", "gp", "<cmd>Lspsaga peek_definition<cr>", { desc = "LSP signature help" })
-map("n", "gt", "<cmd>Lspsaga goto_type_definition<cr>", { desc = "LSP signature help" })
+map("n", "gp", "<cmd>Lspsaga peek_definition<cr>", { desc = "Peek definition" })
+map("n", "gt", "<cmd>Lspsaga goto_type_definition<cr>", { desc = "Goto type definition" })
 map("n", "<leader>ca", "<cmd>Lspsaga code_action<cr>", { desc = "code actions" })
-map("n", "<leader>ci", "<cmd>Telescope lsp_incoming_calls<cr>", { desc = "incoming calls" })
-map("n", "<leader>tt", "<cmd>:Lspsaga term_toggle<cr>", { desc = "Toggle Terminal" })
-map({ "n", "t" }, "<A-t>", "<cmd>Lspsaga term_toggle<CR>", { desc = "Toggle Lspsaga terminal" })
+map("n", "<leader>ci", "<cmd>Telescope lsp_incoming_calls<cr>", { desc = "find incoming calls" })
+map("n", "<leader>co", "<cmd>Telescope lsp_outgoing_calls<cr>", { desc = "find outgoing calls" })
+map("n", "<leader>tt", "<cmd>Lspsaga term_toggle<cr>", { desc = "Toggle Terminal" })
+map({ "n", "t" }, "<A-t>", "<cmd>Lspsaga term_toggle<cr>", { desc = "Toggle Lspsaga terminal" })
 
 -- M.telescope = {
 -- 	n = {
@@ -42,7 +42,7 @@ map("n", "<leader>fg", "<cmd>Telescope live_grep_args<cr>", { desc = "grep in fi
 -- map("n", "<leader>fw", "<cmd>Telescope grep_string<cr>", { desc = "find word under cursor" })
 map("n", "<leader>fw", lga_shortcuts.grep_word_under_cursor, { desc = "find word under cursor" })
 
-map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
+map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "telescope find in current buffer" })
 map("n", "<leader>fq", "<cmd>Telescope quickfix<cr>", { desc = "find quickfix" })
 map(
   "n",
@@ -87,7 +87,7 @@ local nvimTreeFocusOrToggle = function()
   end
 end
 
-map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
+map("n", "<C-n>", "<cmd>NvimTreeToggle<cr>", { desc = "nvimtree toggle window" })
 -- map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
 map("n", "<leader>e", nvimTreeFocusOrToggle, { desc = "nvimtree focus window" })
 
@@ -103,7 +103,7 @@ end, {})
 
 -- mouse users + nvimtree users!
 map("n", "<RightMouse>", function()
-  vim.cmd.exec '"normal! \\<RightMouse>"'
+  vim.cmd [[normal! \<RightMouse>]]
 
   local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
   require("menu").open(options, { mouse = true })
@@ -120,22 +120,22 @@ map({ "n", "t" }, "<A-g>", function()
 end, { desc = "lazygit Toggle" })
 
 -- Nvim DAP
-map("n", "<Leader>dl", "<cmd>lua require'dap'.step_into()<CR>", { desc = "Debugger step into" })
-map("n", "<Leader>dj", "<cmd>lua require'dap'.step_over()<CR>", { desc = "Debugger step over" })
-map("n", "<Leader>dk", "<cmd>lua require'dap'.step_out()<CR>", { desc = "Debugger step out" })
-map("n", "<Leader>dc", "<cmd>lua require'dap'.continue()<CR>", { desc = "Debugger continue" })
-map("n", "<Leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", { desc = "Debugger toggle breakpoint" })
+map("n", "<leader>dl", "<cmd>lua require'dap'.step_into()<cr>", { desc = "Debugger step into" })
+map("n", "<leader>dj", "<cmd>lua require'dap'.step_over()<cr>", { desc = "Debugger step over" })
+map("n", "<leader>dk", "<cmd>lua require'dap'.step_out()<cr>", { desc = "Debugger step out" })
+map("n", "<leader>dc", "<cmd>lua require'dap'.continue()<cr>", { desc = "Debugger continue" })
+map("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { desc = "Debugger toggle breakpoint" })
 -- map(
 --   "n",
---   "<Leader>dd",
---   "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
+--   "<leader>dd",
+--   "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>",
 --   { desc = "Debugger set conditional breakpoint" }
 -- )
-map("n", "<Leader>de", "<cmd>lua require'dap'.terminate()<CR>", { desc = "Debugger reset" })
-map("n", "<Leader>dr", "<cmd>lua require'dap'.run_last()<CR>", { desc = "Debugger run last" })
+map("n", "<leader>de", "<cmd>lua require'dap'.terminate()<cr>", { desc = "Debugger reset" })
+map("n", "<leader>dr", "<cmd>lua require'dap'.run_last()<cr>", { desc = "Debugger run last" })
 
 -- rustaceanvim
-map("n", "<Leader>dt", "<cmd>lua vim.cmd('RustLsp testables')<CR>", { desc = "Debugger testables" })
+map("n", "<leader>dt", "<cmd>lua vim.cmd('RustLsp testables')<cr>", { desc = "Debugger testables" })
 
 -- opencode
 map({ "n", "x" }, "<leader>oa", function()
@@ -156,14 +156,14 @@ map("n", "goo", function()
 end, { desc = "Add line to opencode", expr = true })
 
 -- pi-mono
-map("n", "<leader>pp", ":PiSend<CR>")
-map("n", "<leader>ps", ":PiSendSelection<CR>")
-map("n", "<leader>pb", ":PiSendBuffer<CR>")
-map("n", "<leader>pi", ":PiPing<CR>")
-map("n", "<leader>pf", ":PiSendFile<CR>")
+map("n", "<leader>pp", "<cmd>PiSend<cr>")
+map("n", "<leader>ps", "<cmd>PiSendSelection<cr>")
+map("n", "<leader>pb", "<cmd>PiSendBuffer<cr>")
+map("n", "<leader>pi", "<cmd>PiPing<cr>")
+map("n", "<leader>pf", "<cmd>PiSendFile<cr>")
 
-map("n", "<leader>pa", ":PiAsk<CR>", { desc = "Ask pi" })
-map("v", "<leader>pa", ":PiAskSelection<CR>", { desc = "Ask pi (selection)" })
+map("n", "<leader>pa", "<cmd>PiAsk<cr>", { desc = "Ask pi" })
+map("v", "<leader>pa", "<cmd>PiAskSelection<cr>", { desc = "Ask pi (selection)" })
 
 -- map("n", "<S-C-u>", function()
 --   require("opencode").command "session.half.page.up"
