@@ -74,15 +74,24 @@ ln -sf $DOTFILES/sketchybar/plugins $CONFIG_DIR/sketchybar/plugins
 
 ln -sf $DOTFILES/jankyborders/bordersrc $CONFIG_DIR/borders/bordersrc
 
-# link Kitty, Ghostty, and Yazi configs
+# link Kitty and Ghostty configs
 mkdir -p $CONFIG_DIR/kitty
 mkdir -p $CONFIG_DIR/ghostty
-rm -rf $CONFIG_DIR/yazi
 
 ln -sf $DOTFILES/kitty.conf $CONFIG_DIR/kitty/kitty.conf
 ln -sf $DOTFILES/ghostty $CONFIG_DIR/ghostty
+
+# Setup Yazi
+info "Setting up Yazi..."
+rm -rf $CONFIG_DIR/yazi
 ln -s $DOTFILES/yazi $CONFIG_DIR/yazi
 
+if command -v ya >/dev/null 2>&1; then
+  info "Installing Yazi packages..."
+  ya pkg install || info "Failed to install Yazi packages"
+else
+  info "Yazi package manager 'ya' was not found; skipping Yazi package install"
+fi
 
 # Symlink pi coding agent extensions (per-file, preserves untracked extensions)
 mkdir -p $HOME/.pi/agent/extensions
