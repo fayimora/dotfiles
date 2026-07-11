@@ -140,5 +140,6 @@ alias disable-usb-rwa='sudo chmod a+rw /dev/hidraw*'
 
 alias oc='opencode'
 alias oce='OPENCODE_EXPERIMENTAL=1 opencode'
+alias pilite='pi --no-extensions --no-skills'
 
 alias icat='kitty icat'
