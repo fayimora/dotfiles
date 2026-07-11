@@ -83,6 +83,13 @@ ln -sf $DOTFILES/kitty.conf $CONFIG_DIR/kitty/kitty.conf
 ln -sf $DOTFILES/ghostty $CONFIG_DIR/ghostty
 ln -s $DOTFILES/yazi $CONFIG_DIR/yazi
 
+
+# Symlink pi coding agent extensions (per-file, preserves untracked extensions)
+mkdir -p $HOME/.pi/agent/extensions
+for f in $DOTFILES/pi/agent/extensions/*; do
+  ln -sf "$f" $HOME/.pi/agent/extensions/
+done
+
 # Set macOS preferences - we will run this last because this will reload the shell
 info "Setting up macOS..."
 # source $DOTFILES/.macos
