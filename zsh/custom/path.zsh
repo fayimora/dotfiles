@@ -22,3 +22,6 @@ export PATH="$HOME/.cache/.bun/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
+
+# Plannotator: always open in a new Chromium window
+export PLANNOTATOR_BROWSER="$HOME/.local/bin/plannotator-browser"

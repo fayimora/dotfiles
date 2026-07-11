@@ -80,6 +80,10 @@ info "Setting up Ghostty"
 rm -rf $CONFIG_DIR/ghostty
 ln -s $DOTFILES/ghostty $CONFIG_DIR/ghostty
 
+info "Setting up Plannotator browser handler..."
+mkdir -p $HOME/.local/bin
+ln -sf $DOTFILES/bin/plannotator-browser $HOME/.local/bin/plannotator-browser
+
 info "Setting up Yazi..."
 rm -rf $CONFIG_DIR/yazi
 ln -s $DOTFILES/yazi $CONFIG_DIR/yazi

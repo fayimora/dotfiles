@@ -1,0 +1,4 @@
+#!/bin/sh
+# Plannotator browser handler — always open a new Chromium window.
+# Used via PLANNOTATOR_BROWSER (see zsh/custom/path.zsh).
+exec chromium --new-window "$1"
