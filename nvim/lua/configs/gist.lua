@@ -2,9 +2,18 @@ local M = {}
 
 M.setup = function()
   require("gist").setup({
-    private = true, -- All gists will be private, you won't be prompted again
     clipboard = "+", -- The registry to use for copying the Gist URL
+    platform = "github",
+    platforms = {
+      github = {
+        private = true, -- Create secret gists by default
+        list = {
+          limit = 20,
+        },
+      },
+    },
     list = {
+      use_multiplexer = false,
       -- If there are multiple files in a gist you can scroll them,
       -- with vim-like bindings n/p next previous
       mappings = {

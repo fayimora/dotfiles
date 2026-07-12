@@ -375,7 +375,7 @@ local plugins = {
         { "--hidden", "--glob", "!**/.git/*", "--glob", "!**/node_modules/*", "--glob", "!**/.idea/*" }
 
       local myopts = {
-        extensions_list = { "themes", "terms", "fzf", "live_grep_args" },
+        extensions_list = { "themes", "terms", "fzf", "live_grep_args", "ui-select" },
         pickers = {
           resume = {},
           find_files = {
@@ -420,6 +420,14 @@ local plugins = {
       }
       return vim.tbl_deep_extend("force", conf, myopts)
     end,
+    config = function(_, opts)
+      local telescope = require "telescope"
+      telescope.setup(opts)
+
+      for _, extension in ipairs(opts.extensions_list) do
+        pcall(telescope.load_extension, extension)
+      end
+    end,
     dependencies = {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
@@ -429,6 +437,7 @@ local plugins = {
         "nvim-telescope/telescope-live-grep-args.nvim",
         version = "^1.1.0",
       },
+      "nvim-telescope/telescope-ui-select.nvim",
     },
   },
 
@@ -547,20 +556,11 @@ local plugins = {
   {
     "Rawnly/gist.nvim",
     cmd = { "GistCreate", "GistCreateFromFile", "GistsList" },
+    dependencies = { "nvim-telescope/telescope.nvim" },
     config = function()
       require("configs.gist").setup()
     end,
   },
-  -- `GistsList` opens the selected gif in a terminal buffer,
-  -- nvim-unception uses neovim remote rpc functionality to open the gist in an actual buffer
-  -- and prevents neovim buffer inception
-  {
-    "samjwill/nvim-unception",
-    init = function()
-      vim.g.unception_block_while_host_edits = true
-    end,
-  },
-
   -- {
   --   "mg979/vim-visual-multi",
   --   lazy = false,
