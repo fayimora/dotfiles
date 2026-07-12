@@ -93,10 +93,11 @@ else
   info "Yazi package manager 'ya' was not found; skipping Yazi package install"
 fi
 
-# Symlink pi coding agent extensions (per-file, preserves untracked extensions)
-mkdir -p $HOME/.pi/agent/extensions
-for f in $DOTFILES/pi/agent/extensions/*; do
-  ln -sf "$f" $HOME/.pi/agent/extensions/
+# Symlink pi coding agent resources
+mkdir -p "$HOME/.pi/agent/extensions"
+ln -sfn "$DOTFILES/pi/agent/AGENTS.md" "$HOME/.pi/agent/AGENTS.md"
+for f in "$DOTFILES"/pi/agent/extensions/*; do
+  ln -sf "$f" "$HOME/.pi/agent/extensions/"
 done
 
 # Set macOS preferences - we will run this last because this will reload the shell
