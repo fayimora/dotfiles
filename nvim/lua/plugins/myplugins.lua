@@ -16,18 +16,10 @@ local plugins = {
 
   { "williamboman/mason.nvim", opts = overrides.mason },
 
-  -- {
-  --   "williamboman/mason.nvim",
-  --   opts = overrides.mason,
-  --   config = function(_, opts)
-  --     local conf = vim.tbl_deep_extend("keep", opts, overrides.mason)
-  --     require("mason").setup(conf)
-  --   end,
-  -- },
-
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
-    lazy = false,
+    dependencies = { "williamboman/mason.nvim" },
+    event = "VeryLazy",
     config = function()
       require("mason-tool-installer").setup {
         ensure_installed = overrides.mason.ensure_installed,
@@ -248,11 +240,6 @@ local plugins = {
     config = function()
       require("supermaven-nvim").setup {
         keymaps = nil,
-        -- keymaps = {
-        --   accept_suggestion = "<Tab>",
-        --   clear_suggestion = "<C-]>",
-        --   accept_word = "<C-j>",
-        -- },
         ignore_filetypes = { "cpp" },
         color = {
           suggestion_color = "#ffffff",
@@ -263,31 +250,6 @@ local plugins = {
       }
     end,
   },
-
-  -- { "hrsh7th/nvim-cmp", enabled = false },
-
-  -- {
-  --   "hrsh7th/nvim-cmp",
-  --   -- dependencies = {
-  --   --   {
-  --   --     "zbirenbaum/copilot-cmp",
-  --   --     config = function()
-  --   --       require("copilot_cmp").setup({})
-  --   --     end,
-  --   --   },
-  --   -- },
-  --   opts = {
-  --     sources = {
-  --       { name = "nvim_lsp", group_index = 2 },
-  --       -- { name = "copilot",  group_index = 2 },
-  --       { name = "supermaven", group_index = 2 },
-  --       { name = "luasnip", group_index = 2 },
-  --       { name = "buffer", group_index = 2 },
-  --       { name = "nvim_lua", group_index = 2 },
-  --       { name = "path", group_index = 2 },
-  --     },
-  --   },
-  -- },
 
   {
     "lewis6991/gitsigns.nvim",
@@ -304,10 +266,6 @@ local plugins = {
     config = function(_, opts)
       require("configs.gitlinker").setup(opts)
     end,
-    -- keys = {
-    --   { "<leader>gy", "<cmd>GitLink<cr>", mode = { "n", "v" }, desc = "Yank git link" },
-    --   { "<leader>gY", "<cmd>GitLink!<cr>", mode = { "n", "v" }, desc = "Open git link" },
-    -- },
   },
 
   {
@@ -349,11 +307,6 @@ local plugins = {
     event = "VeryLazy",
     opts = {},
   },
-
-  -- {
-  --   "f-person/git-blame.nvim",
-  --   event = "VeryLazy",
-  -- },
 
   {
     "folke/trouble.nvim",
@@ -535,40 +488,26 @@ local plugins = {
     end,
   },
 
-  -- {
-  --   "mg979/vim-visual-multi",
-  --   lazy = false,
-  -- },
-
   {
-    "numToStr/Comment.nvim",
-    lazy = false,
-    config = function()
-      require("Comment").setup {
-        ignore = "^$", -- ignores empty lines
-        pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
-      }
+    -- nvim 0.10+ builtin gc/gcc commenting, made treesitter-aware (tsx, vue, svelte, ...)
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    event = "VeryLazy",
+    opts = { enable_autocmd = false },
+    init = function()
+      vim.g.skip_ts_context_commentstring_module = true
     end,
-    dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
-    },
+    config = function(_, opts)
+      require("ts_context_commentstring").setup(opts)
+      local get_option = vim.filetype.get_option
+      vim.filetype.get_option = function(filetype, option)
+        if option == "commentstring" then
+          return require("ts_context_commentstring.internal").calculate_commentstring()
+            or get_option(filetype, option)
+        end
+        return get_option(filetype, option)
+      end
+    end,
   },
-
-  -- {
-  --   "sindrets/diffview.nvim",
-  --   cmd = {
-  --     "DiffviewOpen",
-  --     "DiffviewClose",
-  --     "DiffviewToggleFiles",
-  --     "DiffviewFocusFiles",
-  --     "DiffviewRefresh",
-  --     "DiffviewFileHistory",
-  --     "DiffviewOpenInVsplit",
-  --     "DiffviewOpenInTab",
-  --     "DiffviewToggleFilesInTab",
-  --     "DiffviewFocusFilesInTab",
-  --   },
-  -- },
 
   {
     "esmuellert/codediff.nvim",
@@ -578,18 +517,6 @@ local plugins = {
       require("configs.codediff").setup()
     end,
   },
-
-  -- {
-  --   "NeogitOrg/neogit",
-  --   cmd = "Neogit",
-  --   dependencies = {
-  --     "sindrets/diffview.nvim",
-  --   },
-  --   config = function()
-  --     require("neogit").setup()
-  --     dofile(vim.g.base46_cache .. "neogit")
-  --   end,
-  -- },
 
   {
     "folke/noice.nvim",
@@ -607,13 +534,6 @@ local plugins = {
     end,
   },
 
-  -- {
-  --   "mistweaverco/kulala.nvim",
-  --   config = function()
-  --     require("kulala").setup()
-  --   end,
-  -- },
-
   {
     "chrisgrieser/nvim-rip-substitute",
     cmd = "RipSubstitute",
@@ -629,14 +549,6 @@ local plugins = {
     },
   },
 
-  -- {
-  --   "onsails/lspkind-nvim",
-  --   event = "LspAttach",
-  --   config = function()
-  --     require("configs.lspkind").setup()
-  --   end,
-  -- },
-
   {
     "junegunn/vim-easy-align",
     event = "VeryLazy",
@@ -646,25 +558,10 @@ local plugins = {
   { "nvchad/menu", lazy = true },
 
   {
-    "nvim-mini/mini.nvim",
+    "nvim-mini/mini.animate",
     version = false,
-    lazy = false,
-    config = function()
-      -- local animate = require "mini.animate"
-      -- local duration = 500
-      -- require("mini.animate").setup {
-      --   scroll = {
-      --     enable = true,
-      --     timing = animate.gen_timing.linear { duration = duration, unit = "total" },
-      --   },
-      --   cursor = {
-      --     enable = true,
-      --     timing = animate.gen_timing.linear { duration = duration, unit = "total" },
-      --   },
-      -- }
-      require("mini.animate").setup()
-      -- require("mini.ai").setup()
-    end,
+    event = "VeryLazy",
+    opts = {},
   },
 
   {
@@ -678,68 +575,12 @@ local plugins = {
     "mrcjkb/rustaceanvim",
     version = "^5", -- Recommended
     lazy = false, -- This plugin is already lazy
-    config = function()
-      -- local mason_registry = require "mason-registry"
-      -- local codelldb = mason_registry.get_package "codelldb"
-      -- local extension_path = codelldb:get_install_path() .. "/extension/"
-      -- local codelldb_path = extension_path .. "adapter/codelldb"
-
-      -- local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
-      -- If you are on Linux, replace the line above with the line below:
-      -- local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
-
-      -- local cfg = require "rustaceanvim.config"
-
-      -- vim.g.rustaceanvim = {
-      --   dap = {
-      --     adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
-      --   },
-      -- }
-    end,
   },
-
-  -- {
-  --   "mfussenegger/nvim-dap",
-  --   config = function()
-  --     local dap, dapui = require "dap", require "dapui"
-  --     dap.listeners.before.attach.dapui_config = function()
-  --       dapui.open()
-  --     end
-  --     dap.listeners.before.launch.dapui_config = function()
-  --       dapui.open()
-  --     end
-  --     dap.listeners.before.event_terminated.dapui_config = function()
-  --       dapui.close()
-  --     end
-  --     dap.listeners.before.event_exited.dapui_config = function()
-  --       dapui.close()
-  --     end
-  --   end,
-  -- },
-
-  -- {
-  --   "rcarriga/nvim-dap-ui",
-  --   dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
-  --   config = function()
-  --     require("dapui").setup()
-  --   end,
-  -- },
 
   {
     "saecki/crates.nvim",
     ft = { "toml" },
-    config = function()
-      require("crates").setup {
-        -- completion = {
-        --   cmp = {
-        --     enabled = true,
-        --   },
-        -- },
-      }
-      -- require("cmp").setup.buffer {
-      --   sources = { { name = "crates" } },
-      -- }
-    end,
+    opts = {},
   },
 
   {
@@ -750,6 +591,9 @@ local plugins = {
   {
     "ziglang/zig.vim",
     ft = "zig",
+    init = function()
+      vim.g.zig_fmt_autosave = 0 -- conform.nvim owns formatting
+    end,
   },
 
   {
@@ -801,25 +645,6 @@ local plugins = {
     -- end,
   },
 
-  -- {
-  --   "wakatime/vim-wakatime",
-  --   event = "VeryLazy",
-  --   enabled = vim.fn.filereadable(vim.fn.getenv "HOME" .. "/.wakatime.cfg"),
-  -- },
-
-  -- To make a plugin not be loaded
-  -- {
-  --   "NvChad/nvim-colorizer.lua",
-  --   enabled = false
-  -- },
-
-  -- All NvChad plugins are lazy-loaded by default
-  -- For a plugin to be loaded, you will need to set either `ft`, `cmd`, `keys`, `event`, or set `lazy = false`
-  -- If you want a plugin to load on startup, add `lazy = false` to a plugin spec, for example
-  -- {
-  --   "mg979/vim-visual-multi",
-  --   lazy = false,
-  -- }
 }
 
 return plugins
