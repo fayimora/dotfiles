@@ -9,9 +9,6 @@ local plugins = {
 
   {
     "neovim/nvim-lspconfig",
-    opts = {
-      inlay_hints = { enabled = true },
-    },
     config = function()
       require "configs.lspconfig"
     end, -- Override to setup mason-lspconfig
@@ -219,7 +216,7 @@ local plugins = {
         inlayHints = true,
       }
 
-      metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+      metals_config.capabilities = require("blink.cmp").get_lsp_capabilities()
       metals_config.on_attach = function(client, bufnr)
         -- your on_attach function
         vim.keymap.set("n", "<leader>ch", function()
@@ -360,10 +357,8 @@ local plugins = {
 
   {
     "folke/trouble.nvim",
+    cmd = "Trouble",
     opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
       modes = {
         test = {
           mode = "diagnostics",
@@ -610,12 +605,6 @@ local plugins = {
     config = function()
       require("configs.noice").setup()
     end,
-  },
-
-  {
-    "folke/trouble.nvim",
-    opts = {}, -- for default options, refer to the configuration section for custom setup.
-    cmd = "Trouble",
   },
 
   -- {
