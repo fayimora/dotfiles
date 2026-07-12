@@ -302,6 +302,19 @@ local plugins = {
   },
 
   {
+    "linrongbin16/gitlinker.nvim",
+    cmd = { "GitLink", "GitLinkRaw" },
+    opts = { command = { name = "GitLinkRaw" } },
+    config = function(_, opts)
+      require("configs.gitlinker").setup(opts)
+    end,
+    -- keys = {
+    --   { "<leader>gy", "<cmd>GitLink<cr>", mode = { "n", "v" }, desc = "Yank git link" },
+    --   { "<leader>gY", "<cmd>GitLink!<cr>", mode = { "n", "v" }, desc = "Open git link" },
+    -- },
+  },
+
+  {
     "kdheepak/lazygit.nvim",
     cmd = {
       "LazyGit",
@@ -368,6 +381,7 @@ local plugins = {
 
   {
     "nvim-telescope/telescope.nvim",
+    event = "VeryLazy",
     opts = function(_, conf)
       local lga_actions = require "telescope-live-grep-args.actions"
       local actions = require "telescope.actions"
@@ -387,6 +401,7 @@ local plugins = {
           grep_string = { additional_args = additional_rg_args },
         },
         extensions = {
+          ["ui-select"] = require("telescope.themes").get_dropdown {},
           fzf = {
             fuzzy = true,
             override_generic_sorter = true,
