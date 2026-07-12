@@ -9,13 +9,19 @@ local M = {}
 local highlights = require "highlights"
 
 M.ui = {
-  telescope = { style = "bordered" },
-
   hl_override = highlights.override,
   hl_add = highlights.add,
 
   nvdash = {
     load_on_startup = true,
+    -- defaults point at telescope, which is no longer installed
+    buttons = {
+      { txt = "  Find File", keys = "ff", cmd = "lua Snacks.picker.files()" },
+      { txt = "  Recent Files", keys = "fo", cmd = "lua Snacks.picker.recent()" },
+      { txt = "󰈭  Find Word", keys = "fg", cmd = "lua Snacks.picker.grep()" },
+      { txt = "󱥚  Themes", keys = "th", cmd = "lua require('nvchad.themes').open()" },
+      { txt = "  Mappings", keys = "ch", cmd = "NvCheatsheet" },
+    },
   },
 }
 

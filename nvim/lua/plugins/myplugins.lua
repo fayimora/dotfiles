@@ -203,7 +203,6 @@ local plugins = {
   {
     "scalameta/nvim-metals",
     dependencies = {
-      "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim",
     },
     ft = { "scala", "sbt", "java" },
@@ -379,81 +378,62 @@ local plugins = {
     },
   },
 
+  -- NvChad core ships its own telescope spec; disable it (fully replaced by snacks picker)
+  { "nvim-telescope/telescope.nvim", enabled = false },
+
   {
-    "nvim-telescope/telescope.nvim",
-    event = "VeryLazy",
-    opts = function(_, conf)
-      local lga_actions = require "telescope-live-grep-args.actions"
-      local actions = require "telescope.actions"
-      local additional_rg_args =
-        { "--hidden", "--glob", "!**/.git/*", "--glob", "!**/node_modules/*", "--glob", "!**/.idea/*" }
-
-      local myopts = {
-        extensions_list = { "themes", "terms", "fzf", "live_grep_args", "ui-select" },
-        pickers = {
-          resume = {},
-          find_files = {
-            -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
-            find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
-            path_display = { "truncate" },
-          },
-          live_grep = { additional_args = additional_rg_args },
-          grep_string = { additional_args = additional_rg_args },
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      input = {},
+      picker = {
+        layout = {
+          backdrop = false,
         },
-        extensions = {
-          ["ui-select"] = require("telescope.themes").get_dropdown {},
-          fzf = {
-            fuzzy = true,
-            override_generic_sorter = true,
-            override_file_sorter = true,
-            case_mode = "smart_case",
-          },
-          live_grep_args = {
-            auto_quoting = true,
-            mappings = {
-              i = {
-                ["<C-k>"] = lga_actions.quote_prompt(),
-                ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob " },
-                -- freeze the current list and start a fuzzy search in the frozen list
-                ["<C-space>"] = require("telescope.actions").to_fuzzy_refine,
-              },
+        actions = {
+          -- like the built-in toggle_preview (<a-p>), but for the results list.
+          -- simply hiding the list leaves its pane reserved, so swap to an
+          -- input-on-top + full-width-preview layout and back instead.
+          toggle_list = function(picker)
+            if picker._orig_layout then
+              picker:set_layout(picker._orig_layout)
+              picker._orig_layout = nil
+            else
+              picker._orig_layout = picker.resolved_layout
+              picker:set_layout {
+                hidden = { "list" },
+                layout = {
+                  backdrop = false,
+                  box = "vertical",
+                  width = 0.8,
+                  height = 0.8,
+                  border = true,
+                  title = "{title} {live} {flags}",
+                  { win = "input", height = 1, border = "bottom" },
+                  { win = "preview", title = "{preview}", border = "none" },
+                },
+              }
+            end
+          end,
+        },
+        win = {
+          input = {
+            keys = {
+              -- prompt history in normal mode (ported from telescope config)
+              ["h"] = "history_back",
+              ["l"] = "history_forward",
+              ["<a-l>"] = { "toggle_list", mode = { "i", "n" } },
             },
           },
         },
-        defaults = {
-          mappings = {
-            n = {
-              ["l"] = actions.cycle_history_next,
-              ["h"] = actions.cycle_history_prev,
-              ["<C-d>"] = actions.delete_buffer,
-            },
-            i = {
-              ["<C-S-d>"] = actions.delete_buffer,
-            },
-          },
-        },
-      }
-      return vim.tbl_deep_extend("force", conf, myopts)
-    end,
-    config = function(_, opts)
-      local telescope = require "telescope"
-      telescope.setup(opts)
-
-      for _, extension in ipairs(opts.extensions_list) do
-        pcall(telescope.load_extension, extension)
-      end
-    end,
-    dependencies = {
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
       },
-      {
-        "nvim-telescope/telescope-live-grep-args.nvim",
-        version = "^1.1.0",
-      },
-      "nvim-telescope/telescope-ui-select.nvim",
     },
+    config = function(_, opts)
+      require("snacks").setup(opts)
+      require("configs.gists").setup() -- :GistsList / :GistCreate via gh + snacks picker
+    end,
   },
 
   {
@@ -481,14 +461,6 @@ local plugins = {
       { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
       { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
-  },
-
-  {
-    "junegunn/fzf",
-    event = "VeryLazy",
-    run = function()
-      vim.fn["fzf#install"]()
-    end,
   },
 
   {
@@ -568,14 +540,6 @@ local plugins = {
     end,
   },
 
-  {
-    "Rawnly/gist.nvim",
-    cmd = { "GistCreate", "GistCreateFromFile", "GistsList" },
-    dependencies = { "nvim-telescope/telescope.nvim" },
-    config = function()
-      require("configs.gist").setup()
-    end,
-  },
   -- {
   --   "mg979/vim-visual-multi",
   --   lazy = false,
@@ -830,9 +794,8 @@ local plugins = {
   {
     "nickjvandyke/opencode.nvim",
     dependencies = {
-      -- Recommended for `ask()` and `select()`.
-      ---@module 'snacks' <- Loads `snacks.nvim` types for configuration intellisense.
-      { "folke/snacks.nvim", opts = { input = {}, picker = {} } },
+      -- Recommended for `ask()` and `select()`. Configured as a top-level spec above.
+      "folke/snacks.nvim",
       {
         "e-cal/opencode-tmux.nvim",
         opts = {
