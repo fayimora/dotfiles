@@ -23,38 +23,36 @@ map("n", "<leader>cf", "<cmd>lua conform.format()<cr>", { desc = "LSP formatting
 map("n", "gp", "<cmd>Lspsaga peek_definition<cr>", { desc = "Peek definition" })
 map("n", "gt", "<cmd>Lspsaga goto_type_definition<cr>", { desc = "Goto type definition" })
 map("n", "<leader>ca", "<cmd>Lspsaga code_action<cr>", { desc = "code actions" })
-map("n", "<leader>ci", "<cmd>Telescope lsp_incoming_calls<cr>", { desc = "find incoming calls" })
-map("n", "<leader>co", "<cmd>Telescope lsp_outgoing_calls<cr>", { desc = "find outgoing calls" })
+map("n", "<leader>ci", function() Snacks.picker.lsp_incoming_calls() end, { desc = "find incoming calls" })
+map("n", "<leader>co", function() Snacks.picker.lsp_outgoing_calls() end, { desc = "find outgoing calls" })
 map("n", "<leader>tt", "<cmd>Lspsaga term_toggle<cr>", { desc = "Toggle Terminal" })
 map({ "n", "t" }, "<A-t>", "<cmd>Lspsaga term_toggle<cr>", { desc = "Toggle Lspsaga terminal" })
 
--- M.telescope = {
--- 	n = {
--- 		["<leader>ft"] = { "<cmd>Telescope treesitter<cr>", "find treesitter" },
--- 		["<leader>fr"] = { "<cmd>Telescope lsp_references<cr>", "find references" },
--- 	},
--- }
+-- Picker mappings (snacks.nvim)
+-- grep tips: `pattern -- --iglob=*.lua` passes extra rg args,
+-- <c-g> toggles live-grep <-> fuzzy-refine of current results
+map("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "grep in files" })
+map({ "n", "x" }, "<leader>fw", function() Snacks.picker.grep_word() end, { desc = "find word under cursor" })
+map("n", "<leader>fz", function() Snacks.picker.lines() end, { desc = "find in current buffer" })
+map("n", "<leader>fq", function() Snacks.picker.qflist() end, { desc = "find quickfix" })
+-- default lsp_symbols filter already excludes variables
+map("n", "<leader>fds", function() Snacks.picker.lsp_symbols() end, { desc = "find document symbols" })
+map("n", "<leader>mc", function() require("metals").commands() end, { desc = "Metals commands" })
+map("n", "gws", function() Snacks.picker.lsp_workspace_symbols() end, { desc = "find project symbols" })
+map("n", "gi", function() Snacks.picker.lsp_implementations() end, { desc = "Goto Implementation" })
+map("n", "gd", function() Snacks.picker.lsp_definitions() end, { desc = "Goto Definition" })
+map("n", "<leader>fr", function() Snacks.picker.resume() end, { desc = "Resume pickers" })
 
--- Telescope mappings
-local lga_shortcuts = require "telescope-live-grep-args.shortcuts"
-
-map("n", "<leader>fg", "<cmd>Telescope live_grep_args<cr>", { desc = "grep in files" })
--- map("n", "<leader>fw", "<cmd>Telescope grep_string<cr>", { desc = "find word under cursor" })
-map("n", "<leader>fw", lga_shortcuts.grep_word_under_cursor, { desc = "find word under cursor" })
-
-map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "telescope find in current buffer" })
-map("n", "<leader>fq", "<cmd>Telescope quickfix<cr>", { desc = "find quickfix" })
-map(
-  "n",
-  "<leader>fds",
-  "<cmd>Telescope lsp_document_symbols ignore_symbols=variable<cr>",
-  { desc = "find document symbols" }
-)
-map("n", "<leader>mc", "<cmd>Telescope metals commands<cr>", { desc = "Metals window" })
-map("n", "gws", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { desc = "find project symbols" })
-map("n", "gi", "<cmd>Telescope lsp_implementations<cr>", { desc = "Goto Implementation" })
-map("n", "gd", "<cmd>Telescope lsp_definitions<cr>", { desc = "Goto Definition" })
-map("n", "<leader>fr", "<cmd>Telescope resume<cr>", { desc = "Resume pickers" })
+-- NvChad default mappings that pointed at telescope
+map("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "find files" })
+map("n", "<leader>fa", function() Snacks.picker.files { hidden = true, ignored = true } end, { desc = "find all files" })
+map("n", "<leader>fb", function() Snacks.picker.buffers() end, { desc = "find buffers" })
+map("n", "<leader>fh", function() Snacks.picker.help() end, { desc = "help pages" })
+map("n", "<leader>fo", function() Snacks.picker.recent() end, { desc = "recent files" })
+map("n", "<leader>ma", function() Snacks.picker.marks() end, { desc = "find marks" })
+map("n", "<leader>cm", function() Snacks.picker.git_log() end, { desc = "git commits" })
+map("n", "<leader>gt", function() Snacks.picker.git_status() end, { desc = "git status" })
+pcall(vim.keymap.del, "n", "<leader>pt") -- NvChad telescope terms picker (telescope removed)
 
 -- Trouble mappings
 map("n", "<leader>fdd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "find document diagnostics" })
