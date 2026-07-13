@@ -28,7 +28,7 @@ M.ui = {
 M.base46 = {
   theme = "tokyonight",
   theme_toggle = { "tokyonight", "onedark" },
-  integrations = { "trouble", "notify", "neogit" },
+  integrations = { "trouble", "neogit" },
 }
 
 return M

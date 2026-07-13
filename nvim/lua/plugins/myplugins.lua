@@ -146,25 +146,6 @@ local plugins = {
   },
 
   {
-    "rcarriga/nvim-notify",
-    opts = {
-      timeout = 500,
-      render = "compact",
-      stages = "fade",
-      top_down = true,
-
-      -- Option 1 (static color):
-      -- background_colour = "#1a1b26",
-
-      -- Option 2 (dynamic from current Normal highlight):
-      background_colour = function()
-        local hl = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
-        return hl.bg and string.format("#%06x", hl.bg) or "#000000"
-      end,
-    },
-  },
-
-  {
     "nvim-tree/nvim-tree.lua",
     opts = overrides.nvimtree,
   },
@@ -269,17 +250,6 @@ local plugins = {
   },
 
   {
-    "kdheepak/lazygit.nvim",
-    cmd = {
-      "LazyGit",
-      "LazyGitConfig",
-      "LazyGitCurrentFile",
-      "LazyGitFilter",
-      "LazyGitFilterCurentFile",
-    },
-  },
-
-  {
     "kylechui/nvim-surround",
     event = "VeryLazy",
     config = function()
@@ -336,6 +306,11 @@ local plugins = {
     ---@type snacks.Config
     opts = {
       input = {},
+      notifier = {
+        timeout = 500,
+        style = "compact",
+        top_down = true,
+      },
       picker = {
         layout = {
           backdrop = false,
@@ -524,9 +499,7 @@ local plugins = {
       -- add any options here
     },
     dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
     },
     config = function()
       require("configs.noice").setup()

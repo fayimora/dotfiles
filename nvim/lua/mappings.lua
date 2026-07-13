@@ -9,7 +9,15 @@ map("n", ";", ":", { desc = "enter command mode" })
 map("n", "<leader>dd", "<cmd>lua vim.diagnostic.open_float()<cr>", { desc = "Open float" })
 
 -- Git mappings
-map("n", "<leader>lg", "<cmd>LazyGit<cr>", { desc = "open lazygit" })
+map("n", "<leader>gg", function()
+  Snacks.lazygit()
+end, { desc = "Lazygit" })
+map("n", "<leader>gl", function()
+  Snacks.lazygit.log()
+end, { desc = "Lazygit repository log" })
+map("n", "<leader>gf", function()
+  Snacks.lazygit.log_file()
+end, { desc = "Lazygit current file log" })
 map("n", "<leader>gnh", "<cmd>Gitsigns next_hunk<cr>", { desc = "Gitsigns next hunk" })
 map("n", "<leader>gph", "<cmd>Gitsigns prev_hunk<cr>", { desc = "Gitsigns previous hunk" })
 
@@ -50,9 +58,9 @@ map("n", "<leader>fb", function() Snacks.picker.buffers() end, { desc = "find bu
 map("n", "<leader>fh", function() Snacks.picker.help() end, { desc = "help pages" })
 map("n", "<leader>fo", function() Snacks.picker.recent() end, { desc = "recent files" })
 map("n", "<leader>ma", function() Snacks.picker.marks() end, { desc = "find marks" })
-map("n", "<leader>cm", function() Snacks.picker.git_log() end, { desc = "git commits" })
 map("n", "<leader>gt", function() Snacks.picker.git_status() end, { desc = "git status" })
 pcall(vim.keymap.del, "n", "<leader>pt") -- NvChad telescope terms picker (telescope removed)
+pcall(vim.keymap.del, "n", "<leader>cm") -- NvChad telescope git commits picker (telescope removed)
 
 -- Trouble mappings
 map("n", "<leader>fdd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "find document diagnostics" })
@@ -109,12 +117,7 @@ end, {})
 
 -- lazygit Toggle
 map({ "n", "t" }, "<A-g>", function()
-  require("nvchad.term").toggle {
-    pos = "float",
-    id = "lazygit",
-    float_ops = { width = 0.7, height = 0.7 },
-    cmd = "lazygit",
-  }
+  Snacks.lazygit()
 end, { desc = "lazygit Toggle" })
 
 -- Nvim DAP
