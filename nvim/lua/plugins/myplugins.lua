@@ -501,8 +501,7 @@ local plugins = {
       local get_option = vim.filetype.get_option
       vim.filetype.get_option = function(filetype, option)
         if option == "commentstring" then
-          return require("ts_context_commentstring.internal").calculate_commentstring()
-            or get_option(filetype, option)
+          return require("ts_context_commentstring.internal").calculate_commentstring() or get_option(filetype, option)
         end
         return get_option(filetype, option)
       end
@@ -613,18 +612,6 @@ local plugins = {
   },
 
   {
-    "pablopunk/pi.nvim",
-    cmd = {
-      "PiAsk",
-      "PiAskSelection",
-      "PiLog",
-    },
-    config = function()
-      require("pi").setup()
-    end,
-  },
-
-  {
     "nickjvandyke/opencode.nvim",
     dependencies = {
       -- Recommended for `ask()` and `select()`. Configured as a top-level spec above.
@@ -641,7 +628,6 @@ local plugins = {
       },
     },
   },
-
 }
 
 return plugins
