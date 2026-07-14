@@ -14,11 +14,11 @@ local plugins = {
     end, -- Override to setup mason-lspconfig
   },
 
-  { "williamboman/mason.nvim", opts = overrides.mason },
+  { "mason-org/mason.nvim", opts = overrides.mason },
 
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
-    dependencies = { "williamboman/mason.nvim" },
+    dependencies = { "mason-org/mason.nvim" },
     event = "VeryLazy",
     config = function()
       require("mason-tool-installer").setup {
@@ -306,6 +306,7 @@ local plugins = {
     ---@type snacks.Config
     opts = {
       input = {},
+      scroll = {},
       notifier = {
         timeout = 500,
         style = "compact",
@@ -528,13 +529,6 @@ local plugins = {
 
   { "nvchad/volt", lazy = true },
   { "nvchad/menu", lazy = true },
-
-  {
-    "nvim-mini/mini.animate",
-    version = false,
-    event = "VeryLazy",
-    opts = {},
-  },
 
   {
     "nvzone/typr",
