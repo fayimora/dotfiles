@@ -33,8 +33,22 @@ map("n", "gt", "<cmd>Lspsaga goto_type_definition<cr>", { desc = "Goto type defi
 map("n", "<leader>ca", "<cmd>Lspsaga code_action<cr>", { desc = "code actions" })
 map("n", "<leader>ci", function() Snacks.picker.lsp_incoming_calls() end, { desc = "find incoming calls" })
 map("n", "<leader>co", function() Snacks.picker.lsp_outgoing_calls() end, { desc = "find outgoing calls" })
-map("n", "<leader>tt", "<cmd>Lspsaga term_toggle<cr>", { desc = "Toggle Terminal" })
-map({ "n", "t" }, "<A-t>", "<cmd>Lspsaga term_toggle<cr>", { desc = "Toggle Lspsaga terminal" })
+-- Terminal mapping (replace NvChad and Lspsaga terminals with snacks.nvim)
+for _, lhs in ipairs { "<leader>h", "<leader>v" } do
+  pcall(vim.keymap.del, "n", lhs)
+end
+for _, lhs in ipairs { "<A-v>", "<A-h>", "<A-i>" } do
+  pcall(vim.keymap.del, { "n", "t" }, lhs)
+end
+map({ "n", "t" }, "<A-t>", function()
+  Snacks.terminal.toggle(nil, { count = 1 })
+end, { desc = "Toggle floating terminal" })
+map({ "n", "t" }, "<A-h>", function()
+  Snacks.terminal.toggle(nil, { count = 2, win = { position = "bottom", height = 0.3 } })
+end, { desc = "Toggle horizontal terminal" })
+map({ "n", "t" }, "<A-v>", function()
+  Snacks.terminal.toggle(nil, { count = 3, win = { position = "right", width = 0.3 } })
+end, { desc = "Toggle vertical terminal" })
 
 -- Picker mappings (snacks.nvim)
 -- grep tips: `pattern -- --iglob=*.lua` passes extra rg args,

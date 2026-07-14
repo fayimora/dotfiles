@@ -307,6 +307,14 @@ local plugins = {
     opts = {
       input = {},
       scroll = {},
+      terminal = {
+        win = {
+          position = "float",
+          width = 0.7,
+          height = 0.7,
+          border = "rounded",
+        },
+      },
       notifier = {
         timeout = 500,
         style = "compact",
