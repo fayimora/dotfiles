@@ -315,6 +315,11 @@ local plugins = {
           border = "rounded",
         },
       },
+      lazygit = {
+        win = {
+          width = 0.95,
+        },
+      },
       notifier = {
         timeout = 500,
         style = "compact",
