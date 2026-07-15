@@ -317,6 +317,7 @@ local plugins = {
       },
       lazygit = {
         win = {
+          height = 0.95,
           width = 0.95,
         },
       },
