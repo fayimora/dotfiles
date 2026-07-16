@@ -241,15 +241,6 @@ local plugins = {
   },
 
   {
-    "linrongbin16/gitlinker.nvim",
-    cmd = { "GitLink", "GitLinkRaw" },
-    opts = { command = { name = "GitLinkRaw" } },
-    config = function(_, opts)
-      require("configs.gitlinker").setup(opts)
-    end,
-  },
-
-  {
     "kylechui/nvim-surround",
     event = "VeryLazy",
     config = function()
@@ -306,6 +297,7 @@ local plugins = {
     ---@type snacks.Config
     opts = {
       input = {},
+      gitbrowse = {},
       scroll = {},
       terminal = {
         win = {
@@ -371,6 +363,33 @@ local plugins = {
     config = function(_, opts)
       require("snacks").setup(opts)
       require("configs.gists").setup() -- :GistsList / :GistCreate via gh + snacks picker
+
+      -- :GitLink [what] yanks a permalink to the clipboard, :GitLink! opens it
+      -- in the browser (replaces gitlinker.nvim; multi-remote selection is built in)
+      vim.api.nvim_create_user_command("GitLink", function(cmd)
+        local yank
+        if not cmd.bang then
+          yank = function(url)
+            vim.fn.setreg("+", url)
+            Snacks.notify("Yanked " .. url, { title = "Git Browse" })
+          end
+        end
+        Snacks.gitbrowse.open {
+          what = cmd.args ~= "" and cmd.args or "permalink",
+          line_start = cmd.line1,
+          line_end = cmd.line2,
+          open = yank,
+          notify = cmd.bang,
+        }
+      end, {
+        nargs = "?",
+        range = true,
+        bang = true,
+        complete = function()
+          return { "permalink", "file", "branch", "commit", "repo" }
+        end,
+        desc = "Yank a git link (! to open in browser)",
+      })
     end,
   },
 
@@ -578,6 +597,7 @@ local plugins = {
 
   {
     "carderne/pi-nvim",
+    -- dir = vim.fn.expand("~/Code/oss/pi-nvim"), -- local checkout while the session picker changes are upstreamed
     cmd = {
       "Pi",
       "PiSend",
@@ -588,7 +608,10 @@ local plugins = {
       "PiSessions",
     },
     config = function()
-      require("pi-nvim").setup()
+      require("pi-nvim").setup {
+        -- session_scope = "cwd",
+        -- select_session_on_send = true,
+      }
     end,
   },
 
