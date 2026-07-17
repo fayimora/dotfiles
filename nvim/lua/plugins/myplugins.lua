@@ -8,6 +8,29 @@ local plugins = {
   { import = "nvchad.blink.lazyspec" },
 
   {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        { path = "snacks.nvim", words = { "Snacks" } },
+      },
+    },
+  },
+
+  {
+    "saghen/blink.cmp",
+    opts = function(_, opts)
+      table.insert(opts.sources.default, 1, "lazydev")
+      opts.sources.providers = opts.sources.providers or {}
+      opts.sources.providers.lazydev = {
+        name = "LazyDev",
+        module = "lazydev.integrations.blink",
+        score_offset = 100,
+      }
+    end,
+  },
+
+  {
     "neovim/nvim-lspconfig",
     config = function()
       require "configs.lspconfig"
@@ -296,6 +319,10 @@ local plugins = {
     lazy = false,
     ---@type snacks.Config
     opts = {
+      win = {
+        width = 0.95,
+        height = 0.95,
+      },
       input = {},
       gitbrowse = {},
       scroll = {},
@@ -314,13 +341,17 @@ local plugins = {
         },
       },
       notifier = {
-        timeout = 500,
+        timeout = 1000,
         style = "compact",
         top_down = true,
       },
       picker = {
         layout = {
-          backdrop = false,
+          layout = {
+            backdrop = false,
+            width = 0.95,
+            height = 0.95,
+          },
         },
         actions = {
           -- like the built-in toggle_preview (<a-p>), but for the results list.
