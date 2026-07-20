@@ -96,6 +96,7 @@ fi
 # Symlink pi coding agent resources
 mkdir -p "$HOME/.pi/agent/extensions"
 ln -sfn "$DOTFILES/pi/agent/AGENTS.md" "$HOME/.pi/agent/AGENTS.md"
+ln -sfn "$DOTFILES/pi/agent/APPEND_SYSTEM.md" "$HOME/.pi/agent/APPEND_SYSTEM.md"
 for f in "$DOTFILES"/pi/agent/extensions/*; do
   ln -sf "$f" "$HOME/.pi/agent/extensions/"
 done
