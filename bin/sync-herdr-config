@@ -1,0 +1,453 @@
+#!/usr/bin/env python3
+"""Refresh Herdr's documented config template while preserving configured values."""
+
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import difflib
+import json
+import math
+import os
+from pathlib import Path
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+import tomllib
+from typing import Any
+
+
+BARE_KEY_RE = re.compile(r"^[A-Za-z0-9_-]+$")
+HEADER_RE = re.compile(
+    r"^(?P<indent>\s*)(?P<comment>#\s*)?(?P<open>\[\[?)(?P<name>[A-Za-z0-9_.-]+)(?P<close>\]\]?)(?P<tail>\s*(?:#.*)?)$"
+)
+COMMENTED_ASSIGNMENT_RE = re.compile(
+    r"^(?P<indent>\s*)#\s*(?P<key>[A-Za-z0-9_-]+)\s*=.*$"
+)
+ACTIVE_ASSIGNMENT_RE = re.compile(
+    r"^(?P<indent>\s*)(?P<key>[A-Za-z0-9_-]+)\s*=.*$"
+)
+
+
+class SyncError(RuntimeError):
+    pass
+
+
+def parse_args() -> argparse.Namespace:
+    default_config = Path(
+        os.environ.get("HERDR_CONFIG_PATH", "~/.config/herdr/config.toml")
+    ).expanduser()
+    parser = argparse.ArgumentParser(
+        description=(
+            "Regenerate Herdr's default config template and overlay every value "
+            "explicitly set in the current config."
+        )
+    )
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=default_config,
+        help=f"config to synchronize (default: {default_config})",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="validate and print the proposed diff without writing",
+    )
+    parser.add_argument(
+        "--no-reload",
+        action="store_true",
+        help="do not ask a running Herdr server to reload the installed config",
+    )
+    return parser.parse_args()
+
+
+def run_herdr(
+    args: list[str], *, config: Path | None = None, check: bool = True
+) -> subprocess.CompletedProcess[str]:
+    env = os.environ.copy()
+    if config is not None:
+        env["HERDR_CONFIG_PATH"] = str(config)
+    try:
+        return subprocess.run(
+            ["herdr", *args],
+            check=check,
+            env=env,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+    except FileNotFoundError as exc:
+        raise SyncError("herdr is not available on PATH") from exc
+    except subprocess.CalledProcessError as exc:
+        detail = (exc.stderr or exc.stdout).strip()
+        raise SyncError(detail or f"herdr {' '.join(args)} failed") from exc
+
+
+def load_toml(text: str, label: str) -> dict[str, Any]:
+    try:
+        return tomllib.loads(text)
+    except tomllib.TOMLDecodeError as exc:
+        raise SyncError(f"invalid TOML in {label}: {exc}") from exc
+
+
+def flatten(value: dict[str, Any], prefix: tuple[str, ...] = ()) -> dict[tuple[str, ...], Any]:
+    result: dict[tuple[str, ...], Any] = {}
+    for key, child in value.items():
+        path = (*prefix, key)
+        if isinstance(child, dict):
+            result.update(flatten(child, path))
+        else:
+            result[path] = child
+    return result
+
+
+def render_key(key: str) -> str:
+    return key if BARE_KEY_RE.fullmatch(key) else json.dumps(key, ensure_ascii=False)
+
+
+def render_value(value: Any) -> str:
+    if isinstance(value, str):
+        return json.dumps(value, ensure_ascii=False)
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, int):
+        return str(value)
+    if isinstance(value, float):
+        if math.isnan(value):
+            return "nan"
+        if math.isinf(value):
+            return "inf" if value > 0 else "-inf"
+        return repr(value)
+    if isinstance(value, (dt.datetime, dt.date, dt.time)):
+        return value.isoformat()
+    if isinstance(value, list):
+        return "[" + ", ".join(render_value(item) for item in value) + "]"
+    if isinstance(value, dict):
+        fields = ", ".join(
+            f"{render_key(key)} = {render_value(child)}"
+            for key, child in value.items()
+        )
+        return "{ " + fields + " }"
+    raise SyncError(f"cannot render TOML value of type {type(value).__name__}")
+
+
+def parse_header(match: re.Match[str]) -> tuple[str, ...]:
+    return tuple(match.group("name").split("."))
+
+
+def inline_comment(line: str, commented: bool) -> str:
+    """Return an assignment's inline comment, excluding comments inside strings."""
+    content = line.rstrip("\r\n")
+    if commented:
+        content = re.sub(r"^\s*#\s*", "", content, count=1)
+
+    quote: str | None = None
+    escaped = False
+    for index, character in enumerate(content):
+        if quote == '"':
+            if escaped:
+                escaped = False
+            elif character == "\\":
+                escaped = True
+            elif character == quote:
+                quote = None
+        elif quote == "'":
+            if character == quote:
+                quote = None
+        elif character in {'"', "'"}:
+            quote = character
+        elif character == "#":
+            start = index
+            while start > 0 and content[start - 1] in " \t":
+                start -= 1
+            return content[start:]
+    return ""
+
+
+def extract_setting_comments(source: str) -> dict[tuple[str, ...], list[str]]:
+    """Capture contiguous comments immediately above active settings."""
+    context: tuple[str, ...] = ()
+    pending: list[str] = []
+    result: dict[tuple[str, ...], list[str]] = {}
+
+    for line in source.splitlines(keepends=True):
+        bare_line = line.rstrip("\r\n")
+        header = HEADER_RE.match(bare_line)
+        if header and header.group("comment") is None:
+            context = parse_header(header)
+            pending = []
+            continue
+        if re.match(r"^\s*#", bare_line):
+            pending.append(line if line.endswith("\n") else line + "\n")
+            continue
+        assignment = ACTIVE_ASSIGNMENT_RE.match(bare_line)
+        if assignment:
+            if pending:
+                result[(*context, assignment.group("key"))] = pending
+            pending = []
+            continue
+        if not bare_line.strip():
+            pending = []
+        else:
+            pending = []
+    return result
+
+
+def merge_template(
+    template: str,
+    configured: dict[tuple[str, ...], Any],
+    setting_comments: dict[tuple[str, ...], list[str]],
+) -> str:
+    lines = template.splitlines(keepends=True)
+    context: tuple[str, ...] = ()
+    matched: set[tuple[str, ...]] = set()
+    headers: dict[tuple[str, ...], list[tuple[int, bool]]] = {}
+    activate_headers: set[int] = set()
+
+    for index, line in enumerate(lines):
+        bare_line = line.rstrip("\r\n")
+        header = HEADER_RE.match(bare_line)
+        if header and (
+            (header.group("open") == "[" and header.group("close") == "]")
+            or (header.group("open") == "[[" and header.group("close") == "]]" )
+        ):
+            context = parse_header(header)
+            commented = header.group("comment") is not None
+            headers.setdefault(context, []).append((index, commented))
+            continue
+
+        assignment = COMMENTED_ASSIGNMENT_RE.match(bare_line)
+        commented = assignment is not None
+        if assignment is None:
+            assignment = ACTIVE_ASSIGNMENT_RE.match(bare_line)
+        if assignment is None:
+            continue
+
+        path = (*context, assignment.group("key"))
+        if path not in configured or path in matched:
+            continue
+
+        newline = "\n" if line.endswith("\n") else ""
+        suffix = inline_comment(bare_line, commented)
+        lines[index] = (
+            f"{assignment.group('indent')}{render_key(path[-1])} = "
+            f"{render_value(configured[path])}{suffix}{newline}"
+        )
+        matched.add(path)
+        if commented:
+            for header_index, header_commented in headers.get(context, []):
+                if header_commented:
+                    activate_headers.add(header_index)
+
+    unmatched = [path for path in configured if path not in matched]
+    grouped: dict[tuple[str, ...], list[tuple[str, ...]]] = {}
+    for path in unmatched:
+        grouped.setdefault(path[:-1], []).append(path)
+
+    insertions: list[tuple[int, list[str]]] = []
+    for table, paths in grouped.items():
+        if table:
+            candidates = headers.get(table, [])
+            if candidates:
+                header_index, commented = candidates[-1]
+                if commented:
+                    activate_headers.add(header_index)
+                insertion_index = len(lines)
+                for index in range(header_index + 1, len(lines)):
+                    if HEADER_RE.match(lines[index].rstrip("\r\n")):
+                        insertion_index = index
+                        while (
+                            insertion_index > header_index + 1
+                            and lines[insertion_index - 1].lstrip().startswith("#")
+                            and not HEADER_RE.match(
+                                lines[insertion_index - 1].rstrip("\r\n")
+                            )
+                        ):
+                            insertion_index -= 1
+                        break
+            else:
+                table_name = ".".join(render_key(part) for part in table)
+                block = [
+                    "\n" if lines and lines[-1].strip() else "",
+                    f"[{table_name}]\n",
+                ]
+                for path in paths:
+                    comments = setting_comments.get(path)
+                    if comments:
+                        block.extend(comments)
+                    else:
+                        block.append(
+                            "# Preserved from the previous config; not currently "
+                            "included in the default template.\n"
+                        )
+                    block.append(
+                        f"{render_key(path[-1])} = {render_value(configured[path])}\n"
+                    )
+                insertions.append((len(lines), block))
+                continue
+        else:
+            insertion_index = next(
+                (
+                    index
+                    for index, line in enumerate(lines)
+                    if HEADER_RE.match(line.rstrip("\r\n"))
+                ),
+                len(lines),
+            )
+
+        block = []
+        if insertion_index > 0 and lines[insertion_index - 1].strip():
+            block.append("\n")
+        for path in paths:
+            comments = setting_comments.get(path)
+            if comments:
+                block.extend(comments)
+            else:
+                block.append(
+                    "# Preserved from the previous config; not currently included "
+                    "in the default template.\n"
+                )
+            block.append(f"{render_key(path[-1])} = {render_value(configured[path])}\n")
+        if insertion_index < len(lines) and lines[insertion_index].strip():
+            block.append("\n")
+        insertions.append((insertion_index, block))
+
+    for index in activate_headers:
+        lines[index] = re.sub(r"^(\s*)#\s*", r"\1", lines[index], count=1)
+
+    for index, block in sorted(insertions, key=lambda item: item[0], reverse=True):
+        lines[index:index] = block
+
+    return "".join(lines)
+
+
+def validate_preservation(
+    previous: dict[tuple[str, ...], Any], candidate_text: str
+) -> None:
+    candidate = flatten(load_toml(candidate_text, "generated candidate"))
+    missing = [path for path in previous if path not in candidate]
+    changed = [
+        path
+        for path, value in previous.items()
+        if path in candidate and candidate[path] != value
+    ]
+    if missing or changed:
+        names = ", ".join(".".join(path) for path in [*missing, *changed])
+        raise SyncError(f"generated candidate did not preserve: {names}")
+
+
+def validate_with_herdr(candidate: Path) -> None:
+    result = run_herdr(["config", "check"], config=candidate)
+    if result.stdout.strip() != "config: ok":
+        print(result.stdout.strip(), file=sys.stderr)
+
+
+def backup_path(config: Path) -> Path:
+    stamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
+    candidate = config.with_name(f"{config.name}.backup-{stamp}")
+    counter = 1
+    while candidate.exists():
+        candidate = config.with_name(f"{config.name}.backup-{stamp}-{counter}")
+        counter += 1
+    return candidate
+
+
+def print_diff(config: Path, old: str, new: str) -> None:
+    diff = difflib.unified_diff(
+        old.splitlines(keepends=True),
+        new.splitlines(keepends=True),
+        fromfile=str(config),
+        tofile=f"{config} (synchronized)",
+    )
+    sys.stdout.writelines(diff)
+
+
+def main() -> int:
+    args = parse_args()
+    requested_config = args.config.expanduser().absolute()
+    config = requested_config.resolve()
+    if not config.is_file():
+        raise SyncError(f"config does not exist: {requested_config}")
+
+    original_bytes = config.read_bytes()
+    try:
+        original = original_bytes.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise SyncError(f"config is not UTF-8: {config}") from exc
+
+    configured = flatten(load_toml(original, str(config)))
+    setting_comments = extract_setting_comments(original)
+    defaults = run_herdr(["--default-config"]).stdout
+    load_toml(defaults, "herdr --default-config")
+    merged = merge_template(defaults, configured, setting_comments)
+    validate_preservation(configured, merged)
+
+    config.parent.mkdir(parents=True, exist_ok=True)
+    fd, temporary_name = tempfile.mkstemp(
+        prefix=".config.toml.sync-", dir=config.parent
+    )
+    temporary = Path(temporary_name)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="") as handle:
+            handle.write(merged)
+            handle.flush()
+            os.fsync(handle.fileno())
+        temporary.chmod(config.stat().st_mode & 0o777)
+        validate_with_herdr(temporary)
+
+        if args.dry_run:
+            if original == merged:
+                print(f"Already synchronized: {config}")
+            else:
+                print_diff(config, original, merged)
+            return 0
+
+        if config.read_bytes() != original_bytes:
+            raise SyncError("config changed during synchronization; refusing to overwrite it")
+        if original == merged:
+            print(f"Already synchronized: {config}")
+            return 0
+
+        backup = backup_path(requested_config)
+        shutil.copy2(config, backup)
+        os.replace(temporary, config)
+
+        try:
+            validate_with_herdr(requested_config)
+        except SyncError:
+            shutil.copy2(backup, config)
+            raise SyncError(
+                f"installed config failed validation; restored backup: {backup}"
+            )
+
+        print(f"Synchronized: {requested_config}")
+        if requested_config != config:
+            print(f"Tracked config: {config}")
+        print(f"Backup: {backup}")
+
+        if not args.no_reload:
+            reload_result = run_herdr(
+                ["server", "reload-config"], check=False
+            )
+            if reload_result.returncode == 0:
+                print("Running Herdr server reloaded the config.")
+            else:
+                print(
+                    "Herdr server was not reloaded; the config will apply on the "
+                    "next launch.",
+                    file=sys.stderr,
+                )
+        return 0
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except SyncError as exc:
+        print(f"sync-herdr-config: error: {exc}", file=sys.stderr)
+        raise SystemExit(1)

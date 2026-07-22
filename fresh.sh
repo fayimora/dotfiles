@@ -93,6 +93,18 @@ else
   info "Yazi package manager 'ya' was not found; skipping Yazi package install"
 fi
 
+# Setup Herdr
+info "Setting up Herdr..."
+mkdir -p "$CONFIG_DIR/herdr"
+ln -sfn "$DOTFILES/herdr/config.toml" "$CONFIG_DIR/herdr/config.toml"
+
+if command -v herdr >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1; then
+  "$DOTFILES/bin/sync-herdr-config" --config "$CONFIG_DIR/herdr/config.toml" --no-reload || \
+    info "Failed to synchronize Herdr config"
+else
+  info "Herdr or Python 3 was not found; skipping Herdr config synchronization"
+fi
+
 # Symlink pi coding agent resources
 mkdir -p "$HOME/.pi/agent/extensions"
 ln -sfn "$DOTFILES/pi/agent/AGENTS.md" "$HOME/.pi/agent/AGENTS.md"
