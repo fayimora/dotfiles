@@ -69,12 +69,15 @@ HIST_STAMPS="dd/mm/yyyy"
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$DOTFILES/zsh/custom/
 
+# Add Scala CLI completions before Oh My Zsh initializes completion.
+fpath=("$HOME/Library/Application Support/ScalaCli/completions/zsh" $fpath)
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(1password brew direnv docker-compose docker dotenv direnv git git-extras tmux vi-mode zoxide)
+plugins=(1password brew direnv docker-compose docker dotenv git git-extras tmux vi-mode zoxide)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -118,12 +121,6 @@ export SDKMAN_DIR="$HOME/.sdkman"
 # alias cd to zoxide
 eval "$(zoxide init --cmd cd zsh)"
 
-
-
-# >>> scala-cli completions >>>
-fpath=("/Users/fayi/Library/Application Support/ScalaCli/completions/zsh" $fpath)
-compinit
-# <<< scala-cli completions <<<
 
 # pnpm
 export PNPM_HOME="/Users/fayi/Library/pnpm"
