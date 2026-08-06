@@ -1,3 +1,9 @@
+# Config version for compatibility and deprecations
+config-version = 2
+
+# Keep the workspaces referenced by the keybindings available when empty
+persistent-workspaces = ['1', '2', '3', '4']
+
 # You can use it to add commands that run after login to macOS user session.
 # 'start-at-login' needs to be 'true' for 'after-login-command' to work
 # Available commands: https://nikitabobko.github.io/AeroSpace/commands
@@ -7,8 +13,8 @@ after-login-command = []
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
-  'exec-and-forget borders',
-  'exec-and-forget sketchybar'
+  'exec-and-forget /opt/homebrew/bin/borders',
+  'exec-and-forget /opt/homebrew/bin/sketchybar'
 ]
 
 # Notify Sketchybar about workspace change
@@ -42,7 +48,6 @@ default-root-container-orientation = 'auto'
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-on-focus-changed = "move-mouse window-lazy-center"
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
@@ -135,6 +140,9 @@ automatically-unhide-macos-hidden-apps = false
     cmd-ctrl-alt-shift-4 = 'move-node-to-workspace 4'
 
     cmd-ctrl-alt-shift-f = 'fullscreen'
+    cmd-ctrl-alt-q = 'close'
+    cmd-ctrl-alt-shift-r = 'reload-config'
+    cmd-ctrl-alt-f = 'layout floating tiling'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     cmd-ctrl-alt-tab = 'workspace-back-and-forth'
@@ -145,13 +153,12 @@ automatically-unhide-macos-hidden-apps = false
     cmd-ctrl-alt-shift-semicolon = 'mode service'
 
     # Setup App shortcuts
-    cmd-ctrl-alt-t = 'exec-and-forget open -a Kitty'
-    cmd-ctrl-alt-g = 'exec-and-forget open -a Ghostty'
-    cmd-ctrl-alt-o = 'exec-and-forget open -a Obsidian'
-    cmd-ctrl-alt-a = 'exec-and-forget open -a Arc'
-    cmd-ctrl-alt-z = 'exec-and-forget open -a Zen'
-    cmd-ctrl-alt-w = 'exec-and-forget open -a WhatsApp'
-    cmd-ctrl-alt-c = [ 'exec-and-forget open -a Telegram', 'exec-and-forget open -a WhatsApp' ]
+    # cmd-ctrl-alt-t = 'exec-and-forget open -a Kitty'
+    cmd-ctrl-alt-g = 'exec-and-forget /usr/bin/open -b com.mitchellh.ghostty'
+    cmd-ctrl-alt-o = 'exec-and-forget /usr/bin/open -b md.obsidian'
+    cmd-ctrl-alt-b = 'exec-and-forget /usr/bin/open -b com.brave.Browser'
+    cmd-ctrl-alt-w = 'exec-and-forget /usr/bin/open -b net.whatsapp.WhatsApp'
+    cmd-ctrl-alt-c = [ 'exec-and-forget /usr/bin/open -b ru.keepcoder.Telegram', 'exec-and-forget /usr/bin/open -b net.whatsapp.WhatsApp' ]
 
 
 # 'service' binding mode declaration.
@@ -176,12 +183,8 @@ automatically-unhide-macos-hidden-apps = false
 
 # See: https://nikitabobko.github.io/AeroSpace/guide#on-window-detected-callback
 [[on-window-detected]]
-if.app-id = 'Arc'
+if.app-id = 'com.brave.Browser'
 run = "move-node-to-workspace 1"
-
-[[on-window-detected]]
-if.app-id = 'Zen'
-run = "move-node-to-workspace 2"
 
 [[on-window-detected]]
 if.app-id = 'net.kovidgoyal.kitty'
@@ -211,6 +214,16 @@ run = 'layout floating'
 if.app-id = 'ru.keepcoder.Telegram'
 check-further-callbacks = true
 run = ['layout floating', 'move-node-to-workspace 4']
+
+[[on-window-detected]]
+if.app-id = 'com.nordvpn.NordVPN'
+check-further-callbacks = true
+run = ['layout floating', 'move-node-to-workspace 4']
+
+[[on-window-detected]]
+if.app-id = 'org.localsend.localsendApp'
+check-further-callbacks = true
+run = ['layout floating', 'move-node-to-workspace 1']
 
 [[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
