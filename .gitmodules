@@ -10,6 +10,3 @@
 [submodule "zsh/custom/plugins/zsh-history-substring-search"]
 	path = zsh/custom/plugins/zsh-history-substring-search
 	url = git@github.com:zsh-users/zsh-history-substring-search.git
-[submodule "zsh/custom/themes/powerlevel10k"]
-	path = zsh/custom/themes/powerlevel10k
-	url = git@github.com:romkatv/powerlevel10k.git

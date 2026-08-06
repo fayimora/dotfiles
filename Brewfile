@@ -38,6 +38,7 @@ brew 'poppler'
 brew 'ripgrep'
 brew 'sevenzip'
 brew 'sketchybar'
+brew 'starship'
 brew 'svn' # Needed to install fonts
 brew 'tabiew'
 brew 'yazi'
