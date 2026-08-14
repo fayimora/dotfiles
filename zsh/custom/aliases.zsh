@@ -3,6 +3,16 @@ alias copyssh="pbcopy < $HOME/.ssh/id_ed25519.pub"
 alias reloadshell="source $HOME/.zshrc"
 alias reloaddns="dscacheutil -flushcache && sudo killall -HUP mDNSResponder"
 alias ls="eza -1h --icons=always --hyperlink"
+alias lt='eza --tree --level=2 --long --icons --git'
+alias lta='lt -a'
+
+if [[ "$TERM" == "xterm-kitty" || "$TERM_PROGRAM" == "ghostty" ]]; then
+  alias ff="fzf --preview 'case \$(file --mime-type -b {}) in image/*) kitty icat --clear --transfer-mode=memory --stdin=no --place=\${FZF_PREVIEW_COLUMNS}x\${FZF_PREVIEW_LINES}@0x0 {} ;; *) bat --style=numbers --color=always {} ;; esac'"
+else
+  alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
+fi
+alias eff='$EDITOR "$(ff)"'
+
 alias shrug="echo '¯\_(ツ)_/¯' | pbcopy"
 alias c="clear"
 
@@ -140,6 +150,8 @@ alias disable-usb-rwa='sudo chmod a+rw /dev/hidraw*'
 
 alias oc='opencode'
 alias oce='OPENCODE_EXPERIMENTAL=1 opencode'
+alias mup='MISE_MINIMUM_RELEASE_AGE=0 mise up'
 alias pilite='pi --no-extensions --no-skills'
 
 alias icat='kitty icat'
+alias y='yazi'

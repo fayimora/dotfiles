@@ -11,6 +11,13 @@ alias -g .....='../../../..'
 
 # Functions
 #
+# macOS provides its own `open`; use xdg-open only on Linux.
+if [[ "$OSTYPE" == linux* ]]; then
+  open() (
+    xdg-open "$@" >/dev/null 2>&1 &
+  )
+fi
+
 # (f)ind by (n)ame
 # usage: fn foo 
 # to find all files containing 'foo' in the name
