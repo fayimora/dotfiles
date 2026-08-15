@@ -1,10 +1,14 @@
 [Unit]
 Description=ntfy client
-After=graphical-session.target
+After=graphical-session-pre.target network-online.target
+Wants=network-online.target
+PartOf=graphical-session.target
 
 [Service]
+ExecStartPre=/bin/sh -c 'until /usr/bin/curl --fail --silent --connect-timeout 3 --max-time 5 https://ntfy.fayi.network/v1/health >/dev/null; do /usr/bin/sleep 2; done'
 ExecStart=/usr/bin/ntfy subscribe --config %h/.config/ntfy/client.yml --from-config
 Restart=on-failure
+RestartSec=5s
 
 [Install]
 WantedBy=graphical-session.target
