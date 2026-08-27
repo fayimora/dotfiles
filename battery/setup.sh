@@ -39,6 +39,7 @@ sudo systemctl restart upower.service
 
 if omarchy-shell shell rescanPlugins >/dev/null 2>&1; then
   omarchy plugin enable fayi.battery >/dev/null
+  omarchy restart shell
 else
   printf 'Omarchy shell is not running; enable fayi.battery after login.\n'
 fi

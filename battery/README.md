@@ -18,7 +18,7 @@ The percentages must remain strictly descending (`Low > Critical > Action`) or U
 
 - `upower/90-critical-battery.conf` — system policy installed into `/etc/UPower/UPower.conf.d/`.
 - `omarchy/fayi.battery/` — user-owned clone of Quattro's `omarchy.battery` shell service, with its warning threshold changed from 10% to 15%.
-- `setup.sh` — idempotently installs the UPower policy, links the custom plugin, enables it, and restarts UPower.
+- `setup.sh` — idempotently installs the UPower policy, links and enables the custom plugin, then restarts UPower and the Omarchy shell so no stale stock battery service remains loaded.
 - `../setup-laptop.sh` — laptop setup entry point; calls this module and can host additional laptop-specific setup later.
 
 The live plugin path is a symlink:
