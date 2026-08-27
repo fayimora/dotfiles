@@ -3,5 +3,6 @@ export PLANNOTATOR_BROWSER="$HOME/.local/bin/plannotator-browser"
 export PLANNOTATOR_PORT=19432-19463
 export PLANNOTATOR_REMOTE=1
 export GLIMPSE_BACKEND=chromium
+export FFF_ENABLE_HOME_SCAN=0
 
 
