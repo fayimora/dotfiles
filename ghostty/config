@@ -1,4 +1,5 @@
-theme = TokyoNight Night
+# Dynamic theme colors managed by Omarchy
+config-file = ?"~/.local/state/omarchy/current/theme/ghostty.conf"
 font-family = "JetBrainsMono Nerd Font"
 font-size = 11
 macos-option-as-alt = left
