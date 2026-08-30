@@ -80,6 +80,10 @@ info "Setting up Ghostty"
 rm -rf $CONFIG_DIR/ghostty
 ln -s $DOTFILES/ghostty $CONFIG_DIR/ghostty
 
+info "Setting up Foot"
+mkdir -p "$CONFIG_DIR/foot"
+ln -sfn "$DOTFILES/foot/foot.ini" "$CONFIG_DIR/foot/foot.ini"
+
 info "Setting up Plannotator browser handler..."
 mkdir -p $HOME/.local/bin
 ln -sf $DOTFILES/bin/plannotator-browser $HOME/.local/bin/plannotator-browser
