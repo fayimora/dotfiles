@@ -25,6 +25,8 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
+require("omarchy_theme").setup()
+
 -- load theme
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
