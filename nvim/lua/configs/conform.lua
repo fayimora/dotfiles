@@ -20,6 +20,7 @@ end
 
 local options = {
   formatters_by_ft = {
+    astro = web_formatters,
     css = web_formatters,
     html = web_formatters,
     javascript = web_formatters,
@@ -29,6 +30,7 @@ local options = {
     json = { "biome" },
     jsonc = { "biome" },
     markdown = web_formatters,
+    mdx = web_formatters,
     yaml = web_formatters,
     go = { "gofmt" },
     lua = { "stylua" },

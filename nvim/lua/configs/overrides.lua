@@ -22,6 +22,7 @@ M.treesitter = {
     "regex",
     "rust",
     "scala",
+    "sql",
     "toml",
     "tsx",
     "typescript",

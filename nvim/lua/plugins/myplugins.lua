@@ -60,6 +60,28 @@ local plugins = {
   },
 
   {
+    "davidmh/mdx.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    lazy = false,
+    config = function()
+      -- nvim-treesitter's frozen master branch expects a capture to be a
+      -- TSNode, while newer Neovim versions pass a list of TSNodes.
+      vim.treesitter.query.add_directive("set-lang-from-info-string!", function(match, _, bufnr, predicate, metadata)
+        local node = match[predicate[2]]
+        if vim.islist(node) then
+          node = node[1]
+        end
+        if not node then
+          return
+        end
+
+        local language = vim.treesitter.get_node_text(node, bufnr):lower()
+        metadata["injection.language"] = vim.treesitter.language.get_lang(language) or language
+      end, { force = true, all = true })
+    end,
+  },
+
+  {
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "master",
     lazy = true,
