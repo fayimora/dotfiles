@@ -2,6 +2,21 @@ require "nvchad.autocmds"
 
 local autocmd = vim.api.nvim_create_autocmd
 
+autocmd("FileType", {
+  pattern = "*",
+  callback = function(args)
+    if args.match == "dockerfile" then
+      vim.treesitter.stop(args.buf)
+      return
+    end
+
+    local ok, parser = pcall(vim.treesitter.get_parser, args.buf)
+    if ok and parser then
+      vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end
+  end,
+})
+
 -- Auto resize panes when resizing nvim window
 autocmd("VimResized", {
   pattern = "*",
