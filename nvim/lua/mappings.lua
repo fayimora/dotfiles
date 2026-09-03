@@ -7,6 +7,12 @@ map("n", "0", "^", { desc = "go to first character" })
 map("n", "^", "0", { desc = "go to start of line" })
 map("n", ";", ":", { desc = "enter command mode" })
 map("n", "<leader>dd", "<cmd>lua vim.diagnostic.open_float()<cr>", { desc = "Open float" })
+map({ "n", "x" }, "<C-@>", function()
+  vim.treesitter.select "parent"
+end, { desc = "Select parent syntax node" })
+map("x", "<BS>", function()
+  vim.treesitter.select "child"
+end, { desc = "Select child syntax node" })
 
 -- Git mappings
 map("n", "<leader>gg", function()
