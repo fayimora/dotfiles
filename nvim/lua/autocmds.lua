@@ -28,7 +28,7 @@ autocmd("VimResized", {
     --   end)
     -- end, 50) -- 50ms delay
 
-    vim.api.nvim_exec("tabdo wincmd =", false)
+    vim.cmd "tabdo wincmd ="
     -- vim.cmd "tabdo"
     -- vim.cmd "wincmd ="
   end,
