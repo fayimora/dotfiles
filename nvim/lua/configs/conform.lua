@@ -1,5 +1,4 @@
-local web_formatters = { "biome", "prettierd", stop_after_first = true }
-local web_with_oxfmt = { "oxfmt", "biome", "prettierd", stop_after_first = true }
+local web_formatters = { "oxfmt", "biome", "prettierd", stop_after_first = true }
 
 local options = {
   formatters = {
@@ -17,18 +16,18 @@ local options = {
   },
 
   formatters_by_ft = {
-    astro = web_formatters,
-    css = web_with_oxfmt,
-    html = web_with_oxfmt,
-    javascript = web_with_oxfmt,
-    javascriptreact = web_with_oxfmt,
-    typescript = web_with_oxfmt,
-    typescriptreact = web_with_oxfmt,
-    json = { "oxfmt", "biome", stop_after_first = true },
-    jsonc = { "oxfmt", "biome", stop_after_first = true },
-    markdown = web_with_oxfmt,
-    mdx = web_with_oxfmt,
-    yaml = web_with_oxfmt,
+    astro = { "biome", "prettierd", stop_after_first = true },
+    css = web_formatters,
+    html = web_formatters,
+    javascript = web_formatters,
+    javascriptreact = web_formatters,
+    typescript = web_formatters,
+    typescriptreact = web_formatters,
+    json = web_formatters,
+    jsonc = web_formatters,
+    markdown = web_formatters,
+    mdx = web_formatters,
+    yaml = web_formatters,
     go = { "gofmt" },
     lua = { "stylua" },
     sh = { "shfmt" },
