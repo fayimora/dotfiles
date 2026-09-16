@@ -42,6 +42,8 @@ M.mason = {
     -- web dev stuff
     "astro-language-server",
     "biome",
+    "oxlint",
+    "oxfmt",
     "css-lsp",
     "html-lsp",
     "typescript-language-server",
