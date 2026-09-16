@@ -39,6 +39,7 @@ local servers = {
   cssls = {},
   html = {},
   mdx_analyzer = { before_init = typescript_sdk },
+  oxlint = {},
   tailwindcss = {},
   ts_ls = {},
   zls = {},
