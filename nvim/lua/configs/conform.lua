@@ -1,37 +1,34 @@
-local function has_config(patterns)
-  return function(bufnr)
-    local dir = vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr))
-    return vim.fs.find(patterns, { upward = true, path = dir })[1]
-  end
-end
-
-local has_biome = has_config { "biome.json", "biome.jsonc" }
-local has_prettier =
-  has_config { ".prettierrc", ".prettierrc.json", ".prettierrc.js", "prettier.config.js", "prettier.config.mjs" }
-
-local function web_formatters(bufnr)
-  if has_biome(bufnr) then
-    return { "biome" }
-  elseif has_prettier(bufnr) then
-    return { "prettierd" }
-  end
-  return {}
-end
+local web_formatters = { "biome", "prettierd", stop_after_first = true }
+local web_with_oxfmt = { "oxfmt", "biome", "prettierd", stop_after_first = true }
 
 local options = {
+  formatters = {
+    biome = { require_cwd = true },
+    prettierd = { require_cwd = true },
+    oxfmt = {
+      require_cwd = true,
+      cwd = require("conform.util").root_file {
+        ".oxfmtrc.json",
+        ".oxfmtrc.jsonc",
+        "oxfmt.config.ts",
+        "oxfmt.config.mts",
+      },
+    },
+  },
+
   formatters_by_ft = {
     astro = web_formatters,
-    css = web_formatters,
-    html = web_formatters,
-    javascript = web_formatters,
-    javascriptreact = web_formatters,
-    typescript = web_formatters,
-    typescriptreact = web_formatters,
-    json = { "biome" },
-    jsonc = { "biome" },
-    markdown = web_formatters,
-    mdx = web_formatters,
-    yaml = web_formatters,
+    css = web_with_oxfmt,
+    html = web_with_oxfmt,
+    javascript = web_with_oxfmt,
+    javascriptreact = web_with_oxfmt,
+    typescript = web_with_oxfmt,
+    typescriptreact = web_with_oxfmt,
+    json = { "oxfmt", "biome", stop_after_first = true },
+    jsonc = { "oxfmt", "biome", stop_after_first = true },
+    markdown = web_with_oxfmt,
+    mdx = web_with_oxfmt,
+    yaml = web_with_oxfmt,
     go = { "gofmt" },
     lua = { "stylua" },
     sh = { "shfmt" },
