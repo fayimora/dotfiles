@@ -31,7 +31,12 @@ map("n", "<leader>gph", "<cmd>Gitsigns prev_hunk<cr>", { desc = "Gitsigns previo
 map("n", "gk", "<cmd>lua vim.lsp.buf.hover()<cr>", { desc = "show documentaion" })
 map("n", "gK", "<cmd>lua vim.lsp.buf.signature_help()<cr>", { desc = "LSP signature help" })
 map("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "LSP rename" })
-map("n", "<leader>cf", "<cmd>lua conform.format()<cr>", { desc = "LSP formatting" })
+local function format_buffer()
+  require("conform").format()
+end
+map({ "n", "x" }, "<leader>cf", format_buffer, { desc = "Format buffer or selection" })
+-- Override NvChad's shortcut so it uses the same per-filetype fallback rules.
+map({ "n", "x" }, "<leader>fm", format_buffer, { desc = "Format buffer or selection" })
 
 -- Lspsaga mappings
 map("n", "gp", "<cmd>Lspsaga peek_definition<cr>", { desc = "Peek definition" })
