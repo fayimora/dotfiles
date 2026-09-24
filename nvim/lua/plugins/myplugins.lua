@@ -41,8 +41,8 @@ local plugins = {
 
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
+    lazy = false,
     dependencies = { "mason-org/mason.nvim" },
-    event = "VeryLazy",
     config = function()
       require("mason-tool-installer").setup {
         ensure_installed = overrides.mason.ensure_installed,
