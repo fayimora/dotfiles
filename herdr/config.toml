@@ -96,10 +96,10 @@ switch_workspace = "prefix+ctrl+1..9"   # optional indexed binding, e.g. "prefix
 # close_tab = "prefix+shift+x"
 # rename_pane = "prefix+shift+p"
 # edit_scrollback = "prefix+e"
-# focus_pane_left = "prefix+h"
-# focus_pane_down = "prefix+j"
-# focus_pane_up = "prefix+k"
-# focus_pane_right = "prefix+l"
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
 # cycle_pane_next = "prefix+tab"
 # cycle_pane_previous = "prefix+shift+tab"
 # last_pane = ""          # optional, unset by default; bind e.g. "prefix+tab" for global back-and-forth
@@ -122,6 +122,16 @@ switch_workspace = "prefix+ctrl+1..9"   # optional indexed binding, e.g. "prefix
 # navigate_pane_down = "j"
 # navigate_pane_up = "k"
 # navigate_pane_right = "l"     # right arrow always focuses the pane to the right
+
+# Ctrl+H/J/K/L navigates Neovim splits, then Herdr panes at an editor edge.
+# Install the Herdr half: herdr plugin install aimdevlee/herdr-nvim-nav
+command = [
+  { key = "prefix+t", type = "plugin_action", command = "herdr-navigator.open", description = "jump to anything" },
+  { key = "ctrl+h", type = "plugin_action", command = "herdr-nvim-nav.left", description = "navigate left (nvim/herdr)" },
+  { key = "ctrl+j", type = "plugin_action", command = "herdr-nvim-nav.down", description = "navigate down (nvim/herdr)" },
+  { key = "ctrl+k", type = "plugin_action", command = "herdr-nvim-nav.up", description = "navigate up (nvim/herdr)" },
+  { key = "ctrl+l", type = "plugin_action", command = "herdr-nvim-nav.right", description = "navigate right (nvim/herdr)" },
+]
 
 # Custom commands use the same binding syntax.
 # type = "shell" runs detached in the background.
