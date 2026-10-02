@@ -20,10 +20,22 @@ auto_switch = false
 # Override individual color tokens on top of the base theme.
 # Accepts: hex (#rrggbb), named colors, rgb(r,g,b), or panel_bg = "reset"
 # [theme.custom]
+# sidebar_bg = "#181825"
+# active_row_bg = "#1e1e2e"
+# selection_bg = "#313244"
 # panel_bg = "reset"
 # accent = "#f5c2e7"
 # red = "#ff6188"
 # green = "#a6e3a1"
+
+# Layer appearance-specific overrides on top when auto_switch is enabled.
+# [theme.custom.light]
+# panel_bg = "#eff1f5"
+# text = "#4c4f69"
+#
+# [theme.custom.dark]
+# panel_bg = "#1e1e2e"
+# text = "#cdd6f4"
 
 [terminal]
 # Executable used for new interactive panes.
