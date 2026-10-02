@@ -1,5 +1,8 @@
 require "nvchad.mappings"
 
+-- Override NvChad window movement with Neovim/Herdr navigation and tmux fallback.
+require("herdr-nvim-nav").setup()
+
 local map = vim.keymap.set
 
 -- General mappings

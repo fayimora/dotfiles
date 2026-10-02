@@ -354,7 +354,17 @@ local plugins = {
   },
 
   {
+    "aimdevlee/herdr-nvim-nav",
+    commit = "ec047fd6d8d0269d54a34e9405af28d8aad4c8f0",
+    lazy = false,
+    -- setup() runs in mappings.lua after NvChad installs its window mappings.
+  },
+
+  {
     "christoomey/vim-tmux-navigator",
+    init = function()
+      vim.g.tmux_navigator_no_mappings = 1
+    end,
     cmd = {
       "TmuxNavigateLeft",
       "TmuxNavigateDown",
@@ -364,10 +374,6 @@ local plugins = {
       "TmuxNavigatorProcessList",
     },
     keys = {
-      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
       { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
   },
