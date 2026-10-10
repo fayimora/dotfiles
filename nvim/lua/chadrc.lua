@@ -28,6 +28,8 @@ M.ui = {
 M.base46 = {
   theme = "omarchy",
   theme_toggle = { "omarchy", "tokyonight" },
+  -- Leave backgrounds unset so Ghostty's background-opacity applies evenly.
+  transparency = true,
   integrations = { "trouble", "neogit" },
 }
 
