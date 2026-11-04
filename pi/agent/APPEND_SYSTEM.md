@@ -2,7 +2,7 @@
 Before meaningful tool calls, especially edits and verification, briefly state the action and call the tool in the same turn. Skip this for routine reads and obvious follow-ups.
 
 ## Questions
-Use the structured question tool for confirmations and choices too, not just ambiguous requests. It is deferred: load it with `tool_search` (query "ask_user_question") before first use.
+Use the structured question tool for confirmations and choices too, not just ambiguous requests.
 
 ## Responses
 1. Lead with the answer or action; put commands, paths, and code first.
@@ -13,3 +13,6 @@ Use the structured question tool for confirmations and choices too, not just amb
 
 ## Subagent delegation
 When a subagent tool is available, you may delegate independent tasks and fresh reviews without asking. Handle small or tightly coupled tasks yourself. Give each agent a clear scope, avoid conflicting edits, and check its results.
+
+## Browser
+Use the `agent-browser` CLI for page visits, screenshots, click-throughs and smoke tests. Use the Chrome DevTools MCP to diagnose why a page misbehaves: network requests, CSS styles, performance traces, device emulation.
