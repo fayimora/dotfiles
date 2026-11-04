@@ -7,7 +7,7 @@
  *   final answer…
  *
  * Each prompt has three levels; click its summary line (fullscreen mode) to cycle them:
- *   ▸ folded   only the summary line and the final answer
+ *   ▸ folded   only the summary line, the final answer and any questions to you
  *   ▿ outline  plus one line per tool call
  *   ▾ full     every step as Pi normally renders it
  *
@@ -52,6 +52,12 @@ const STATE_FILE = join(getAgentDir(), "fold-runs.json");
 const PROBE_WIDGET = "fold-runs-probe";
 const STATUS_KEY = "fold-runs";
 const MAX_OVERRIDES = 1000;
+/**
+ * Tools that talk to the user. Their calls, and the text of the message that makes them,
+ * are part of the conversation, so they stay visible when folded. Calls that prompt the
+ * user at runtime are detected too (see ui_prompt_start below).
+ */
+const INTERACTIVE_TOOLS = new Set(["ask_user_question", "question", "questionnaire"]);
 /** Outline rows right-align their details within this many columns. */
 const OUTLINE_WIDTH = 110;
 
@@ -65,6 +71,8 @@ type State = {
 	broken?: string;
 	/** Per-prompt levels chosen by clicking, keyed by a stable id of the prompt's first step. */
 	overrides: Map<string, Level>;
+	/** Tool call ids that showed the user a prompt while they ran. */
+	promptedCalls: Set<string>;
 	tui?: TUI;
 	getTheme?: () => Theme;
 	warn?: (message: string) => void;
@@ -84,7 +92,10 @@ const state: State = (g.__foldRunsState ??= g.__hideStepsState ?? {
 	level: "folded",
 	busy: false,
 	overrides: new Map(),
+	promptedCalls: new Set(),
 });
+// State created by an older version of this file in the same process lacks newer fields.
+state.promptedCalls ??= new Set();
 
 // ---------------------------------------------------------------------------
 // Persistence
@@ -115,7 +126,7 @@ function saveLevel(level: Level): void {
 // ---------------------------------------------------------------------------
 // Private component shapes we read
 
-type Block = { type: string; thinking?: string };
+type Block = { type: string; thinking?: string; id?: string; name?: string };
 type Usage = { input?: number; output?: number; cacheRead?: number; cacheWrite?: number; cost?: { total?: number } };
 type AssistantMsg = {
 	content?: Block[];
@@ -553,10 +564,27 @@ function layout(comp: object): Plan | null {
 	const level = effectiveLevel(run);
 	const header = isLeader && hasSteps(run) ? run : undefined;
 	if (level === "full") return { run, header, level, showBody: true };
-	// Folded and outline keep only the final answer: an assistant message without tool calls.
-	const isFinalAnswer =
-		comp instanceof AssistantMessageComponent && !hasToolCalls((comp as unknown as AssistantLike).lastMessage);
-	return { run, header, level, showBody: isFinalAnswer };
+	// Folded and outline keep only the conversation: final answers and exchanges with the user.
+	return { run, header, level, showBody: isConversation(comp) };
+}
+
+function isInteractive(name: string | undefined, id: string | undefined): boolean {
+	return (name !== undefined && INTERACTIVE_TOOLS.has(name)) || (id !== undefined && state.promptedCalls.has(id));
+}
+
+/**
+ * An assistant message is conversation when it has no tool calls (a final answer) or one of
+ * its tool calls talks to the user, e.g. text that introduces a question. A tool call is
+ * conversation when it talks to the user, so the question and answer stay visible.
+ */
+function isConversation(comp: object): boolean {
+	if (comp instanceof AssistantMessageComponent) {
+		const content = (comp as unknown as AssistantLike).lastMessage?.content ?? [];
+		const calls = content.filter((b) => b.type === "toolCall");
+		return calls.length === 0 || calls.some((b) => isInteractive(b.name, b.id));
+	}
+	const tool = comp as ToolLike;
+	return isInteractive(tool.toolName, tool.toolCallId);
 }
 
 function withHeader(comp: { __hsHeader?: number }, plan: Plan | null, body: string[], width: number): string[] {
@@ -795,6 +823,25 @@ export default function foldRuns(pi: ExtensionAPI) {
 		captureTui(ctx);
 		refresh();
 		showStatus(ctx);
+	});
+
+	// Remember which tool calls prompt the user: a prompt that opens while a call runs belongs to it.
+	const runningCalls = new Set<string>();
+	pi.on("tool_execution_start", async (event) => {
+		runningCalls.add(event.toolCallId);
+	});
+	pi.on("tool_execution_end", async (event) => {
+		runningCalls.delete(event.toolCallId);
+	});
+	pi.on("ui_prompt_start", async () => {
+		if (runningCalls.size === 0) return;
+		for (const id of runningCalls) state.promptedCalls.add(id);
+		while (state.promptedCalls.size > MAX_OVERRIDES) {
+			const oldest = state.promptedCalls.values().next().value;
+			if (oldest === undefined) break;
+			state.promptedCalls.delete(oldest);
+		}
+		refresh();
 	});
 
 	pi.on("agent_start", async () => {
