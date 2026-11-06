@@ -76,6 +76,7 @@ type State = {
 	tui?: TUI;
 	getTheme?: () => Theme;
 	warn?: (message: string) => void;
+	warningTimer?: ReturnType<typeof setTimeout>;
 };
 
 type Fn = (...args: any[]) => any;
@@ -180,7 +181,7 @@ type Run = {
 
 type Placement = { run: Run; isLeader: boolean };
 
-const parents = new WeakMap<object, ContainerLike>();
+let parents = new WeakMap<object, ContainerLike>();
 let frameCache: Map<ContainerLike, Map<object, Placement>> | undefined;
 
 function findParent(comp: object): ContainerLike | undefined {
@@ -619,14 +620,15 @@ function disable(reason: string): void {
 	if (state.broken) return;
 	state.broken = reason;
 	// Rendering may be in progress; notify and redraw afterwards.
-	setTimeout(() => {
+	state.warningTimer = setTimeout(() => {
+		state.warningTimer = undefined;
 		state.warn?.(`fold-runs disabled (${reason}). Pi's internals may have changed; see fold-runs.ts.`);
 		refresh();
 	}, 0);
 }
 
 function guarded<T>(fallback: () => T, run: () => T): T {
-	if (state.broken) return fallback();
+	if (!state.tui || state.broken) return fallback();
 	try {
 		return run();
 	} catch (error) {
@@ -658,7 +660,7 @@ function installPatches(): string | undefined {
 	});
 
 	ap.updateContent = function (this: AssistantLike, message: AssistantMsg, ...rest: unknown[]) {
-		const mode = state.broken ? "full" : (this.__hsMode ?? "full");
+		const mode = !state.tui || state.broken ? "full" : (this.__hsMode ?? "full");
 		o.aUpdate.call(this, filterContent(message, mode), ...rest);
 		// Keep the real message so stats, unfolding and other readers see full content.
 		this.lastMessage = message;
@@ -725,6 +727,18 @@ function installPatches(): string | undefined {
 
 // ---------------------------------------------------------------------------
 // Extension wiring
+
+/** Prototype patches survive reloads, but session contexts and TUI references must not. */
+function releaseSession(): void {
+	if (state.warningTimer !== undefined) clearTimeout(state.warningTimer);
+	state.warningTimer = undefined;
+	state.getTheme = undefined;
+	state.warn = undefined;
+	state.tui = undefined;
+	state.busy = false;
+	parents = new WeakMap();
+	frameCache = undefined;
+}
 
 /** Grab the TUI through a throwaway widget so we can find the chat and force re-renders. */
 function captureTui(ctx: ExtensionContext): void {
@@ -808,9 +822,10 @@ export default function foldRuns(pi: ExtensionAPI) {
 	};
 
 	pi.on("session_start", async (_event, ctx) => {
+		// Also discard references inherited from older versions without shutdown cleanup.
+		releaseSession();
 		if (ctx.mode !== "tui" || !ctx.hasUI) return;
 		state.level = loadLevel();
-		state.busy = false;
 		state.broken = undefined;
 		state.getTheme = () => ctx.ui.theme;
 		state.warn = (message) => {
@@ -827,6 +842,10 @@ export default function foldRuns(pi: ExtensionAPI) {
 
 	// Remember which tool calls prompt the user: a prompt that opens while a call runs belongs to it.
 	const runningCalls = new Set<string>();
+	pi.on("session_shutdown", () => {
+		releaseSession();
+		runningCalls.clear();
+	});
 	pi.on("tool_execution_start", async (event) => {
 		runningCalls.add(event.toolCallId);
 	});
